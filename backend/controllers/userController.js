@@ -11,7 +11,7 @@ const registerUser = async (req , res) => {
             res.status(400).json({message: "Email is already associated with an account"})
         }
         
-        const createdUser = new User({name , email , password});
+        let createdUser = new User({name , email , password});
         createdUser = await createdUser.save();
 
         if(createdUser){

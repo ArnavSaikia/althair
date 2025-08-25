@@ -1,4 +1,4 @@
-const { default: bcrypt } = require('bcryptjs');
+const bcrypt = require('bcryptjs');
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
