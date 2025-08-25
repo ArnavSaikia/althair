@@ -15,7 +15,7 @@ const registerUser = async (req , res) => {
         createdUser = await createdUser.save();
 
         if(createdUser){
-            generateToken(res , User._id)
+            generateToken(res , createdUser._id)
             res.status(201).json({
                 message: "Successfully Registered"
             })
@@ -30,4 +30,28 @@ const registerUser = async (req , res) => {
     }
 }
 
-module.exports = registerUser;
+// a user logging in
+const loginUser = async (req,res) => {
+    const {email , password} = req.body;
+
+    try{
+        const user = await User.findOne({email})
+
+        if (!user) res.status(400).json({message: "No account found with following email"});
+        
+        if (user && (await user.matchPassword(password))){
+            generateToken(res , user._id);
+            res.status(201).json({message: "Successfully Logged In"});
+        }
+
+        else{
+            res.status(400).json({message: "Wrong password"})
+        }
+    }
+
+    catch(err){
+        res.status(500).json({message: err.message});
+    }
+}
+
+module.exports = {registerUser , loginUser};
