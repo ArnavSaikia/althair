@@ -96,7 +96,10 @@ const updateUserDetails = async (req , res) => {
             }
 
             if(name) user.name = name;
-            if(email) user.email = email;
+            if(email){
+                if(await User.findOne({email}) !== user) return res.status(400).json({message: "This email is already registered with another account"})
+                user.email = email;
+            }
             if(password) user.password = password;
 
             //im not regenerating jwt here cuz jwt is storing only userId at the moment which will not change(i hope)
