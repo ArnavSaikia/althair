@@ -1,5 +1,6 @@
 const User = require('../models/userModel');
 const generateToken = require('../utils/generateToken');
+const verifyToken = require('../utils/verifyToken');
 
 // a user regestering to make an account
 const registerUser = async (req , res) => {
@@ -54,4 +55,32 @@ const loginUser = async (req,res) => {
     }
 }
 
-module.exports = {registerUser , loginUser};
+
+// a user logging out
+const logoutUser = (req,res) => {
+    try{
+        res.cookie("jwt","",{
+        httpOnly: true,
+        expires: new Date(0)
+        });
+        res.status(200).json({message: "Successfully Logged Out"});
+    }
+
+    catch(err){
+        res.status(500).json({message: err.message});
+    }
+};
+
+
+// user details
+const fetchUserDetails = async (req,res) => {
+    try{
+        const user = await verifyToken(req);
+        res.status(200).json(user);
+    }
+    catch(err){
+        res.status(500).json({message: err.message});
+    }
+}
+
+module.exports = {registerUser , loginUser , logoutUser, fetchUserDetails};
