@@ -107,6 +107,9 @@ const updateUserDetails = async (req , res) => {
 
             res.status(200).json({message: `User details successfully updated`});
         }
+        else{
+            req.status(400).json({message: "invalid token. login again"});
+        }
     }
 
     catch(err){
@@ -115,4 +118,30 @@ const updateUserDetails = async (req , res) => {
     }
 }
 
-module.exports = {registerUser , loginUser , logoutUser, fetchUserDetails, updateUserDetails};
+const deleteProfile = async (req ,res) => {
+    try{
+        const userWithooutPassword = await verifyToken(req);
+        const user = await User.findById(userWithooutPassword._id)
+        if(user){
+            const {password} = req.body;
+            if(!password || !(await user.matchPassword(password))){
+                return res.status(400).json({message: "Wrong Password Entered. Account Not Updated"});
+            }
+
+            await user.deleteOne();
+            res.cookie('jwt', '',  { httpOnly: true, expires: new Date(0) });
+            res.status(200).json({ message: "Account successfully deleted" });
+        }
+
+        else{
+            req.status(400).json({message: "invalid token. login again"});
+        }
+    }
+    
+    catch(err){
+        console.log(err);
+        res.status(500).json({message: err.message});
+    }
+};
+
+module.exports = {registerUser , loginUser , logoutUser, fetchUserDetails, updateUserDetails , deleteProfile};
