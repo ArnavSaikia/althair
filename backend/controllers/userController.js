@@ -83,4 +83,33 @@ const fetchUserDetails = async (req,res) => {
     }
 }
 
-module.exports = {registerUser , loginUser , logoutUser, fetchUserDetails};
+
+// update user details
+const updateUserDetails = async (req , res) => {
+    try{
+        const userWithooutPassword = await verifyToken(req);
+        const user = await User.findById(userWithooutPassword._id)
+        if(user){
+            const {name, email, password, oldPassword} = req.body;
+            if(!oldPassword || !(await user.matchPassword(oldPassword))){
+                return res.status(400).json({message: "Wrong Password Entered. Account Not Updated"});
+            }
+
+            if(name) user.name = name;
+            if(email) user.email = email;
+            if(password) user.password = password;
+
+            //im not regenerating jwt here cuz jwt is storing only userId at the moment which will not change(i hope)
+            await user.save();
+
+            res.status(200).json({message: `User details successfully updated`});
+        }
+    }
+
+    catch(err){
+        console.log(err);
+        res.status(500).json({message: err.message});
+    }
+}
+
+module.exports = {registerUser , loginUser , logoutUser, fetchUserDetails, updateUserDetails};
