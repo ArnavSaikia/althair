@@ -15,3 +15,5 @@ pnpm-debug.log*
 # OS files
 .DS_Store
 Thumbs.db
+
+*wardrobe-s3-user_accessKeys.csv

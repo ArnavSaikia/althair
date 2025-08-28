@@ -16,3 +16,8 @@ app.use(cookieParser());
 const userRoutes = require('./routes/userRoutes')
 
 app.use('/users' , userRoutes);
+
+//Wardrobe Section
+const wardrobeRoutes = require('./routes/wardrobeRoutes')
+
+app.use('/wardrobe', wardrobeRoutes);

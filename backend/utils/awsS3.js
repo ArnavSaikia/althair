@@ -9,4 +9,21 @@ const s3 = new S3Client({
     }
 });
 
+// const uploadToS3 = async (fileBuffer , FilterRuleName, mimeType) => {
+//     const params = {
+//         Bucket: process.env.S3_BUCKET_NAME,
+//         Key: FilterRuleName,
+//         Body: fileBuffer,
+//         ContentType: mimeType,
+//     }
+
+//     try{
+//         await s3.send(new PutObjectCommand(params));
+//         console.log("Upload Successful");
+//     }
+//     catch(err) {
+//         console.log(err);
+//     }
+// }
+
 module.exports = { s3 , PutObjectCommand};
