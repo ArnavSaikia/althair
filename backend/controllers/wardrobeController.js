@@ -83,4 +83,26 @@ const fetchItem = async (req,res) => {
     }
 }
 
-module.exports = {addClothingItem , fetchWardrobe , fetchItem};
+const updateItem = async (req,res) => {
+    try{
+        const user = await verifyToken(req);
+        if(!user) return res.status(400).json({message: "User not logged in or invalid token"});
+
+        const _id = req.params.id;
+        const item = await Clothing.findOne({_id});
+        if (!item) return res.status(400).json({message: "Item Not Found"});
+
+        Object.keys(req.body).forEach((key) => {
+            item[key] = req.body[key];
+        });
+
+        const updatedItem = await item.save();
+
+        res.status(200).json({message: `Item ${item._id} successfully update`, updatedItem});
+    }
+    catch(err){
+        res.status(500).json({message: err.message});
+    }
+}
+
+module.exports = {addClothingItem , fetchWardrobe , fetchItem, updateItem};
