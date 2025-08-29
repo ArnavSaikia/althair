@@ -67,4 +67,20 @@ const fetchWardrobe = async (req,res) => {
 
 };
 
-module.exports = {addClothingItem , fetchWardrobe};
+const fetchItem = async (req,res) => {
+    try{
+        const user = await verifyToken(req);
+        if(!user) return res.status(400).json({message: "User not logged in or invalid token"});
+
+        const _id = req.params.id;
+        const item = await Clothing.findOne({_id});
+        if(!item) res.status(400).json({message: `No item found with ID ${_id}`});
+        else res.status(200).json(item);
+    }
+
+    catch(err) {
+        res.status(500).json({message: err.message});
+    }
+}
+
+module.exports = {addClothingItem , fetchWardrobe , fetchItem};
