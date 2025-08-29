@@ -38,7 +38,7 @@ const loginUser = async (req,res) => {
     try{
         const user = await User.findOne({email})
 
-        if (!user) res.status(400).json({message: "No account found with following email"});
+        if (!user) return res.status(400).json({message: "No account found with following email"});
         
         if (user && (await user.matchPassword(password))){
             generateToken(res , user._id);
