@@ -2,6 +2,7 @@ const verifyToken = require('../utils/verifyToken');
 const Clothing = require('../models/ClothingModel');
 const { S3Client, PutObjectCommand } = require('@aws-sdk/client-s3');
 
+// for the route POST /wardrobe/add
 const addClothingItem = async(req , res) =>{
     try{
         const user = await verifyToken(req);
@@ -49,4 +50,21 @@ const addClothingItem = async(req , res) =>{
     }
 }
 
-module.exports = {addClothingItem}
+
+// for the route GET /wardrobe
+const fetchWardrobe = async (req,res) => {
+    try {
+        const user = await verifyToken(req);
+        if(!user) return res.status(400).json({message: "User not logged in or invalid token"});
+
+        const items = await Clothing.find({user: user._id});
+        res.status(200).json(items);    //might add pagination here if scale grows
+    }
+
+    catch(err) {
+        res.status(500).json({message: err.message});
+    }
+
+};
+
+module.exports = {addClothingItem , fetchWardrobe};
