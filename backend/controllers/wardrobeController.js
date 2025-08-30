@@ -149,4 +149,29 @@ const deleteItem = async (req,res) => {
     }
 }
 
-module.exports = {addClothingItem , fetchWardrobe , fetchItem, updateItem, deleteItem};
+//using query params instead of body params cuz this is going to be a GET request
+//on the front end probably should implemnent blocks for each param in the search box. name being the default value of the box with params being the sub boxes
+const searchClothingItems = async (req,res) => {
+    try{
+        const user = await verifyToken(req);
+        if(!user) return res.status(400).json({message: "User not logged in or invalid token"});
+
+        const filters = { user: user._id };
+
+        const {category, color, size, fit, name} = req.query;
+        if (category) filters.category = category;
+        if (color) filters.color = color;
+        if (size) filters.size = size;
+        if (fit) filters.fit = fit;
+        if (name) filters.name = { $regex: name, $options: 'i' };
+
+        const items = await Clothing.find(filters);
+        res.status(200).json({ items });
+    }
+
+    catch(err){
+        res.status(500).json({message: err.message});
+    }
+}
+
+module.exports = {addClothingItem , fetchWardrobe , fetchItem, updateItem, deleteItem, searchClothingItems};
