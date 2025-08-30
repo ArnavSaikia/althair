@@ -1,8 +1,9 @@
 const verifyToken = require('../utils/verifyToken');
 const Clothing = require('../models/ClothingModel');
-const { S3Client, PutObjectCommand } = require('@aws-sdk/client-s3');
+const { S3Client, PutObjectCommand, DeleteObjectCommand } = require('@aws-sdk/client-s3');
 
 // for the route POST /wardrobe/add
+//using form data here. might need to change later
 const addClothingItem = async(req , res) =>{
     try{
         const user = await verifyToken(req);
@@ -105,4 +106,47 @@ const updateItem = async (req,res) => {
     }
 }
 
-module.exports = {addClothingItem , fetchWardrobe , fetchItem, updateItem};
+//for now this func is strictly for deleting user's own uploaded items. DO NOT ATTEMPT to use it on a webscraped item
+//possible soln i can think of rn: creating a new folder in s3 for web scraped items and adding a guard in this func to not touch that folder
+const deleteItem = async (req,res) => {
+    try{
+        const user = await verifyToken(req);
+        if(!user) return res.status(400).json({message: "User not logged in or invalid token"});
+
+        const _id = req.params.id;
+        const item = await Clothing.findOne({_id});
+        if (!item) return res.status(400).json({message: "Item Not Found"});
+
+        if (item.user.toString() !== user._id.toString()) {
+            return res.status(403).json({ message: "Not authorized to delete this item" });
+        }
+
+        const url = item.imageUrl;
+        const urlParts = url.split('/');
+        const keyIndex = urlParts.findIndex(part => part === 'clothing'); // or wherever your folder starts
+        const s3Key = urlParts.slice(keyIndex).join('/');
+
+        const s3 = new S3Client({
+            region: process.env.AWS_REGION,
+            credentials: {
+                accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+                secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+            },
+        });
+
+        await s3.send(new DeleteObjectCommand({
+            Bucket: process.env.S3_BUCKET_NAME,
+            Key: s3Key,
+        }));
+
+        await Clothing.deleteOne({ _id });
+
+        res.status(200).json({message: `Item ${item._id} successfully deleted`});
+    }
+
+    catch(err) {
+        res.status(500).json({message: err.message});
+    }
+}
+
+module.exports = {addClothingItem , fetchWardrobe , fetchItem, updateItem, deleteItem};
