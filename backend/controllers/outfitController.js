@@ -1,10 +1,11 @@
 const verifyToken = require('../utils/verifyToken');
 const Outfit = require('../models/OutfitModel');
 const Clothing = require('../models/ClothingModel');
+const mongoose = require('mongoose');
 
 const uploadOutfit = async (req,res) => {
     try{
-        const user = verifyToken(req);
+        const user = await verifyToken(req);
         if(!user) return res.status(400).json({message: "User not logged in or invalid token"});
 
         const {name, description, items} = req.body;
@@ -13,7 +14,11 @@ const uploadOutfit = async (req,res) => {
             return res.status(400).json({message: "An outfit must have a name and atleast one clothing item"});
         }
 
-        const clothingItems = await Clothing.find({ _id: { $in: items}, user: user._id});
+        const clothingItems = await Clothing.find({
+            _id: { $in: items.map(id => new mongoose.Types.ObjectId(id)) },
+            user: new mongoose.Types.ObjectId(user._id)
+        });
+        console.log(clothingItems);
         if (clothingItems.length !== items.length) return res.status(403).json({message: "One or more of the items are not present in the user's wardrobe"});
 
         const newOutfit = new Outfit({
