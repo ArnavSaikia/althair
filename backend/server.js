@@ -21,3 +21,8 @@ app.use('/users' , userRoutes);
 const wardrobeRoutes = require('./routes/wardrobeRoutes')
 
 app.use('/wardrobe', wardrobeRoutes);
+
+//Outfit Section
+const outfitRoutes = require('./routes/outfitRoutes');
+
+app.use('/outfits', outfitRoutes);
