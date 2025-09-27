@@ -11,7 +11,7 @@ const uploadOutfit = async (req,res) => {
         const {name, description, items} = req.body;
 
         if (!name || !items || !Array.isArray(items) || items.length == 0){
-            return res.status(400).json({message: "An outfit must have a name and atleast one clothing item"});
+            return res.status(400).json({message: "An outfit must have a name and at least one clothing item"});
         }
 
         const clothingItems = await Clothing.find({
@@ -40,4 +40,22 @@ const uploadOutfit = async (req,res) => {
     }
 }
 
-module.exports = uploadOutfit;
+const fetchOutfits = async (req,res) => {
+    try{
+        const user = await verifyToken(req);
+        if(!user) return res.status(400).json({message: "User not logged in or invalid token"});
+
+        const ownOutfits = await Outfit.find({
+            user: user._id
+        }).populate('items'); //this populate thingy here will open the items array and replace the id objects inside with the actual clothing object from the Clothing schema
+
+        if(!ownOutfits) return res.status(404).json({message: "No Outfit found belonging to the user"});
+
+        return res.status(200).json({outfits: ownOutfits});
+    }
+    catch(err){
+        res.status(500).json({message: err.message});
+    }
+}
+
+module.exports = {uploadOutfit , fetchOutfits};
