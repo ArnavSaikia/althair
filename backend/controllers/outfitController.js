@@ -144,4 +144,27 @@ const deleteOutfit = async (req, res) => {
     }
 };
 
-module.exports = {uploadOutfit , fetchOutfits, fetchSpecificOutfit, updateOutfit, deleteOutfit};
+// currently only allowing user to search their own outfit. this would need modification when i introduce public sharing of outfits
+const searchOutfit = async (req, res) => {
+    try{
+        const user = await verifyToken(req);
+        if(!user) return res.status(400).json({message: "User not logged in or invalid token"});
+
+        const {query} = req.query;
+
+        const outfits = await Outfit.find({
+            user: user._id,
+            $or: [
+                { name: { $regex: query, $options: "i" } },
+                { description: { $regex: query, $options: "i" } }
+            ]
+        }).populate("items");
+
+        return res.status(200).json(outfits);
+    }
+    catch(err){
+        res.status(500).json({message: err.message});
+    }
+};
+
+module.exports = {uploadOutfit , fetchOutfits, fetchSpecificOutfit, updateOutfit, deleteOutfit, searchOutfit};
