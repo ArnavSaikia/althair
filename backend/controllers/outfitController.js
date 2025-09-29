@@ -38,7 +38,7 @@ const uploadOutfit = async (req,res) => {
     catch (err){
         res.status(500).json({message: err.message});
     }
-}
+};
 
 const fetchOutfits = async (req,res) => {
     try{
@@ -56,6 +56,30 @@ const fetchOutfits = async (req,res) => {
     catch(err){
         res.status(500).json({message: err.message});
     }
-}
+};
 
-module.exports = {uploadOutfit , fetchOutfits};
+//kinda seems like a redundant route cuz i can prolly use the route above this and pass it down to specific pages on the frontend
+//might deprecate later
+const fetchSpecificOutfit = async (req, res) => {
+    try{
+        const user = await verifyToken(req);
+        if(!user) return res.status(400).json({message: "User not logged in or invalid token"});
+
+        const id = req.params.id;
+        const outfit = await Outfit.findOne({
+            _id: id
+        }).populate('items');
+
+        if (!outfit) return res.status(404).json({message: `Outfit with ID ${id} nout found`});
+
+        return res.status(200).json({outfit});
+    }
+
+    catch(err){
+        res.status(500).json({message: err.message});
+    }
+};
+
+
+
+module.exports = {uploadOutfit , fetchOutfits, fetchSpecificOutfit};
