@@ -113,8 +113,8 @@ const updateOutfit = async (req, res) => {
         const updatedOutfit = await outfit.save();
 
         res.status(200).json({
-        message: `Outfit ${outfit._id} updated successfully`,
-        outfit: updatedOutfit,
+            message: `Outfit ${outfit._id} updated successfully`,
+            outfit: updatedOutfit,
         });
     }
 
@@ -123,4 +123,25 @@ const updateOutfit = async (req, res) => {
     }
 }
 
-module.exports = {uploadOutfit , fetchOutfits, fetchSpecificOutfit, updateOutfit};
+const deleteOutfit = async (req, res) => {
+    try{
+        const user = await verifyToken(req);
+        if(!user) return res.status(400).json({message: "User not logged in or invalid token"});
+
+        const id = req.params.id;
+        const outfit = await Outfit.findOne({
+            user: user._id,
+            _id: id
+        });
+
+        if (!outfit) return res.status(404).json({message: `Outfit with ID ${id} nout found`});
+
+        await Outfit.deleteOne({_id: id});
+        res.status(200).json({ message: `Outfit ${outfit._id} successfully deleted` });
+    }
+    catch(err){
+        res.status(500).json({message: err.message});
+    }
+};
+
+module.exports = {uploadOutfit , fetchOutfits, fetchSpecificOutfit, updateOutfit, deleteOutfit};
