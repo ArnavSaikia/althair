@@ -67,6 +67,7 @@ const fetchSpecificOutfit = async (req, res) => {
 
         const id = req.params.id;
         const outfit = await Outfit.findOne({
+            user: user._id,
             _id: id
         }).populate('items');
 
@@ -80,6 +81,46 @@ const fetchSpecificOutfit = async (req, res) => {
     }
 };
 
+const updateOutfit = async (req, res) => {
+    try{
+        const user = await verifyToken(req);
+        if(!user) return res.status(400).json({message: "User not logged in or invalid token"});
 
+        const id = req.params.id;
+        const {name, description, items} = req.body;
 
-module.exports = {uploadOutfit , fetchOutfits, fetchSpecificOutfit};
+        const outfit = await Outfit.findOne({
+            user: user._id,
+            _id: id
+        }).populate('items');
+        
+        if(!outfit) res.status(404).json({message: `Outfit with ID ${id} nout found`});
+
+        if(name) outfit.name = name;
+        if(description) outfit.description = description;
+
+        if (items && Array.isArray(items) && items.length > 0){
+            const clothingItems = await Clothing.find({
+                _id: { $in: items.map((id) => new mongoose.Types.ObjectId(id))},
+                user: new mongoose.Types.ObjectId(user._id),
+            });
+
+            if (clothingItems.length !== items.length) return res.status(403).json({message: "Trying to update with items not in ur wardrobe"});
+
+            outfit.items = items;
+        }
+
+        const updatedOutfit = await outfit.save();
+
+        res.status(200).json({
+        message: `Outfit ${outfit._id} updated successfully`,
+        outfit: updatedOutfit,
+        });
+    }
+
+    catch(err) {
+        res.status(500).json({message: err.message});
+    }
+}
+
+module.exports = {uploadOutfit , fetchOutfits, fetchSpecificOutfit, updateOutfit};

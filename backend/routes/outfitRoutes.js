@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const {uploadOutfit , fetchOutfits, fetchSpecificOutfit} = require('../controllers/outfitController');
+const {uploadOutfit , fetchOutfits, fetchSpecificOutfit, updateOutfit} = require('../controllers/outfitController');
 
 //for uploading a wardrobe to your list
 router.post('/', uploadOutfit);
@@ -7,5 +7,7 @@ router.post('/', uploadOutfit);
 router.get('/', fetchOutfits);
 
 router.get('/:id', fetchSpecificOutfit);
+
+router.put('/:id', updateOutfit);
 
 module.exports = router;
