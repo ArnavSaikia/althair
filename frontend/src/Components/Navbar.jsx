@@ -13,12 +13,12 @@ export default function Navbar() {
                 <a href="" className="navbar-link group">Outfit<span></span></a>
             </div>
             <div className='flex justify-between items-center gap-[0rem]'>
-                <button className='shadow-md p-2 rounded'>
-                    <AddIcon style={{ fontSize: 16, color: "#333" }} />
+                <button className='shadow-md p-2 rounded-4xl h-1/2 flex '>
+                    <AddIcon style={{ fontSize: "inherit", color: "#333"}} />
                     <span className='hidden'>Add Item</span>
                 </button>
-                <button className='shadow-md p-2 rounded'>
-                    <SearchIcon style={{ fontSize: 16, color: "#333" }} />
+                <button className='shadow-md p-2 rounded-4xl h-1/2 flex'>
+                    <SearchIcon style={{ fontSize: "inherit", color: "#333"}} />
                     <span className='hidden'>Search</span>
                 </button>
             </div>
