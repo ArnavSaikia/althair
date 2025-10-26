@@ -1,7 +1,16 @@
 @import "tailwindcss";
 
+/* https://icolorpalette.com/color/86A96F */
 @layer components{
-    .navbar-link{
-        @apply 
+    .navbar-link {
+        @apply relative text-gray-800 transition-colors duration-300;
     }
+        .navbar-link span {
+        @apply absolute left-0 -bottom-[2px] h-[1px] w-0 bg-[#8dae78] transition-all duration-250;
+    }
+        .navbar-link:hover span {
+        @apply w-full;
+    }
+
+
 }
