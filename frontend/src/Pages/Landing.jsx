@@ -1,5 +1,6 @@
 import Navbar from '../Components/Navbar.jsx';
 import Card from '../Components/Card.jsx'
+import Footer from '../Components/Footer.jsx';
 
 function Landing(){
     return(
@@ -27,6 +28,18 @@ function Landing(){
                         <Card image="/upperwear_landing.jpg" title={"template"} />
                     </div>
                 </div>
+
+                <div className='w-screen p-4'>
+                    <span className='text-lg'>Featured Clothing</span>
+                    <div className='h-[35vh] flex gap-[1rem] overflow-scroll'>
+                        <Card image="/upperwear_landing.jpg" title={"template"} />
+                        <Card image="/upperwear_landing.jpg" title={"template"} />
+                        <Card image="/upperwear_landing.jpg" title={"template"} />
+                        <Card image="/upperwear_landing.jpg" title={"template"} />
+                    </div>
+                </div>
+
+                <Footer/>
             </div>
         </> 
     )
