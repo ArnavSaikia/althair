@@ -7,7 +7,7 @@ function Landing(){
         <>
             <Navbar/>
             <div className='size-max'>
-                <img src='/hero.png' className='w-screen h-[40vh] object-cover' alt="hero" />
+                <img src='/hero.png' className='w-screen h-[80vh] object-cover' alt="hero" />
                 <div className='w-screen p-4'>
                     <span className='text-lg'>Shop By Category</span>
                     <div className='grid grid-cols-2 gap-4 '>
