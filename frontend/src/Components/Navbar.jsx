@@ -1,4 +1,5 @@
 import '../Styles/Navbar.css';
+import NavbarMobileDrawer from './NavbarMobileDrawer';
 import SearchIcon from '@mui/icons-material/Search';
 import AddIcon from '@mui/icons-material/Add';
 import MenuIcon from '@mui/icons-material/Menu';
@@ -9,11 +10,16 @@ export default function Navbar() {
     const [searchIsOpen, setSearchIsOpen] = useState(false);
     const [isOpen, setisOpen] = useState(false);
     const searchRef = useRef(null);
+    const drawerRef = useRef(null);
 
     useEffect(() => {
         function handleClickOutside(event) {
             if (searchRef.current && !searchRef.current.contains(event.target)) {
-            setSearchIsOpen(false);
+                setSearchIsOpen(false);
+            }
+
+            if (drawerRef.current && !drawerRef.current.contains(event.target)) {
+                setisOpen(false);
             }
         }
         document.addEventListener("mousedown", handleClickOutside);
@@ -54,11 +60,13 @@ export default function Navbar() {
                     />
                 </button>
 
-                <button className='bg-transparent p-2 rounded-4xl h-full flex'>
+                <button className='bg-transparent p-2 rounded-4xl h-full flex' onClick={() => setisOpen(true)}>
                     <MenuIcon sx={{ fontSize: 24, color: "#333" }} />
                 </button>
             </div>
 
+            {/* mobile drawer html....not to be shown in desktop mode */}
+            <NavbarMobileDrawer ref={drawerRef} isOpen={isOpen} setisOpen={setisOpen}/>
         </div>
     )
 }
