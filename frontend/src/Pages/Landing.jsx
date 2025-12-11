@@ -69,7 +69,7 @@ function Landing(){
 
 
                     {/* centered slide text */}
-                    <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-6">
+                    <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-1">
                         <h1
                             className="
                                 font-['Cormorant_Garamond']
@@ -81,13 +81,14 @@ function Landing(){
                                 max-w-[18ch]
                                 drop-shadow-[0_4px_8px_rgba(0,0,0,0.6)]
                                 transition-opacity duration-700
+                                mb-2
                             "
                         >
                             {heroSlides[index].title}
                         </h1>
                         <p
                             className="
-                                font-[inter]
+                                font-sans
                                 text-white/80
                                 text-lg
                                 leading-snug
