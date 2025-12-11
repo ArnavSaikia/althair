@@ -65,13 +65,38 @@ function Landing(){
                         />
                     ))}
 
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent pointer-events-none gap-0"></div>
+
+
                     {/* centered slide text */}
                     <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-6">
-                        <h1 className="text-white text-4xl font-bold drop-shadow-lg transition-opacity duration-500">
+                        <h1
+                            className="
+                                font-['Cormorant_Garamond']
+                                text-white/95
+                                text-5xl
+                                font-light
+                                leading-[1.05]
+                                tracking-wide
+                                max-w-[18ch]
+                                drop-shadow-[0_4px_8px_rgba(0,0,0,0.6)]
+                                transition-opacity duration-700
+                            "
+                        >
                             {heroSlides[index].title}
                         </h1>
-                        <br/>
-                        <p className="text-white text-xl drop-shadow-lg transition-opacity duration-500">
+                        <p
+                            className="
+                                font-[inter]
+                                text-white/80
+                                text-lg
+                                leading-snug
+                                tracking-wide
+                                max-w-[35ch]
+                                drop-shadow-[0_3px_6px_rgba(0,0,0,0.55)]
+                                transition-opacity duration-700
+                            "
+                        >
                             {heroSlides[index].text}
                         </p>
                     </div>
