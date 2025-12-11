@@ -103,9 +103,9 @@ function Landing(){
                     </div>
             </div>
 
-                <div className='w-screen p-4'>
-                    <span className='text-lg'>Shop By Category</span>
-                    <div className='grid grid-cols-2 gap-4 '>
+                <div className='w-screen p-4 pt-4'>
+                    <span className='text-3xl font-light tracking-wide font-["Cormorant_Garamond"]'>Categories</span>
+                    <div className='grid grid-cols-2 gap-4 mt-3'>
                         <div className='flex flex-col gap-4'>
                             <img src='/upperwear_landing.jpg' className='h-[auto] flex-none aspect-2/3' alt="upperwear" />
                             <img src='/bottomwear_landing.jpg' className='h-[auto] grow aspect-2/3' alt="bottomwear" />
