@@ -107,10 +107,13 @@ function Landing(){
                     <span className='text-3xl font-light tracking-wide font-["Cormorant_Garamond"]'>Categories</span>
                     <div className='grid grid-cols-2 gap-4 mt-3'>
                         <div className='flex flex-col gap-4'>
-                            <img src='/upperwear_landing.jpg' className='h-[auto] flex-none aspect-2/3' alt="upperwear" />
+                            <img src='/upperwear_landing2.jpg' className='h-[auto] flex-none aspect-2/3' alt="upperwear" />
                             <img src='/bottomwear_landing.jpg' className='h-[auto] grow aspect-2/3' alt="bottomwear" />
                         </div>
-                        <img src='/footwear_landing.jpg' className='h-[100%] flex-none aspect-2/3' alt="footwear" />
+                        <div className='flex flex-col gap-4'>
+                            <img src='/footwear_landing3.jpg' className='grow-[2] flex-none aspect-2/3' alt="footwear" />
+                            <img src='/footwear_landing.jpg' className='h-[40%] flex-none aspect-2/3' alt="footwear" />
+                        </div>
                     </div>
                 </div>
 
