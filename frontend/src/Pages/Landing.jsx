@@ -111,8 +111,9 @@ function Landing(){
                             <img src='/bottomwear_landing.jpg' className='h-[auto] grow aspect-2/3' alt="bottomwear" />
                         </div>
                         <div className='flex flex-col gap-4'>
-                            <img src='/footwear_landing3.jpg' className='grow-[2] flex-none aspect-2/3' alt="footwear" />
-                            <img src='/footwear_landing.jpg' className='h-[40%] flex-none aspect-2/3' alt="footwear" />
+                            <img src='/footwear_landing5.jpg' className='grow-[2] flex-none aspect-2/3' alt="footwear" /> 
+                            {/* go with either 5th or 7th one id say */}
+                            <img src='/accessories_landing2.jpg' className='h-[40%] flex-none aspect-2/3' alt="footwear" />
                         </div>
                     </div>
                 </div>
