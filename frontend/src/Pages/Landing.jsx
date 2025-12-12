@@ -107,13 +107,29 @@ function Landing(){
                     <span className='text-3xl font-light tracking-wide font-["Cormorant_Garamond"]'>Categories</span>
                     <div className='grid grid-cols-2 gap-4 mt-3'>
                         <div className='flex flex-col gap-4'>
-                            <img src='/upperwear_landing2.jpg' className='h-[auto] flex-none aspect-2/3' alt="upperwear" />
-                            <img src='/bottomwear_landing.jpg' className='h-[auto] grow aspect-2/3' alt="bottomwear" />
+                            <div className="relative rounded-[12px] overflow-hidden shadow-[0_8px_20px_rgba(0,0,0,0.1)] border border-white/20 hover:scale-[1.03] transition duration-500 aspect-2/3">
+                                <img src="/upperwear_landing2.jpg" className="w-full h-full object-cover" alt="upperwear" />
+                                <div className="absolute inset-0 bg-gradient-to-t from-black/25 to-transparent"></div>
+                                <span className="absolute bottom-3 left-3 text-white tracking-wide font-['Cormorant_Garamond'] text-lg">Upperwear</span>
+                            </div>
+                            <div className="relative rounded-[12px] overflow-hidden shadow-[0_8px_20px_rgba(0,0,0,0.1)] border border-white/20 hover:scale-[1.03] transition duration-500 aspect-2/3">
+                                <img src="/bottomwear_landing.jpg" className="w-full h-full object-cover" alt="bottomwear" />
+                                <div className="absolute inset-0 bg-gradient-to-t from-black/25 to-transparent"></div>
+                                <span className="absolute bottom-3 left-3 text-white tracking-wide font-['Cormorant_Garamond'] text-lg">Bottomwear</span>
+                            </div>
                         </div>
                         <div className='flex flex-col gap-4'>
-                            <img src='/footwear_landing5.jpg' className='grow-[2] flex-none aspect-2/3' alt="footwear" /> 
+                            <div className="relative grow-[3] min-h-0 rounded-[12px] overflow-hidden shadow-[0_8px_20px_rgba(0,0,0,0.1)] border border-white/20 hover:scale-[1.03] transition duration-500">
+                                <img src="/footwear_landing5.jpg" className="w-full h-full object-cover" alt="footwear" />
+                                <div className="absolute inset-0 bg-gradient-to-t from-black/25 to-transparent"></div>
+                                <span className="absolute bottom-3 left-3 text-white tracking-wide font-['Cormorant_Garamond'] text-lg">Footwear</span>
+                            </div> 
                             {/* go with either 5th or 7th one id say */}
-                            <img src='/accessories_landing2.jpg' className='h-[40%] flex-none aspect-2/3' alt="footwear" />
+                            <div className="relative rounded-[12px] overflow-hidden shadow-[0_8px_20px_rgba(0,0,0,0.1)] border border-white/20 hover:scale-[1.03] transition duration-500 aspect-[2/2.5]">
+                                <img src="/accessories_landing2.jpg" className="w-full h-full object-cover" alt="accessories" />
+                                <div className="absolute inset-0 bg-gradient-to-t from-black/25 to-transparent"></div>
+                                <span className="absolute bottom-3 left-3 text-white tracking-wide font-['Cormorant_Garamond'] text-lg">Accessories</span>
+                            </div>
                         </div>
                     </div>
                 </div>
