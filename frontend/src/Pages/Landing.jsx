@@ -145,8 +145,8 @@ function Landing(){
                 </div>
 
                 <div className='w-screen p-4'>
-                    <span className='text-lg'>Featured Clothing</span>
-                    <div className='h-[35vh] flex gap-[1rem] overflow-scroll'>
+                    <span className='text-3xl font-light tracking-wide font-["Cormorant_Garamond"]'>Community Picks</span>
+                    <div className='flex gap-4 overflow-x-auto mt-3'>
                         <Card image="/upperwear_landing.jpg" title={"template"} />
                         <Card image="/upperwear_landing.jpg" title={"template"} />
                         <Card image="/upperwear_landing.jpg" title={"template"} />
