@@ -1,6 +1,7 @@
 import Navbar from '../Components/Navbar.jsx';
 import Card from '../Components/Card.jsx'
 import Footer from '../Components/Footer.jsx';
+import CTA from '../Components/CTA.jsx';
 import { useState, useEffect, useRef } from 'react';
 
 function Landing(){
@@ -134,8 +135,10 @@ function Landing(){
                     </div>
                 </div>
 
+                <CTA/>
+
                 <div className='w-screen p-4'>
-                    <span className='text-3xl font-light tracking-wide font-["Cormorant_Garamond"]'>Featured Outfits</span>
+                    <span className='text-3xl font-light tracking-wide font-["Cormorant_Garamond"]'>Our Picks</span>
                     <div className='flex gap-4 overflow-x-auto mt-3'>
                         <Card image="/upperwear_landing3.jpg" title={"Formal Day"} />
                         <Card image="/accessories_landing1.jpg" title={"Cozy Sweater Fit"} />
@@ -144,7 +147,7 @@ function Landing(){
                     </div>
                 </div>
 
-                <div className='w-screen p-4'>
+                {/* <div className='w-screen p-4'>
                     <span className='text-3xl font-light tracking-wide font-["Cormorant_Garamond"]'>Community Picks</span>
                     <div className='flex gap-4 overflow-x-auto mt-3'>
                         <Card image="/upperwear_landing.jpg" title={"template"} />
@@ -152,7 +155,7 @@ function Landing(){
                         <Card image="/upperwear_landing.jpg" title={"template"} />
                         <Card image="/upperwear_landing.jpg" title={"template"} />
                     </div>
-                </div>
+                </div> */}
 
                 <Footer/>
             </div>

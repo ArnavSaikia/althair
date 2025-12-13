@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button"
 function Footer(){
     return(
         <>
-            <div className="w-screen p-4 flex flex-col">
+            <div className="w-screen p-4 flex flex-col bg-[#f2f0ec]">
                 <div className="">
                     <h1>Deserunt occaecat ex duis minim eu minim exercitation tempor.</h1>
                     <p>
