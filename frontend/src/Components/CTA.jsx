@@ -5,7 +5,8 @@ function CTA() {
             py-16
             flex
             justify-center
-            bg-[#f2f0ec]
+            bg-[linear-gradient(180deg,#f2f0ec 0%,#edeae4 100%)]
+
         ">
             <div className="text-center max-w-[32ch]">
                 <span className="
@@ -16,7 +17,7 @@ function CTA() {
                     tracking-wide
                     text-neutral-900
                 ">
-                    Build an outfit from your wardrobe
+                    Your clothes, styled once, remembered forever
                 </span>
 
                 <span className="
@@ -26,21 +27,47 @@ function CTA() {
                     text-neutral-600
                     tracking-wide
                 ">
-                    Combine pieces you own or upload new ones
+                    Outfits you’ve curated, kept in one place.
                 </span>
 
-                <button className="
-                    mt-6
-                    text-sm
-                    text-neutral-700
-                    tracking-wide
-                    underline
-                    underline-offset-4
-                    hover:text-neutral-900
-                    transition
-                ">
-                    Upload clothing
-                </button>
+                <div className="mt-8 flex justify-center gap-3">
+                    {/* Primary */}
+                    <button className="
+                        px-6
+                        py-2.5
+                        text-xs
+                        font-medium
+                        tracking-wider
+                        whitespace-nowrap
+                        text-white
+                        bg-neutral-900
+                        rounded-full
+                        hover:bg-neutral-800
+                        transition
+                    ">
+                        Start building
+                    </button>
+
+                    {/* Secondary */}
+                    <button className="
+                        px-6
+                        py-2.5
+                        text-xs
+                        font-medium
+                        tracking-wider
+                        whitespace-nowrap
+                        text-neutral-800
+                        border
+                        border-neutral-400
+                        rounded-full
+                        hover:border-neutral-600
+                        transition
+                    ">
+                        Upload clothing
+                    </button>
+                </div>
+
+
             </div>
         </section>
     );
