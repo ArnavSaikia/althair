@@ -1,30 +1,24 @@
 import { ArrowUpIcon } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import InstagramIcon from '@mui/icons-material/Instagram';
+import XIcon from '@mui/icons-material/X';
 
 function Footer(){
     return(
         <>
-            <div className="w-screen p-4 flex flex-col bg-[#f2f0ec]">
+            <div className="w-screen p-4 flex flex-col bg-[#f2f0ec] pt-8">
                 <div className="">
-                    <h1>Deserunt occaecat ex duis minim eu minim exercitation tempor.</h1>
-                    <p>
-                        Cillum aliqua anim ullamco sit pariatur ipsum est adipisicing ex reprehenderit in reprehenderit mollit exercitation. Esse occaecat ea in voluptate consectetur irure labore incididunt cupidatat eu. Minim consectetur cillum anim est velit culpa laborum quis commodo sunt magna anim ea ipsum.
+                    <span className='font-["Elsie_Swash_Caps"] text-3xl'>Althair</span>
+                    <p className="my-4 font-[inter]">
+                        Curate your personal style. Build outfits that reflect who you are. Your wardrobe, reimagined.
                     </p>
-                    <Button variant="outline" size="icon" className="rounded-full">
-                        <ArrowUpIcon />
+                    <Button variant="outline" size="icon" className="rounded-full mr-3">
+                        <InstagramIcon />
                     </Button>
                     <Button variant="outline" size="icon" className="rounded-full">
-                        <ArrowUpIcon />
+                        <XIcon />
                     </Button>
-                    <Button variant="outline" size="icon" className="rounded-full">
-                        <ArrowUpIcon />
-                    </Button>
-                    <Button variant="outline" size="icon" className="rounded-full">
-                        <ArrowUpIcon />
-                    </Button>
-                    <Button variant="outline" size="icon" className="rounded-full">
-                        <ArrowUpIcon />
-                    </Button>
+                    
                 </div>
 
                 <div>
