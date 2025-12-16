@@ -1,47 +1,124 @@
-import { ArrowUpIcon } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import InstagramIcon from '@mui/icons-material/Instagram';
-import XIcon from '@mui/icons-material/X';
+import InstagramIcon from "@mui/icons-material/Instagram"
+import XIcon from "@mui/icons-material/X"
 
-function Footer(){
-    return(
+function Footer() {
+    return (
         <>
-            <div className="w-screen p-4 flex flex-col bg-[#f2f0ec] pt-8">
-                <div className="mb-4">
-                    <span className='font-["Elsie_Swash_Caps"] text-3xl'>Althair</span>
-                    <p className="my-4 font-[inter]">
-                        Curate your personal style. Build outfits that reflect who you are. Your wardrobe, reimagined.
+            <footer className="
+                w-screen
+                px-4
+                pt-10
+                pb-8
+                bg-[#141414]
+            ">
+                {/* Brand */}
+                <div className="max-w-xl">
+                    <span className="
+                        block
+                        font-['Elsie_Swash_Caps']
+                        text-2xl
+                        text-neutral-100
+                    ">
+                        Althair
+                    </span>
+
+                    <p className="
+                        mt-3
+                        max-w-[38ch]
+                        text-sm
+                        font-light
+                        leading-relaxed
+                        text-neutral-400
+                    ">
+                        Curate your personal style. Build outfits that reflect who you are.
+                        Your wardrobe, reimagined.
                     </p>
-                    <Button variant="outline" size="icon" className="rounded-full mr-3">
-                        <InstagramIcon />
-                    </Button>
-                    <Button variant="outline" size="icon" className="rounded-full ">
-                        <XIcon />
-                    </Button>
-                    
+
+                    <div className="mt-5 flex gap-3">
+                        <Button
+                            variant="ghost"
+                            size="icon"
+                            className="
+                                rounded-full
+                                text-neutral-400
+                                hover:text-neutral-100
+                                hover:bg-white/5
+                                transition
+                            "
+                        >
+                            <InstagramIcon />
+                        </Button>
+
+                        <Button
+                            variant="ghost"
+                            size="icon"
+                            className="
+                                rounded-full
+                                text-neutral-400
+                                hover:text-neutral-100
+                                hover:bg-white/5
+                                transition
+                            "
+                        >
+                            <XIcon />
+                        </Button>
+                    </div>
                 </div>
 
-                <div>
-                    <h1 className="font-['Cormorant_Garamond'] text-2xl">Footnotes</h1>
-                    <ul>
-                        <li><a>Inspiration</a></li>
-                        <li><a>Technology Behind</a></li>
-                        <li><a>Design Notes</a></li>
-                        <li><a>Site In Numbers</a></li>
-                        <li><a>To the Users</a></li>
+                {/* Footnotes */}
+                <div className="mt-5">
+                    <span className="
+                        block
+                        font-['Cormorant_Garamond']
+                        text-lg
+                        tracking-wide
+                        text-neutral-200
+                    ">
+                        Footnotes
+                    </span>
+
+                    <ul className="
+                        mt-4
+                        space-y-2
+                        text-sm
+                        text-neutral-400
+                    ">
+                        {[
+                            "Inspiration",
+                            "Technology Behind",
+                            "Design Notes",
+                            "Site In Numbers",
+                            "To the Users"
+                        ].map((item) => (
+                            <li key={item}>
+                                <a className="
+                                    cursor-pointer
+                                    hover:text-neutral-100
+                                    transition
+                                ">
+                                    {item}
+                                </a>
+                            </li>
+                        ))}
                     </ul>
                 </div>
-            </div>
+            </footer>
 
-            <hr className="w-screen bg-black"/>
-
-            <div className="w-screen p-4 flex flex-start">
-                <span>
-                    © <span className='font-["Elsie_Swash_Caps"] mr-2'>Althair</span> <i>Made With Love</i>
-                </span>
+            {/* Bottom line */}
+            <div className="
+                w-screen
+                px-4
+                py-4
+                bg-[#141414]
+                text-xs
+                text-neutral-500
+            ">
+                © <span className="font-['Elsie_Swash_Caps']">Althair</span>{" "}
+                <i>Made with love</i>
             </div>
         </>
     )
 }
 
-export default Footer;
+export default Footer
