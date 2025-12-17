@@ -139,24 +139,14 @@ function Landing(){
 
                 <div className='w-screen p-4'>
                     <span className='text-3xl font-light tracking-wide font-["Cormorant_Garamond"]'>Our Picks</span>
-                    <div className='flex gap-4 overflow-x-auto mt-3'>
+                    <div className='flex gap-4 overflow-x-auto mt-3 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]'>
                         <Card image="/upperwear_landing3.jpg" title={"Formal Day"} />
                         <Card image="/accessories_landing1.jpg" title={"Cozy Sweater Fit"} />
                         <Card image="/upperwear_landing.jpg" title={"template"} />
                         <Card image="/upperwear_landing.jpg" title={"template"} />
                     </div>
                 </div>
-
-                {/* <div className='w-screen p-4'>
-                    <span className='text-3xl font-light tracking-wide font-["Cormorant_Garamond"]'>Community Picks</span>
-                    <div className='flex gap-4 overflow-x-auto mt-3'>
-                        <Card image="/upperwear_landing.jpg" title={"template"} />
-                        <Card image="/upperwear_landing.jpg" title={"template"} />
-                        <Card image="/upperwear_landing.jpg" title={"template"} />
-                        <Card image="/upperwear_landing.jpg" title={"template"} />
-                    </div>
-                </div> */}
-
+                
                 <Footer/>
             </div>
         </> 

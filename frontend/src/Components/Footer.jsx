@@ -26,9 +26,11 @@ function Footer() {
                     <p className="
                         mt-3
                         max-w-[38ch]
-                        text-sm
-                        font-light
+                        font-sans
+                        text-[13px]
+                        font-normal
                         leading-relaxed
+                        tracking-tight
                         text-neutral-400
                     ">
                         Curate your personal style. Build outfits that reflect who you are.
@@ -81,7 +83,9 @@ function Footer() {
                     <ul className="
                         mt-4
                         space-y-2
-                        text-sm
+                        font-sans
+                        text-[13px]
+                        tracking-tight
                         text-neutral-400
                     ">
                         {[
@@ -94,8 +98,8 @@ function Footer() {
                             <li key={item}>
                                 <a className="
                                     cursor-pointer
-                                    hover:text-neutral-100
                                     transition
+                                    hover:text-neutral-200
                                 ">
                                     {item}
                                 </a>
