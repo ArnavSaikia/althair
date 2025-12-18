@@ -31,7 +31,7 @@ function DraggableItem({ item, onScale, onSelect, isSelected, onDelete}) {
   }
 
   return (
-    <Draggable nodeRef={nodeRef}>
+    <Draggable nodeRef={nodeRef} bounds="parent">
 
       <div
         ref={nodeRef}

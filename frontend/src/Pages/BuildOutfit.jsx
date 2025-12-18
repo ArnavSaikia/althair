@@ -76,7 +76,7 @@ function BuildOutfit() {
                                         it.canvasId === id
                                             ? {
                                                 ...it,
-                                                scale: Math.max(0.4, Math.min(4, it.scale + delta))
+                                                scale: Math.max(0.4, Math.min(3, it.scale + delta))
                                             }
                                             : it
                                     )
