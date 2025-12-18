@@ -1,12 +1,13 @@
-import { useState } from "react"
-import Draggable from "react-draggable"
+import { useState, useRef } from "react"
+import DraggableItem from "@/Components/DraggableItem"
 import Navbar from "../Components/Navbar"
 import { Button } from "@/components/ui/button"
 
+
 const wardrobeItems = [
-    { id: 1, src: "/upperwear_landing.jpg", type: "top" },
-    { id: 2, src: "/bottomwear_landing.jpg", type: "bottom" },
-    { id: 3, src: "/footwear_landing5.jpg", type: "shoes" }
+    { id: 1, src: "BuildOutfit/jacket.png", type: "top" },
+    { id: 2, src: "BuildOutfit/jeans.png", type: "bottom" },
+    { id: 3, src: "BuildOutfit/boots.png", type: "shoes" }
 ]
 
 function BuildOutfit() {
@@ -40,22 +41,12 @@ function BuildOutfit() {
                     overflow-hidden
                 ">
                     {canvasItems.map(item => (
-                        <Draggable
+                        <DraggableItem
                             key={item.canvasId}
-                            defaultPosition={{ x: 0, y: 0 }}
-                        >
-                            <img
-                                src={item.src}
-                                className="
-                                    absolute
-                                    w-32
-                                    select-none
-                                    cursor-grab
-                                "
-                                draggable={false}
-                            />
-                        </Draggable>
+                            src={item.src}
+                        />
                     ))}
+                    
                 </div>
 
                 {/* Toolbar */}
