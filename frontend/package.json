@@ -21,6 +21,7 @@
     "lucide-react": "^0.553.0",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
+    "react-draggable": "^4.5.0",
     "shadcn": "^3.5.0",
     "tailwind-merge": "^3.3.1"
   },
