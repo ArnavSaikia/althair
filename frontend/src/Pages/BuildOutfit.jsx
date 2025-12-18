@@ -13,6 +13,7 @@ const wardrobeItems = [
 function BuildOutfit() {
     const [isWardrobeOpen, setIsWardrobeOpen] = useState(false)
     const [canvasItems, setCanvasItems] = useState([])
+    const [selectedId, setSelectedId] = useState(null)
 
     const addToCanvas = (item) => {
         setCanvasItems(prev => [
@@ -22,7 +23,8 @@ function BuildOutfit() {
                 canvasId: crypto.randomUUID(),
                 x: 0,
                 y: 0,
-                scale: 1
+                scale: 1,
+                zIndex: canvasItems.length
             }
         ])
         setIsWardrobeOpen(false)
@@ -41,18 +43,32 @@ function BuildOutfit() {
                     relative
                     bg-neutral-100
                     overflow-hidden
-                ">
+                "
+                onClick={() => setSelectedId(null)}
+                >
                     {canvasItems.map(item => (
                         <DraggableItem
                             key={item.canvasId}
                             item={item}
+                            isSelected={item.canvasId === selectedId}
+                            onSelect={(id) => {
+                                setSelectedId(id)
+                                setCanvasItems(prev => {
+                                    const maxZ = Math.max(0, ...prev.map(i => i.zIndex ?? 0))
+                                    return prev.map(it =>
+                                        it.canvasId === id
+                                            ? { ...it, zIndex: maxZ + 1 }
+                                            : it
+                                    )
+                                })
+                            }}
                             onScale={(id, delta) => {
                                 setCanvasItems(prev =>
                                     prev.map(it =>
                                         it.canvasId === id
                                             ? {
                                                 ...it,
-                                                scale: Math.max(0.4, Math.min(2, it.scale + delta))
+                                                scale: Math.max(0.4, Math.min(4, it.scale + delta))
                                             }
                                             : it
                                     )
