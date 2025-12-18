@@ -30,6 +30,12 @@ function BuildOutfit() {
         setIsWardrobeOpen(false)
     }
 
+    const handleDelete = (canvasId) => {
+        setCanvasItems(prev =>
+            prev.filter(item => item.canvasId !== canvasId)
+        )
+    }
+
 
     return (
         <div className="min-h-screen flex flex-col">
@@ -51,6 +57,7 @@ function BuildOutfit() {
                             key={item.canvasId}
                             item={item}
                             isSelected={item.canvasId === selectedId}
+
                             onSelect={(id) => {
                                 setSelectedId(id)
                                 setCanvasItems(prev => {
@@ -62,6 +69,7 @@ function BuildOutfit() {
                                     )
                                 })
                             }}
+
                             onScale={(id, delta) => {
                                 setCanvasItems(prev =>
                                     prev.map(it =>
@@ -74,6 +82,8 @@ function BuildOutfit() {
                                     )
                                 )
                             }}
+
+                            onDelete={handleDelete}
                         />
                     ))}
 

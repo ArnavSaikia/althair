@@ -1,5 +1,7 @@
-import { useRef } from "react"
-import Draggable from "react-draggable"
+import { useRef } from "react";
+import Draggable from "react-draggable";
+import ClearIcon from '@mui/icons-material/Clear';
+
 
 function DraggableItem({ item, onScale, onSelect, isSelected }) {
   const nodeRef = useRef(null)
@@ -30,6 +32,7 @@ function DraggableItem({ item, onScale, onSelect, isSelected }) {
 
   return (
     <Draggable nodeRef={nodeRef}>
+
       <div
         ref={nodeRef}
         className="absolute touch-none"
@@ -39,6 +42,37 @@ function DraggableItem({ item, onScale, onSelect, isSelected }) {
           onSelect(item.canvasId)
         }}
       >
+
+        {isSelected && (
+            <button
+                onPointerDown={(e) => {
+                    e.stopPropagation()
+                    onDelete(item.canvasId)
+                }}
+
+                className="
+                    absolute
+                    -top-3
+                    -left-3
+                    w-6
+                    h-6
+                    rounded-full
+                    bg-white
+                    shadow-md
+                    flex
+                    items-center
+                    justify-center
+                    active:scale-95
+                "
+                style={{
+                    zIndex: item.zIndex + 1
+                }}
+            >
+                <ClearIcon style={{ fontSize: 16 }} />
+            </button>
+            )}
+
+
         <div
           style={{
             transform: `scale(${item.scale}) translateZ(0)`,
@@ -50,6 +84,7 @@ function DraggableItem({ item, onScale, onSelect, isSelected }) {
             borderRadius: "8px"
           }}
         >
+
           <img
             src={item.src}
             draggable={false}
@@ -57,8 +92,11 @@ function DraggableItem({ item, onScale, onSelect, isSelected }) {
             onTouchEnd={handleTouchEnd}
             className="w-32 select-none cursor-grab"
           />
+
         </div>
+
       </div>
+
     </Draggable>
   )
 }
