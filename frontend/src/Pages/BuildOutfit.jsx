@@ -21,11 +21,13 @@ function BuildOutfit() {
                 ...item,
                 canvasId: crypto.randomUUID(),
                 x: 0,
-                y: 0
+                y: 0,
+                scale: 1
             }
         ])
         setIsWardrobeOpen(false)
     }
+
 
     return (
         <div className="min-h-screen flex flex-col">
@@ -43,10 +45,22 @@ function BuildOutfit() {
                     {canvasItems.map(item => (
                         <DraggableItem
                             key={item.canvasId}
-                            src={item.src}
+                            item={item}
+                            onScale={(id, delta) => {
+                                setCanvasItems(prev =>
+                                    prev.map(it =>
+                                        it.canvasId === id
+                                            ? {
+                                                ...it,
+                                                scale: Math.max(0.4, Math.min(2, it.scale + delta))
+                                            }
+                                            : it
+                                    )
+                                )
+                            }}
                         />
                     ))}
-                    
+
                 </div>
 
                 {/* Toolbar */}
@@ -143,4 +157,4 @@ function BuildOutfit() {
     )
 }
 
-export default BuildOutfit
+export default BuildOutfit;

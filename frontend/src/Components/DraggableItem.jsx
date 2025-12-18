@@ -1,24 +1,55 @@
 import { useRef } from "react"
 import Draggable from "react-draggable"
 
-function DraggableItem({ src }) {
+function DraggableItem({ item, onScale }) {
     const nodeRef = useRef(null)
+    const lastDistance = useRef(null)
+
+    const getDistance = (t1, t2) => {
+        const dx = t1.clientX - t2.clientX
+        const dy = t1.clientY - t2.clientY
+        return Math.sqrt(dx * dx + dy * dy)
+    }
+
+    const handleTouchMove = (e) => {
+        if (e.touches.length !== 2) return
+
+        const dist = getDistance(e.touches[0], e.touches[1])
+
+        if (lastDistance.current !== null) {
+            const delta = (dist - lastDistance.current) / 200
+            onScale(item.canvasId, delta)
+        }
+
+        lastDistance.current = dist
+    }
+
+    const handleTouchEnd = () => {
+        lastDistance.current = null
+    }
 
     return (
-        <Draggable nodeRef={nodeRef} defaultPosition={{ x: 0, y: 0 }}>
-            <img
+        <Draggable nodeRef={nodeRef}>
+            {/* TRANSLATE here */}
+            <div
                 ref={nodeRef}
-                src={src}
-                draggable={false}
-                className="
-                    absolute
-                    w-32
-                    cursor-grab
-                    select-none
-                "
-            />
+                className="absolute touch-none"
+            >
+                {/* SCALE here */}
+                <div
+                    style={{ transform: `scale(${item.scale})` }}
+                >
+                    <img
+                        src={item.src}
+                        draggable={false}
+                        onTouchMove={handleTouchMove}
+                        onTouchEnd={handleTouchEnd}
+                        className="w-32 select-none cursor-grab"
+                    />
+                </div>
+            </div>
         </Draggable>
     )
 }
 
-export default DraggableItem;
+export default DraggableItem
