@@ -3,7 +3,7 @@ import Draggable from "react-draggable";
 import ClearIcon from '@mui/icons-material/Clear';
 
 
-function DraggableItem({ item, onScale, onSelect, isSelected }) {
+function DraggableItem({ item, onScale, onSelect, isSelected, onDelete}) {
   const nodeRef = useRef(null)
   const lastDistance = useRef(null)
 
@@ -43,7 +43,19 @@ function DraggableItem({ item, onScale, onSelect, isSelected }) {
         }}
       >
 
-        {isSelected && (
+        <div
+          style={{
+            transform: `scale(${item.scale}) translateZ(0)`,
+            filter: isSelected
+                ? "drop-shadow(0 0 0.5px rgba(0,0,0,0.9)) drop-shadow(0 0 8px rgba(0,0,0,0.15))"
+                : "none",
+            opacity: isSelected ? 1 : 0.96,
+            outlineOffset: "4px",
+            borderRadius: "8px"
+          }}
+        >
+
+            {isSelected && (
             <button
                 onPointerDown={(e) => {
                     e.stopPropagation()
@@ -65,25 +77,14 @@ function DraggableItem({ item, onScale, onSelect, isSelected }) {
                     active:scale-95
                 "
                 style={{
-                    zIndex: item.zIndex + 1
+                    zIndex: item.zIndex + 1,
+                    transform: `scale(${1 / item.scale})`,
+                    transformOrigin: "top left"
                 }}
             >
                 <ClearIcon style={{ fontSize: 16 }} />
             </button>
             )}
-
-
-        <div
-          style={{
-            transform: `scale(${item.scale}) translateZ(0)`,
-            filter: isSelected
-                ? "drop-shadow(0 0 0.5px rgba(0,0,0,0.9)) drop-shadow(0 0 8px rgba(0,0,0,0.15))"
-                : "none",
-            opacity: isSelected ? 1 : 0.96,
-            outlineOffset: "4px",
-            borderRadius: "8px"
-          }}
-        >
 
           <img
             src={item.src}
@@ -101,4 +102,4 @@ function DraggableItem({ item, onScale, onSelect, isSelected }) {
   )
 }
 
-export default DraggableItem
+export default DraggableItem;
