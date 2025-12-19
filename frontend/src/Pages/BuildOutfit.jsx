@@ -18,7 +18,15 @@ const wardrobeItems = [
     { id: 10, src: "BuildOutfit/jacket.png", type: "top" },
     { id: 11, src: "BuildOutfit/jeans.png", type: "bottom" },
     { id: 12, src: "BuildOutfit/boots.png", type: "shoes" }
-]
+];
+
+const wardrobeCategories = [
+    { key: "top", label: "Topwear" },
+    { key: "bottom", label: "Bottomwear" },
+    { key: "shoes", label: "Footwear" },
+    { key: "accessories", label: "Accessories" }
+];
+
 
 function BuildOutfit() {
     const [isWardrobeOpen, setIsWardrobeOpen] = useState(false)
@@ -48,6 +56,9 @@ function BuildOutfit() {
             startYRef.current = null
         }, 300)
     }
+
+    //for wardrobe sheet styling
+    const [activeWardrobeId, setActiveWardrobeId] = useState(null);
 
 
     const addToCanvas = (item) => {
@@ -249,7 +260,7 @@ function BuildOutfit() {
                 <div
                     ref={sheetRef}
                     className={`
-                        relative w-full bg-white rounded-t-2xl p-4
+                        relative w-full bg-white/90 rounded-t-2xl p-4
                         max-h-[70%] overflow-y-auto
                         transition-transform duration-300 ease-out
                         ${isWardrobeOpen ? "translate-y-0" : "translate-y-full"}
@@ -264,7 +275,7 @@ function BuildOutfit() {
                 >
                     {/* Grab handle */}
                     <div 
-                        className="w-full flex justify-center mb-3"
+                        className="w-full flex justify-center mb-3 sticky"
                         style={{ touchAction: "none" }}
 
                         onPointerDown={(e) => {
@@ -302,31 +313,79 @@ function BuildOutfit() {
                         />
                     </div>
 
-                    <span className="block text-sm tracking-wide text-neutral-600 mb-4">
-                        Wardrobe
-                    </span>
+                    {wardrobeCategories.map(category => {
+                        const items = wardrobeItems.filter(
+                            item => item.type === category.key
+                        )
 
-                    <div className="grid grid-cols-3 gap-3">
-                        {wardrobeItems.map(item => (
-                            <button
-                                key={item.id}
-                                onClick={() => addToCanvas(item)}
-                                className="
-                                    aspect-[3/4]
-                                    rounded-lg
-                                    overflow-hidden
-                                    border
-                                    hover:border-neutral-900
-                                    transition
-                                "
-                            >
-                                <img
-                                    src={item.src}
-                                    className="w-full h-full object-cover"
-                                />
-                            </button>
-                        ))}
-                    </div>
+                        if (items.length === 0) return null
+
+                        return (
+                            <div key={category.key} className="mb-10">
+                                {/* Category label */}
+                                <p className="
+                                    mb-4
+                                    tracking-[0.1em]
+                                    text-xl
+                                    text-neutral-600
+                                    font-['Cormorant_Garamond']
+                                ">
+                                    {category.label}
+                                </p>
+
+                                {/* Items */}
+                                <div className="grid grid-cols-3 gap-4">
+                                    {items.map(item => (
+                                        <button
+                                            key={item.id}
+                                            onClick={() => {
+                                                    addToCanvas(item);
+                                                    setActiveWardrobeId(item.id);
+                                                }
+                                            }
+                                            className="
+                                                group
+                                                relative
+                                                aspect-[3/4]
+                                                overflow-hidden
+                                                transition-transform
+                                            "
+                                        >
+                                            <img
+                                                src={item.src}
+                                                alt=""
+                                                className="
+                                                    w-full h-full object-cover
+                                                    transition-transform duration-300
+                                                    group-hover:scale-[1.03]
+                                                "
+                                                style={{
+                                                    opacity: activeWardrobeId === item.id ? 1 : 0.9,
+                                                    filter: activeWardrobeId === item.id
+                                                        ? "drop-shadow(0 0 0.5px rgba(0,0,0,0.8)) drop-shadow(0 8px 20px rgba(0,0,0,0.12))"
+                                                        : "none",
+                                                    transform: activeWardrobeId === item.id ? "scale(1.02)" : "scale(1)",
+                                                    transition: "all 150ms ease"
+                                                }}
+                                            />
+
+                                            <div className="
+                                                pointer-events-none
+                                                absolute inset-0
+                                                bg-gradient-to-t
+                                                from-black/5
+                                                to-transparent
+                                                opacity-0
+                                                group-hover:opacity-100
+                                                transition
+                                            " />
+                                        </button>
+                                    ))}
+                                </div>
+                            </div>
+                        )
+                    })}
+
                 </div>
             </div>
 
