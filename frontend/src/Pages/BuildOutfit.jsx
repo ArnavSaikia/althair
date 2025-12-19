@@ -8,7 +8,16 @@ import ImageIcon from '@mui/icons-material/Image'
 const wardrobeItems = [
     { id: 1, src: "BuildOutfit/jacket.png", type: "top" },
     { id: 2, src: "BuildOutfit/jeans.png", type: "bottom" },
-    { id: 3, src: "BuildOutfit/boots.png", type: "shoes" }
+    { id: 3, src: "BuildOutfit/boots.png", type: "shoes" },
+    { id: 4, src: "BuildOutfit/jacket.png", type: "top" },
+    { id: 5, src: "BuildOutfit/jeans.png", type: "bottom" },
+    { id: 6, src: "BuildOutfit/boots.png", type: "shoes" },
+    { id: 7, src: "BuildOutfit/jacket.png", type: "top" },
+    { id: 8, src: "BuildOutfit/jeans.png", type: "bottom" },
+    { id: 9, src: "BuildOutfit/boots.png", type: "shoes" },
+    { id: 10, src: "BuildOutfit/jacket.png", type: "top" },
+    { id: 11, src: "BuildOutfit/jeans.png", type: "bottom" },
+    { id: 12, src: "BuildOutfit/boots.png", type: "shoes" }
 ]
 
 function BuildOutfit() {
@@ -17,6 +26,13 @@ function BuildOutfit() {
     const [selectedId, setSelectedId] = useState(null)
     const [referenceImage, setReferenceImage] = useState(null)
     const fileInputRef = useRef(null)   //for reference outfit image upload
+
+    //for wardrobe grab pill animations
+    const [dragOffset, setDragOffset] = useState(0)
+    const startYRef = useRef(null)
+    const CLOSE_THRESHOLD = 250
+
+
 
     const addToCanvas = (item) => {
         setCanvasItems(prev => [
@@ -221,7 +237,67 @@ function BuildOutfit() {
                         transition-transform duration-300 ease-out
                         ${isWardrobeOpen ? "translate-y-0" : "translate-y-full"}
                     `}
+
+                    style={{
+                        transform: isWardrobeOpen
+                            ? `translateY(${dragOffset}px)`
+                            : "translateY(100%)",
+                        transition: dragOffset === 0 ? "transform 300ms ease-out" : "none"
+                    }}
                 >
+                    {/* Grab handle */}
+                    <div 
+                        className="w-full flex justify-center mb-3"
+                        style={{ touchAction: "none" }}
+
+                        onTouchStart={(e) => {
+                            startYRef.current = e.touches[0].clientY
+                        }}
+                        onTouchMove={(e) => {
+                            if (startYRef.current === null) return
+
+                            const delta = e.touches[0].clientY - startYRef.current
+                            if (delta > 0) setDragOffset(delta)
+                        }}
+                        onTouchEnd={() => {
+                            if (dragOffset > CLOSE_THRESHOLD) {
+                                setIsWardrobeOpen(false)
+                            }
+                            setDragOffset(0)
+                            startYRef.current = null
+                        }}
+
+                        onPointerDown={(e) => {
+                            startYRef.current = e.clientY
+                            e.currentTarget.setPointerCapture(e.pointerId)
+                        }}
+                        onPointerMove={(e) => {
+                            if (startYRef.current === null) return
+
+                            const delta = e.clientY - startYRef.current
+                            if (delta > 0) {
+                                setDragOffset(delta)
+                            }
+                        }}
+                        onPointerUp={() => {
+                            if (dragOffset > CLOSE_THRESHOLD) {
+                                setIsWardrobeOpen(false)
+                            }
+                            setDragOffset(0)
+                            startYRef.current = null
+                        }}
+                        onPointerCancel={() => {
+                            setDragOffset(0)
+                            startYRef.current = null
+                        }}
+                    >
+                        <div
+                            className="w-10 h-1.5 rounded-full bg-neutral-300 cursor-grab active:cursor-grabbing"
+
+                            
+                        />
+                    </div>
+
                     <span className="block text-sm tracking-wide text-neutral-600 mb-4">
                         Wardrobe
                     </span>
