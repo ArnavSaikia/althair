@@ -120,54 +120,82 @@ function BuildOutfit() {
                 {/* Toolbar */}
                 <div className="
                     w-full
+                    bg-white/80
                     backdrop-blur-md
-                    bg-white/70
                     border-t
                     border-black/5
                     px-4
                     py-3
-                    flex
-                    items-center
-                    justify-between
+                    shadow-[0_-4px_12px_rgba(0,0,0,0.04)]
                 ">
-                    <span className="text-xs text-neutral-500 tracking-widest uppercase">
-                        Outfit canvas
-                    </span>
-
                     <div className="flex gap-3">
+                        {/* Upload image */}
                         <button
                             onClick={() => fileInputRef.current.click()}
-                            className="p-2 rounded-md hover:bg-neutral-200 transition"
+                            className="
+                                flex-1
+                                px-6
+                                py-3.5
+                                text-xs
+                                font-medium
+                                tracking-wider
+                                whitespace-nowrap
+                                text-neutral-800
+                                border
+                                border-neutral-300
+                                rounded-full
+                                hover:border-neutral-500
+                                transition
+                            "
                         >
-                            <ImageIcon fontSize="small" />
+                            Upload image
                         </button>
 
-                        <Button
-                            variant="outline"
-                            className="
-                                rounded-full
-                                border-black/20
-                                text-neutral-700
-                                hover:border-black
-                                hover:bg-black/5
-                            "
+                        {/* Wardrobe */}
+                        <button
                             onClick={() => setIsWardrobeOpen(true)}
+                            className="
+                                flex-1
+                                px-6
+                                py-3.5
+                                text-xs
+                                font-medium
+                                tracking-wider
+                                whitespace-nowrap
+                                text-neutral-800
+                                border
+                                border-neutral-300
+                                rounded-full
+                                hover:border-neutral-500
+                                transition
+                            "
                         >
                             Wardrobe
-                        </Button>
+                        </button>
 
-                        <Button
+                        {/* Save */}
+                        <button
                             className="
-                            rounded-full
-                            bg-black
-                            text-white
-                            hover:bg-black/90
-                        "
+                                flex-1
+                                px-6
+                                py-3.5
+                                text-xs
+                                font-medium
+                                tracking-wider
+                                whitespace-nowrap
+                                text-white
+                                bg-neutral-900
+                                rounded-full
+                                hover:bg-neutral-800
+                                transition
+
+                            "
                         >
                             Save
-                        </Button>
+                        </button>
                     </div>
                 </div>
+
             </div>
 
             {/* Wardrobe Bottom Sheet */}
