@@ -184,7 +184,7 @@ function BuildOutfit() {
                                 tracking-wider
                                 whitespace-nowrap
                                 text-white
-                                bg-neutral-900
+                                bg-neutral-800
                                 rounded-full
                                 hover:bg-neutral-800
                                 transition
