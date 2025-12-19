@@ -2,6 +2,7 @@ import { useState, useRef } from "react"
 import DraggableItem from "@/Components/DraggableItem"
 import Navbar from "../Components/Navbar"
 import { Button } from "@/components/ui/button"
+import ImageIcon from '@mui/icons-material/Image'
 
 
 const wardrobeItems = [
@@ -14,6 +15,8 @@ function BuildOutfit() {
     const [isWardrobeOpen, setIsWardrobeOpen] = useState(false)
     const [canvasItems, setCanvasItems] = useState([])
     const [selectedId, setSelectedId] = useState(null)
+    const [referenceImage, setReferenceImage] = useState(null)
+    const fileInputRef = useRef(null)   //for reference outfit image upload
 
     const addToCanvas = (item) => {
         setCanvasItems(prev => [
@@ -39,6 +42,22 @@ function BuildOutfit() {
 
     return (
         <div className="min-h-screen flex flex-col">
+            <input
+                ref={fileInputRef}
+                type="file"
+                accept="image/*"
+                className="hidden"
+                onChange={(e) => {
+                    const file = e.target.files[0]
+                    if (!file) return
+
+                    const url = URL.createObjectURL(file)
+                    setReferenceImage(url)
+                }}
+            />
+            {/* hidden element only for image upload */}
+
+
             <Navbar />
 
             {/* Editor */}
@@ -47,8 +66,17 @@ function BuildOutfit() {
                 <div className="
                     flex-1
                     relative
-                    bg-neutral-100
                     overflow-hidden
+                    bg-[#f5f4f1]
+                    before:pointer-events-none
+                    before:absolute
+                    before:inset-0
+                    before:bg-[radial-gradient(ellipse_at_center,rgba(0,0,0,0.04),transparent_60%)]
+                    after:pointer-events-none
+                    after:absolute
+                    after:inset-0
+                    after:bg-[url('/noise.png')]
+                    after:opacity-[0.03]
                 "
                 onClick={() => setSelectedId(null)}
                 >
@@ -92,28 +120,50 @@ function BuildOutfit() {
                 {/* Toolbar */}
                 <div className="
                     w-full
-                    bg-white
+                    backdrop-blur-md
+                    bg-white/70
                     border-t
-                    border-neutral-200
+                    border-black/5
                     px-4
                     py-3
                     flex
                     items-center
                     justify-between
                 ">
-                    <span className="text-sm text-neutral-600 tracking-wide">
+                    <span className="text-xs text-neutral-500 tracking-widest uppercase">
                         Outfit canvas
                     </span>
 
                     <div className="flex gap-3">
+                        <button
+                            onClick={() => fileInputRef.current.click()}
+                            className="p-2 rounded-md hover:bg-neutral-200 transition"
+                        >
+                            <ImageIcon fontSize="small" />
+                        </button>
+
                         <Button
                             variant="outline"
+                            className="
+                                rounded-full
+                                border-black/20
+                                text-neutral-700
+                                hover:border-black
+                                hover:bg-black/5
+                            "
                             onClick={() => setIsWardrobeOpen(true)}
                         >
                             Wardrobe
                         </Button>
 
-                        <Button>
+                        <Button
+                            className="
+                            rounded-full
+                            bg-black
+                            text-white
+                            hover:bg-black/90
+                        "
+                        >
                             Save
                         </Button>
                     </div>
