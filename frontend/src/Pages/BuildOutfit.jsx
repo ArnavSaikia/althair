@@ -118,7 +118,7 @@ function BuildOutfit() {
                 </div>
 
                 {/* Toolbar */}
-                <div className="
+                <div className={`
                     w-full
                     bg-white/80
                     backdrop-blur-md
@@ -127,7 +127,9 @@ function BuildOutfit() {
                     px-4
                     py-3
                     shadow-[0_-4px_12px_rgba(0,0,0,0.04)]
-                ">
+                    transition-transform duration-300 ease-out delay-50
+                    ${isWardrobeOpen ? "translate-y-full" : "translate-y-0"}
+                `}>
                     <div className="flex gap-3">
                         {/* Upload image */}
                         <button
@@ -188,7 +190,6 @@ function BuildOutfit() {
                                 rounded-full
                                 hover:bg-neutral-800
                                 transition
-
                             "
                         >
                             Save
@@ -199,64 +200,56 @@ function BuildOutfit() {
             </div>
 
             {/* Wardrobe Bottom Sheet */}
-            {isWardrobeOpen && (
-                <div className="
-                    fixed
-                    inset-0
-                    z-50
-                    flex
-                    items-end
-                ">
-                    {/* Backdrop */}
-                    <div
-                        className="absolute inset-0 bg-black/40"
-                        onClick={() => setIsWardrobeOpen(false)}
-                    />
+            <div
+                className={`
+                    fixed inset-0 z-50 flex items-end
+                    transition-opacity duration-300
+                    ${isWardrobeOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}
+                `}
+            >
+                {/* Backdrop */}
+                <div
+                    className="absolute inset-0 bg-black/40"
+                    onClick={() => setIsWardrobeOpen(false)}
+                />
 
-                    {/* Sheet */}
-                    <div className="
-                        relative
-                        w-full
-                        bg-white
-                        rounded-t-2xl
-                        p-4
-                        max-h-[70%]
-                        overflow-y-auto
-                    ">
-                        <span className="
-                            block
-                            text-sm
-                            tracking-wide
-                            text-neutral-600
-                            mb-4
-                        ">
-                            Wardrobe
-                        </span>
+                {/* Sheet */}
+                <div
+                    className={`
+                        relative w-full bg-white rounded-t-2xl p-4
+                        max-h-[70%] overflow-y-auto
+                        transition-transform duration-300 ease-out
+                        ${isWardrobeOpen ? "translate-y-0" : "translate-y-full"}
+                    `}
+                >
+                    <span className="block text-sm tracking-wide text-neutral-600 mb-4">
+                        Wardrobe
+                    </span>
 
-                        <div className="grid grid-cols-3 gap-3">
-                            {wardrobeItems.map(item => (
-                                <button
-                                    key={item.id}
-                                    onClick={() => addToCanvas(item)}
-                                    className="
-                                        aspect-[3/4]
-                                        rounded-lg
-                                        overflow-hidden
-                                        border
-                                        hover:border-neutral-900
-                                        transition
-                                    "
-                                >
-                                    <img
-                                        src={item.src}
-                                        className="w-full h-full object-cover"
-                                    />
-                                </button>
-                            ))}
-                        </div>
+                    <div className="grid grid-cols-3 gap-3">
+                        {wardrobeItems.map(item => (
+                            <button
+                                key={item.id}
+                                onClick={() => addToCanvas(item)}
+                                className="
+                                    aspect-[3/4]
+                                    rounded-lg
+                                    overflow-hidden
+                                    border
+                                    hover:border-neutral-900
+                                    transition
+                                "
+                            >
+                                <img
+                                    src={item.src}
+                                    className="w-full h-full object-cover"
+                                />
+                            </button>
+                        ))}
                     </div>
                 </div>
-            )}
+            </div>
+
         </div>
     )
 }
