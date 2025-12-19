@@ -31,6 +31,7 @@ function BuildOutfit() {
     const [dragOffset, setDragOffset] = useState(0)
     const startYRef = useRef(null)
     const CLOSE_THRESHOLD = 250
+    const sheetRef = useRef(null)
 
 
 
@@ -231,6 +232,7 @@ function BuildOutfit() {
 
                 {/* Sheet */}
                 <div
+                    ref={sheetRef}
                     className={`
                         relative w-full bg-white rounded-t-2xl p-4
                         max-h-[70%] overflow-y-auto
@@ -250,22 +252,22 @@ function BuildOutfit() {
                         className="w-full flex justify-center mb-3"
                         style={{ touchAction: "none" }}
 
-                        onTouchStart={(e) => {
-                            startYRef.current = e.touches[0].clientY
-                        }}
-                        onTouchMove={(e) => {
-                            if (startYRef.current === null) return
+                        // onTouchStart={(e) => {
+                        //     startYRef.current = e.touches[0].clientY
+                        // }}
+                        // onTouchMove={(e) => {
+                        //     if (startYRef.current === null) return
 
-                            const delta = e.touches[0].clientY - startYRef.current
-                            if (delta > 0) setDragOffset(delta)
-                        }}
-                        onTouchEnd={() => {
-                            if (dragOffset > CLOSE_THRESHOLD) {
-                                setIsWardrobeOpen(false)
-                            }
-                            setDragOffset(0)
-                            startYRef.current = null
-                        }}
+                        //     const delta = e.touches[0].clientY - startYRef.current
+                        //     if (delta > 0) setDragOffset(delta)
+                        // }}
+                        // onTouchEnd={() => {
+                        //     if (dragOffset > CLOSE_THRESHOLD) {
+                        //         setIsWardrobeOpen(false)
+                        //     }
+                        //     setDragOffset(0)
+                        //     startYRef.current = null
+                        // }}
 
                         onPointerDown={(e) => {
                             startYRef.current = e.clientY
@@ -280,7 +282,12 @@ function BuildOutfit() {
                             }
                         }}
                         onPointerUp={() => {
-                            if (dragOffset > CLOSE_THRESHOLD) {
+                            if (!sheetRef.current) return
+
+                            const sheetHeight = sheetRef.current.offsetHeight
+                            const closeThreshold = sheetHeight * 0.6
+
+                            if (dragOffset > closeThreshold) {
                                 setIsWardrobeOpen(false)
                             }
                             setDragOffset(0)
@@ -292,7 +299,7 @@ function BuildOutfit() {
                         }}
                     >
                         <div
-                            className="w-10 h-1.5 rounded-full bg-neutral-300 cursor-grab active:cursor-grabbing"
+                            className="w-20 h-1.5 rounded-full bg-neutral-300 cursor-grab active:cursor-grabbing"
 
                             
                         />
