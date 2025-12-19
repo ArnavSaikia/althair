@@ -275,7 +275,7 @@ function BuildOutfit() {
                 >
                     {/* Grab handle */}
                     <div 
-                        className="w-full flex justify-center mb-3 sticky"
+                        className="w-full flex justify-center mb-3 sticky top-0 z-10"
                         style={{ touchAction: "none" }}
 
                         onPointerDown={(e) => {
