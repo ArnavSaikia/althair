@@ -125,20 +125,18 @@ function SaveOutfitModal({ isOpen, onClose, onSave, referenceImage }) {
           </button>
 
           <button
-            onClick={() => onSave({ name, description })}
-            className="
+            onClick={() => name.length != 0 ? onSave({ name, description }) : null }
+            className={`
               flex-1
               px-6
               py-3
               text-xs
               font-medium
               tracking-wider
-              text-white
-              bg-neutral-900
               rounded-full
-              hover:bg-neutral-800
               transition
-            "
+              ${name.length === 0 ? "bg-neutral-300 text-neutral-500 cursor-not-allowed" : "bg-neutral-800 text-white hover:bg-neutral-800"}
+            `}
           >
             Save
           </button>

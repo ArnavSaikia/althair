@@ -222,7 +222,7 @@ function BuildOutfit() {
 
                         {/* Save */}
                         <button
-                            className="
+                            className={`
                                 flex-1
                                 px-6
                                 py-3.5
@@ -230,13 +230,11 @@ function BuildOutfit() {
                                 font-medium
                                 tracking-wider
                                 whitespace-nowrap
-                                text-white
-                                bg-neutral-800
                                 rounded-full
-                                hover:bg-neutral-800
                                 transition
-                            "
-                            onClick={() => setIsSaveOpen(true)}
+                                ${canvasItems.length === 0 ? "bg-neutral-300 text-neutral-500 cursor-not-allowed" : "bg-neutral-800 text-white hover:bg-neutral-800"}
+                            `}
+                            onClick={() => canvasItems.length!=0 ? setIsSaveOpen(true) : null}
                         >
                             Save
                         </button>
