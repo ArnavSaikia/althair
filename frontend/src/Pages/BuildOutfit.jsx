@@ -261,7 +261,7 @@ function BuildOutfit() {
                 <div
                     ref={sheetRef}
                     className={`
-                        relative w-full bg-white/90 rounded-t-2xl p-4
+                        relative w-full bg-white rounded-t-2xl p-4
                         max-h-[70%] overflow-y-auto
                         transition-transform duration-300 ease-out
                         ${isWardrobeOpen ? "translate-y-0" : "translate-y-full"}
@@ -401,7 +401,6 @@ function BuildOutfit() {
                         referenceImage
                     })
 
-                    setIsSaveOpen(false)
                 }}
             />
 
