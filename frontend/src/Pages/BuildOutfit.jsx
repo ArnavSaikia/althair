@@ -1,8 +1,7 @@
 import { useState, useRef } from "react"
 import DraggableItem from "@/Components/DraggableItem"
 import Navbar from "../Components/Navbar"
-import { Button } from "@/components/ui/button"
-import ImageIcon from '@mui/icons-material/Image'
+import SaveOutfitModal from "@/Components/SaveOutfitModal"
 
 
 const wardrobeItems = [
@@ -59,6 +58,9 @@ function BuildOutfit() {
 
     //for wardrobe sheet styling
     const [activeWardrobeId, setActiveWardrobeId] = useState(null);
+
+    //for save modal
+    const [isSaveOpen, setIsSaveOpen] = useState(false);
 
 
     const addToCanvas = (item) => {
@@ -193,7 +195,7 @@ function BuildOutfit() {
                                 transition
                             "
                         >
-                            Upload image
+                            Attach Reference
                         </button>
 
                         {/* Wardrobe */}
@@ -234,6 +236,7 @@ function BuildOutfit() {
                                 hover:bg-neutral-800
                                 transition
                             "
+                            onClick={() => setIsSaveOpen(true)}
                         >
                             Save
                         </button>
@@ -388,6 +391,21 @@ function BuildOutfit() {
 
                 </div>
             </div>
+
+            <SaveOutfitModal
+                isOpen={isSaveOpen}
+                onClose={() => setIsSaveOpen(false)}
+                referenceImage={referenceImage}
+                onSave={(data) => {
+                    console.log("SAVE PAYLOAD", {
+                        ...data,
+                        canvasItems,
+                        referenceImage
+                    })
+
+                    setIsSaveOpen(false)
+                }}
+            />
 
         </div>
     )
