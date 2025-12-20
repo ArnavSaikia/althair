@@ -4,11 +4,13 @@ import viteLogo from '/vite.svg'
 import './App.css'
 import Landing from './Pages/Landing.jsx';
 import BuildOutfit from './Pages/BuildOutfit';
+import OutfitCollection from './Pages/OutfitCollection';
 
 function App() {
   return (
     // <Landing/>
-    <BuildOutfit/>
+    // <BuildOutfit/>
+    <OutfitCollection/>
   )
 }
 
