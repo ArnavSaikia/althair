@@ -55,16 +55,15 @@ function SaveOutfitModal({ isOpen, onClose, onSave, referenceImage }) {
             shadow-[0_20px_60px_rgba(0,0,0,0.15)]
         ">
             {/* Title */}
-            <h2 className="
-            text-sm
-            font-medium
-            tracking-widest
-            uppercase
-            text-neutral-700
-            mb-6
-            ">
-            Save outfit
-            </h2>
+                <h2 className="
+                text-[22px]
+                leading-snug
+                font-light
+                text-neutral-800
+                mb-5
+                ">
+                    Name your outfit
+                </h2>
 
             {/* Reference image preview */}
             {referenceImage && (
@@ -79,48 +78,44 @@ function SaveOutfitModal({ isOpen, onClose, onSave, referenceImage }) {
 
             {/* Name */}
             <div className="mb-4">
-                <label className="block text-xs tracking-wide text-neutral-500 mb-2">
-                    Outfit name
-                </label>
+                    
                 <input
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    placeholder="Summer evening fit"
+                        placeholder="Title"
                     className="
                     w-full
-                    border
+                    border-b
                     border-neutral-300
-                    rounded-md
-                    px-3
-                    py-2.5
+                    pb-2
                     text-sm
+                    text-neutral-800
+                    placeholder-neutral-400
                     focus:outline-none
                     focus:border-neutral-700
-                    "
+                "
                 />
             </div>
 
             {/* Description */}
             <div className="mb-6">
-                <label className="block text-xs tracking-wide text-neutral-500 mb-2">
-                    Description
-                </label>
+                
                 <textarea
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
                     rows={3}
-                    placeholder="Loose fit, neutral tones, everyday wear"
+                        placeholder="Notes on fit, tone, mood"
                     className="
-                    w-full
-                    border
-                    border-neutral-300
-                    rounded-md
-                    px-3
-                    py-2.5
-                    text-sm
-                    resize-none
-                    focus:outline-none
-                    focus:border-neutral-700
+                        w-full
+                        border-b
+                        border-neutral-200
+                        pb-2
+                        text-xs
+                        text-neutral-700
+                        placeholder-neutral-400
+                        resize-none
+                        focus:outline-none
+                        focus:border-neutral-500
                     "
                 />
             </div>
@@ -201,7 +196,7 @@ function SaveOutfitModal({ isOpen, onClose, onSave, referenceImage }) {
                     font-['Cormorant_Garamond']
                     font-medium
                     ">
-                    Outfit successfully uploaded
+                    Added to your collection
                     </span>
                 </div>
             )}
