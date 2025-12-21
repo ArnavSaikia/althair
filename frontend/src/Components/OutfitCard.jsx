@@ -5,7 +5,12 @@ function OutfitCard({ outfit }) {
                 relative
                 aspect-[3/4]
                 overflow-hidden
-                rounded-lg
+                rounded-[14px]
+                shadow-[0_8px_20px_rgba(0,0,0,0.1)]
+                border border-white/20
+                transition
+                duration-500
+                hover:scale-[1.03]
             ">
                 <img
                     src={outfit.preview}

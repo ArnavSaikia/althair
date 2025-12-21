@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Navbar from "@/Components/Navbar";
 import Footer from "@/Components/Footer";
 import CollectionHeader from "../Components/CollectionHeader"
@@ -68,13 +69,74 @@ function OutfitCollection() {
         }
     ]
 
+    const [sortBy, setSortBy] = useState("newest")
+    // "newest" | "oldest"
+
+    const sortedOutfits = [...outfits].sort((a, b) => {
+        const da = new Date(a.createdAt)
+        const db = new Date(b.createdAt)
+
+        return sortBy === "newest" ? db - da : da - db
+    })
+
+
     return (
         <>
             <Navbar />
-            <div className="min-h-screen bg-[#f2f0ec] px-4 pb-20 pt-14">
+            <div className="min-h-screen bg-[linear-gradient(180deg,#f2f0ec 0%,#edeae4 100%)] px-4 pb-20 pt-12">
                 <CollectionHeader count={outfits.length} />
 
-                <OutfitGrid outfits={outfits} />
+                {sortedOutfits.length === 0 ? (
+                    <div className="
+                        flex
+                        flex-col
+                        items-center
+                        justify-center
+                        text-center
+                        py-24
+                        text-neutral-600
+                    ">
+                        <p className="
+                            text-xl
+                            font-['Cormorant_Garamond']
+                            font-light
+                            text-neutral-800
+                            mb-2
+                        ">
+                            Your collection is empty
+                        </p>
+
+                        <p className="text-sm max-w-sm">
+                            Start building outfits to see them collected here.
+                        </p>
+                    </div>
+                ) : (
+                    <>
+                            <div className="flex justify-center gap-2 mb-10">
+                                {["newest", "oldest"].map(option => (
+                                    <button
+                                        key={option}
+                                        onClick={() => setSortBy(option)}
+                                        className={`
+                                            px-5
+                                            py-2
+                                            rounded-full
+                                            text-xs
+                                            tracking-wide
+                                            transition
+                                            ${sortBy === option
+                                                                    ? "bg-neutral-800 text-white"
+                                                                    : "bg-white/70 text-neutral-600 hover:bg-white"
+                                                                }
+                                        `}
+                                    >
+                                        {option === "newest" ? "Newest first" : "Oldest first"}
+                                    </button>
+                                ))}
+                            </div>
+                        <OutfitGrid outfits={sortedOutfits} />
+                    </>
+                )}
             </div>
             <Footer/>
         </>

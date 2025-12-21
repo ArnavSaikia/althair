@@ -1,6 +1,6 @@
 function CollectionHeader({ count }) {
     return (
-        <div className="mb-14 text-center">
+        <div className="mb-12 text-center">
             <h1 className="
                 text-[42px]
                 leading-tight
