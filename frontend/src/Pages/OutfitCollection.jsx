@@ -126,7 +126,7 @@ function OutfitCollection() {
                                             transition
                                             ${sortBy === option
                                                                     ? "bg-neutral-800 text-white"
-                                                                    : "bg-white/70 text-neutral-600 hover:bg-white"
+                                                : "bg-white/70 text-neutral-600 hover:bg-white border border-neutral-300"
                                                                 }
                                         `}
                                     >

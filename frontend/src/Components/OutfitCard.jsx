@@ -22,6 +22,7 @@ function OutfitCard({ outfit }) {
                         transition
                         duration-500
                         group-hover:scale-[1.03]
+                        group-hover:contrast-[1.02]
                     "
                 />
 
