@@ -5,12 +5,14 @@ import './App.css'
 import Landing from './Pages/Landing.jsx';
 import BuildOutfit from './Pages/BuildOutfit';
 import OutfitCollection from './Pages/OutfitCollection';
+import OutfitPreview from './Pages/OutfitPreview';
 
 function App() {
   return (
     // <Landing/>
     // <BuildOutfit/>
-    <OutfitCollection/>
+    // <OutfitCollection/>
+    <OutfitPreview/>
   )
 }
 
