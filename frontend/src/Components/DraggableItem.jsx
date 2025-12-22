@@ -3,8 +3,9 @@ import Draggable from "react-draggable";
 import ClearIcon from '@mui/icons-material/Clear';
 
 
-function DraggableItem({ item, onScale, onSelect, isSelected, onDelete, onDragEnd}) {
+function DraggableItem({ item, onScale, onSelect, isSelected, onDelete, onDragEnd, onScaleEnd}) {
   const nodeRef = useRef(null)
+  const scaleRef = useRef(null); //ref used for measuring the width of the scaled div
   const lastDistance = useRef(null)
 
   const getDistance = (t1, t2) => {
@@ -28,6 +29,11 @@ function DraggableItem({ item, onScale, onSelect, isSelected, onDelete, onDragEn
 
   const handleTouchEnd = () => {
     lastDistance.current = null
+
+    if (!onScaleEnd || !nodeRef.current) return
+
+    const rect = scaleRef.current.getBoundingClientRect()
+    onScaleEnd(item.canvasId, rect.width)
   }
 
   return (
@@ -57,6 +63,8 @@ function DraggableItem({ item, onScale, onSelect, isSelected, onDelete, onDragEn
             outlineOffset: "4px",
             borderRadius: "8px"
           }}
+
+          ref={scaleRef}
         >
 
             {isSelected && (

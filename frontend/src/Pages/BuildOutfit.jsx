@@ -48,6 +48,22 @@ function BuildOutfit() {
                     : item
             )
         )
+    }
+
+    //for propagating width values (for scaling) of each item back to main page component
+    const handleScaleEnd = (id, width) => {
+        if (!canvasRef.current) return
+
+        const canvasWidth = canvasRef.current.getBoundingClientRect().width
+        const normalizedScale = width / canvasWidth
+
+        setCanvasItems(prev =>
+            prev.map(item =>
+                item.canvasId === id
+                    ? { ...item, normalizedScale }
+                    : item
+            )
+        )
 
         console.log(canvasItems);
     }
@@ -90,6 +106,8 @@ function BuildOutfit() {
                 x: 0,
                 y: 0,
                 scale: 1,
+                normalizedScale: 128/canvasRef.current.getBoundingClientRect().width,
+                // because default image size is w-32 in the code which is equal to 128 pixels
                 zIndex: canvasItems.length
             }
         ])
@@ -179,6 +197,8 @@ function BuildOutfit() {
                             onDelete={handleDelete}
 
                             onDragEnd={handleDragEnd}
+
+                            onScaleEnd={handleScaleEnd}
                         />
                     ))}
 
