@@ -36,15 +36,25 @@ function BuildOutfit() {
 
     //for propagating x and y values of each item back to main page component
     const canvasRef = useRef(null);
-    const handleDragEnd = (id , xRaw , yRaw) => {
-        const rect = canvasRef.current.getBoundingClientRect();
-        const xNormalized = xRaw / rect.width;
-        const yNormalized = yRaw / rect.height;
+    const handleDragEnd = (id , xRaw , yRaw, scaleRef) => {
+        const canvasRect = canvasRef.current.getBoundingClientRect();
+        const itemRect = scaleRef.current.getBoundingClientRect();
+        const xNormalized = xRaw / canvasRect.width;
+        const yNormalized = yRaw / canvasRect.height;
+        
+        const centerX =
+            itemRect.left + itemRect.width / 2 - canvasRect.left
 
+        const centerY =
+            itemRect.top + itemRect.height / 2 - canvasRect.top
+
+        const normalizedXCenter = centerX / canvasRect.width
+        const normalizedYCenter = centerY / canvasRect.height
+        
         setCanvasItems(prev =>
             prev.map(item =>
                 item.canvasId === id
-                    ? { ...item, x: xNormalized, y: yNormalized }
+                    ? { ...item, x: xNormalized, y: yNormalized, xCenter: normalizedXCenter, yCenter: normalizedYCenter}
                     : item
             )
         )

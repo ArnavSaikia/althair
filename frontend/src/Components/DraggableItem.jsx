@@ -39,7 +39,7 @@ function DraggableItem({ item, onScale, onSelect, isSelected, onDelete, onDragEn
   return (
     <Draggable nodeRef={nodeRef} bounds="parent"
       onStop={(e,data) => {
-        onDragEnd(item.canvasId, data.x, data.y);
+        onDragEnd(item.canvasId, data.x, data.y, scaleRef);
       }}
     >
 

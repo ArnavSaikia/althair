@@ -15,23 +15,40 @@ function OutfitPreview() {
                 "id": 1,
                 "src": "BuildOutfit/jacket.png",
                 "type": "top",
-                "canvasId": "818e3fb9-42d7-4751-8538-1e1f2c01264e",
-                "x": 0.37385904441759427,
-                "y": 0.2219091623793648,
-                "scale": 2.6001706253550285,
-                "normalizedScale": 0.8078199960653064,
-                "zIndex": 23
+                "canvasId": "9036ab7e-fa28-4e75-8e6a-19b63e0e9bc1",
+                "x": 0.3274888529360873,
+                "y": 0.14899627428695697,
+                "scale": 2.719322778666097,
+                "normalizedScale": 0.8448381146180977,
+                "zIndex": 29,
+                "xCenter": 0.482828663390817,
+                "yCenter": 0.22692836823848064
             },
             {
                 "id": 5,
                 "src": "BuildOutfit/jeans.png",
                 "type": "bottom",
-                "canvasId": "daa7512f-0c4b-4d86-ae15-db5c131a370e",
-                "x": 0.37965456953326476,
-                "y": 0.44540322945905253,
-                "scale": 1.7547329955055413,
-                "normalizedScale": 0.5451597565586127,
-                "zIndex": 20
+                "canvasId": "27022562-67c7-4d8a-a0b0-926be23748d1",
+                "x": 0.33618313131980526,
+                "y": 0.31859807194370277,
+                "scale": 1.6005647243081693,
+                "normalizedScale": 0.49726289915807037,
+                "zIndex": 28,
+                "xCenter": 0.4915229649219698,
+                "yCenter": 0.46900301424388635
+            },
+            {
+                "id": 6,
+                "src": "BuildOutfit/boots.png",
+                "type": "shoes",
+                "canvasId": "18a2f506-0034-40f6-a508-c9f8de4b1cd6",
+                "x": 0.3535721417769645,
+                "y": 0.597569475194066,
+                "scale": 1.3113784692758368,
+                "normalizedScale": 0.4074185936196337,
+                "zIndex": 24,
+                "xCenter": 0.5089119476022073,
+                "yCenter": 0.6825289576697323
             }
         ]
     }
@@ -49,7 +66,7 @@ function OutfitPreview() {
                     relative
                     max-w-md
                     mx-auto
-                    aspect-[3/4]
+                    aspect-[9/16]
                     overflow-x-auto
                     flex
                     snap-x

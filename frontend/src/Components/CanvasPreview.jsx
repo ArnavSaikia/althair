@@ -38,8 +38,11 @@ function CanvasPreview({ items, extraCSS = "" }) {
                             draggable={false}
                             style={{
                                 position: "absolute",
-                                transform: `translate(${item.x * size.width}px, ${item.y * size.height}px)`,
+                                left: item.xCenter * size.width,
+                                top: item.yCenter * size.height,
+                                transform: "translate(-50%, -50%)",
                                 width: item.normalizedScale * size.width,
+                                transformOrigin: "center",
                                 zIndex: item.zIndex
                             }}
                         />
