@@ -3,7 +3,7 @@ import Draggable from "react-draggable";
 import ClearIcon from '@mui/icons-material/Clear';
 
 
-function DraggableItem({ item, onScale, onSelect, isSelected, onDelete}) {
+function DraggableItem({ item, onScale, onSelect, isSelected, onDelete, onDragEnd}) {
   const nodeRef = useRef(null)
   const lastDistance = useRef(null)
 
@@ -31,7 +31,11 @@ function DraggableItem({ item, onScale, onSelect, isSelected, onDelete}) {
   }
 
   return (
-    <Draggable nodeRef={nodeRef} bounds="parent">
+    <Draggable nodeRef={nodeRef} bounds="parent"
+      onStop={(e,data) => {
+        onDragEnd(item.canvasId, data.x, data.y);
+      }}
+    >
 
       <div
         ref={nodeRef}

@@ -29,10 +29,28 @@ const wardrobeCategories = [
 
 function BuildOutfit() {
     const [isWardrobeOpen, setIsWardrobeOpen] = useState(false)
-    const [canvasItems, setCanvasItems] = useState([])
+    const [canvasItems, setCanvasItems] = useState([])  //the x and y here are normalized w.r.t to the canvas' width nd height respectively
     const [selectedId, setSelectedId] = useState(null)
     const [referenceImage, setReferenceImage] = useState(null)
     const fileInputRef = useRef(null)   //for reference outfit image upload
+
+    //for propagating x and y values of each item back to main page component
+    const canvasRef = useRef(null);
+    const handleDragEnd = (id , xRaw , yRaw) => {
+        const rect = canvasRef.current.getBoundingClientRect();
+        const xNormalized = xRaw / rect.width;
+        const yNormalized = yRaw / rect.height;
+
+        setCanvasItems(prev =>
+            prev.map(item =>
+                item.canvasId === id
+                    ? { ...item, x: xNormalized, y: yNormalized }
+                    : item
+            )
+        )
+
+        console.log(canvasItems);
+    }
 
     //for wardrobe grab pill animations
     const [dragOffset, setDragOffset] = useState(0)
@@ -123,6 +141,8 @@ function BuildOutfit() {
                     after:bg-[url('/noise.png')]
                     after:opacity-[0.03]
                 "
+                ref={canvasRef}
+
                 onClick={() => setSelectedId(null)}
                 >
                     {canvasItems.map(item => (
@@ -157,6 +177,8 @@ function BuildOutfit() {
                             }}
 
                             onDelete={handleDelete}
+
+                            onDragEnd={handleDragEnd}
                         />
                     ))}
 
