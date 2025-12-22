@@ -12,22 +12,26 @@ function OutfitPreview() {
         referenceImage: "/bottomwear_landing3.jpg",
         canvasItems: [
             {
-                id: "shirt",
-                image: "/BuildOutfit/jacket.png",
-                x: 120,
-                y: 80,
-                z: 2,
-                scale: 1,
-                rotation: 0
+                "id": 1,
+                "src": "BuildOutfit/jacket.png",
+                "type": "top",
+                "canvasId": "818e3fb9-42d7-4751-8538-1e1f2c01264e",
+                "x": 0.37385904441759427,
+                "y": 0.2219091623793648,
+                "scale": 2.6001706253550285,
+                "normalizedScale": 0.8078199960653064,
+                "zIndex": 23
             },
             {
-                id: "pants",
-                image: "/BuildOutfit/jeans.png",
-                x: 110,
-                y: 260,
-                z: 1,
-                scale: 1,
-                rotation: 0
+                "id": 5,
+                "src": "BuildOutfit/jeans.png",
+                "type": "bottom",
+                "canvasId": "daa7512f-0c4b-4d86-ae15-db5c131a370e",
+                "x": 0.37965456953326476,
+                "y": 0.44540322945905253,
+                "scale": 1.7547329955055413,
+                "normalizedScale": 0.5451597565586127,
+                "zIndex": 20
             }
         ]
     }
@@ -38,7 +42,6 @@ function OutfitPreview() {
 
             <div className="
                 min-h-screen
-                pt-14
                 bg-[linear-gradient(180deg,#f2f0ec_0%,#edeae4_100%)]
             ">
                 {/* Swipe container */}
@@ -51,7 +54,6 @@ function OutfitPreview() {
                     flex
                     snap-x
                     snap-mandatory
-                    rounded-xl
                 ">
                     {/* Slide 1 – reference image */}
                     <div className="min-w-full h-full snap-center relative">

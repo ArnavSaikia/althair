@@ -10,9 +10,9 @@ import OutfitPreview from './Pages/OutfitPreview';
 function App() {
   return (
     // <Landing/>
-    <BuildOutfit/>
+    // <BuildOutfit/>
     // <OutfitCollection/>
-    // <OutfitPreview/>
+    <OutfitPreview/>
   )
 }
 
