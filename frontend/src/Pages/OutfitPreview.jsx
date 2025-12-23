@@ -2,12 +2,13 @@ import Navbar from "@/Components/Navbar"
 import Footer from "@/Components/Footer"
 import CanvasPreview from "@/Components/CanvasPreview"
 import {TitleOverlay, DateOverlay, DateOverlay2, DescriptionOverlay} from "@/Components/EditorialOverlay";
+import GarmentGrid from "@/Components/GarmentGrid";
 
 function OutfitPreview() {
     // mock backend response
     const outfit = {
         name: "Evening neutrals",
-        description: "Loose silhouettes, warm neutrals, winter evening lalalalalalalalalalalalal when i popped off then ur girl gave me just a little bit of lock jaw",
+        description: "Understated elegance in warm tones. Relaxed tailoring meets refined minimalism—a study in quiet sophistication for the modern evening.",
         createdAt: "12 Dec 2025",
         referenceImage: "/hero2.jpg",
         canvasItems: [
@@ -80,8 +81,9 @@ function OutfitPreview() {
                             className="w-full h-full object-cover"
                         />
 
-                        <TitleOverlay outfit={outfit} />
-                        <DateOverlay outfit={outfit} />
+                        {/* <TitleOverlay outfit={outfit} /> */}
+                        {/* swap around with DateOverlay see what fits best*/}
+                        <DateOverlay2 outfit={outfit} /> 
                     </div>
 
                     {/* Slide 2 – reconstructed canvas */}
@@ -97,7 +99,48 @@ function OutfitPreview() {
                     </div>
                 </div>
 
-                {/* rest of page later */}
+                {/* Metadata */}
+                <section className="
+                    max-w-md
+                    mx-auto
+                    px-6
+                    pt-5
+                    pb-10
+                ">
+                    <h2 className="
+                        font-['Cormorant_Garamond']
+                        text-[28px]
+                        leading-tight
+                        text-[#2c2b28]
+                        font-light
+                    ">
+                        {outfit.name}
+                    </h2>
+
+                    <p className="
+                        mt-2
+                        text-[11px]
+                        tracking-wide
+                        text-[#6f6c66]
+                    ">
+                        {outfit.createdAt}
+                    </p>
+
+                    {outfit.description && (
+                        <p className="
+                            mt-5
+                            text-[14px]
+                            leading-[1.7]
+                            text-[#3a3936]
+                            max-w-[42ch]
+                        ">
+                            {outfit.description}
+                        </p>
+                    )}
+                </section>
+
+                <GarmentGrid items={outfit.canvasItems}/>
+
             </div>
 
             <Footer />

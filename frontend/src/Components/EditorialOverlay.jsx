@@ -4,7 +4,7 @@ export function TitleOverlay({outfit}) {
         <div className="
             absolute
             left-4
-            bottom-6
+            top-6
             max-w-[70%]
         ">
             <h1 className="
@@ -26,11 +26,12 @@ export function DateOverlay({outfit}) {
     return(
         <div className="
             absolute
-            top-5
+            bottom-5
             right-5
             text-[11px]
             tracking-[0.25em]
             text-white/60
+            
         ">
             {outfit.createdAt}
         </div>
@@ -42,22 +43,18 @@ export function DateOverlay2({outfit}){
     return(
         <div className="
             absolute
-            top-5
+            bottom-5
             right-5
-            px-3
-            py-2
-            rounded-sm
-            bg-[#f6f3ee]/55
-            backdrop-blur-[2px]
-            font-['Inter']
             text-[11px]
             tracking-[0.25em]
-            text-[#3a3834]
-            opacity-80
+            text-white/60
+            px-4
+            py-2.5
+            bg-[#f6f3ee]/40
+            backdrop-blur-[2px]
         ">
             {outfit.createdAt}
         </div>
-
     )
 }
 
