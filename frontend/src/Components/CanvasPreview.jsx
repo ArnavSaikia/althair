@@ -22,7 +22,7 @@ function CanvasPreview({ items, extraCSS = "" }) {
                 relative
                 w-full
                 h-full
-                bg-[#f2f0ec]
+
                 overflow-hidden
                 ${extraCSS}
             `}

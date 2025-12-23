@@ -1,54 +1,54 @@
 import Navbar from "@/Components/Navbar"
 import Footer from "@/Components/Footer"
 import CanvasPreview from "@/Components/CanvasPreview"
-import EditorialOverlay from "@/Components/EditorialOverlay";
+import {TitleOverlay, DateOverlay, DateOverlay2, DescriptionOverlay} from "@/Components/EditorialOverlay";
 
 function OutfitPreview() {
     // mock backend response
     const outfit = {
         name: "Evening neutrals",
-        description: "Loose silhouettes, warm neutrals, winter evening",
+        description: "Loose silhouettes, warm neutrals, winter evening lalalalalalalalalalalalal when i popped off then ur girl gave me just a little bit of lock jaw",
         createdAt: "12 Dec 2025",
-        referenceImage: "/bottomwear_landing3.jpg",
+        referenceImage: "/hero2.jpg",
         canvasItems: [
             {
-                "id": 1,
+                "id": 4,
                 "src": "BuildOutfit/jacket.png",
                 "type": "top",
-                "canvasId": "9036ab7e-fa28-4e75-8e6a-19b63e0e9bc1",
-                "x": 0.3274888529360873,
-                "y": 0.14899627428695697,
-                "scale": 2.719322778666097,
-                "normalizedScale": 0.8448381146180977,
-                "zIndex": 29,
-                "xCenter": 0.482828663390817,
-                "yCenter": 0.22692836823848064
+                "canvasId": "49d0dc5c-2b24-4d21-98b9-e9f7ca5ac94a",
+                "x": 0.33285018772754854,
+                "y": 0.16960228379897793,
+                "scale": 2.804259766483157,
+                "normalizedScale": 0.8712264125786938,
+                "zIndex": 34,
+                "xCenter": 0.4881900167002261,
+                "yCenter": 0.24753436762253844
             },
             {
-                "id": 5,
+                "id": 8,
                 "src": "BuildOutfit/jeans.png",
                 "type": "bottom",
-                "canvasId": "27022562-67c7-4d8a-a0b0-926be23748d1",
-                "x": 0.33618313131980526,
-                "y": 0.31859807194370277,
-                "scale": 1.6005647243081693,
-                "normalizedScale": 0.49726289915807037,
-                "zIndex": 28,
-                "xCenter": 0.4915229649219698,
-                "yCenter": 0.46900301424388635
+                "canvasId": "e9ecb023-9d45-4ac0-9931-0b733f1971e5",
+                "x": 0.3390812364596765,
+                "y": 0.397851591633719,
+                "scale": 1.7906428693858527,
+                "normalizedScale": 0.5563162646247345,
+                "zIndex": 33,
+                "xCenter": 0.49442104228491923,
+                "yCenter": 0.5482564731661236
             },
             {
-                "id": 6,
+                "id": 3,
                 "src": "BuildOutfit/boots.png",
                 "type": "shoes",
-                "canvasId": "18a2f506-0034-40f6-a508-c9f8de4b1cd6",
-                "x": 0.3535721417769645,
-                "y": 0.597569475194066,
-                "scale": 1.3113784692758368,
-                "normalizedScale": 0.4074185936196337,
-                "zIndex": 24,
-                "xCenter": 0.5089119476022073,
-                "yCenter": 0.6825289576697323
+                "canvasId": "459d9b86-b939-433d-a180-6ad5e5e4adba",
+                "x": 0.34777536669981135,
+                "y": 0.7203131371754828,
+                "scale": 1.5406721981119091,
+                "normalizedScale": 0.4786554725424757,
+                "zIndex": 32,
+                "xCenter": 0.5031151632660801,
+                "yCenter": 0.8052726601630019
             }
         ]
     }
@@ -80,14 +80,20 @@ function OutfitPreview() {
                             className="w-full h-full object-cover"
                         />
 
-                        <EditorialOverlay outfit={outfit} />
+                        <TitleOverlay outfit={outfit} />
+                        <DateOverlay outfit={outfit} />
                     </div>
 
                     {/* Slide 2 – reconstructed canvas */}
-                    <div className="min-w-full h-full snap-center relative">
+                    <div className="min-w-full h-full snap-center relative 
+                        bg-[radial-gradient(ellipse_at_22%_16%,#fdfbf8_0%,#f3efe9_35%,#ebe6df_60%,#e2ddd6_75%),radial-gradient(ellipse_at_85%_85%,rgba(0,0,0,0.08)_0%,rgba(0,0,0,0)_55%)]
+
+
+                    ">
                         <CanvasPreview items={outfit.canvasItems} />
 
-                        <EditorialOverlay outfit={outfit} />
+                        {/* <DateOverlay2 outfit={outfit} /> */}
+                        <DescriptionOverlay outfit={outfit} />
                     </div>
                 </div>
 

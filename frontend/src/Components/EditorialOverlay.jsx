@@ -1,48 +1,91 @@
-function EditorialOverlay({ outfit }) {
-    return (
+export function TitleOverlay({outfit}) {
+    console.log(outfit)
+    return(
         <div className="
             absolute
-            inset-x-0
-            bottom-0
-            px-4
-            pt-10
-            pb-4
-            bg-gradient-to-t
-            from-black/60
-            via-black/25
-            to-transparent
+            left-4
+            bottom-6
+            max-w-[70%]
         ">
             <h1 className="
-                text-white
                 font-['Cormorant_Garamond']
-                text-2xl
+                text-white/80
+                text-[2.25rem]
                 font-light
-                leading-snug
+                leading-[1.1]
+                tracking-wide
             ">
                 {outfit.name}
             </h1>
-
-            <p className="
-                mt-1
-                text-[11px]
-                tracking-wide
-                text-white/70
-            ">
-                {outfit.createdAt}
-            </p>
-
-            {outfit.description && (
-                <p className="
-                    mt-2
-                    text-xs
-                    text-white/80
-                    max-w-[90%]
-                ">
-                    {outfit.description}
-                </p>
-            )}
         </div>
+
     )
 }
 
-export default EditorialOverlay;
+export function DateOverlay({outfit}) {
+    return(
+        <div className="
+            absolute
+            top-5
+            right-5
+            text-[11px]
+            tracking-[0.25em]
+            text-white/60
+        ">
+            {outfit.createdAt}
+        </div>
+
+    )
+}
+
+export function DateOverlay2({outfit}){
+    return(
+        <div className="
+            absolute
+            top-5
+            right-5
+            px-3
+  py-2
+  rounded-sm
+  bg-[#f6f3ee]/55
+  backdrop-blur-[2px]
+            font-['Inter']
+            text-[11px]
+            tracking-[0.25em]
+            text-[#3a3834]
+            opacity-80
+        ">
+            {outfit.createdAt}
+        </div>
+
+    )
+}
+
+export function DescriptionOverlay({outfit}){
+    const i = Math.random() > 0.5 ? 1 : 0;
+    return(
+        <div className="
+    absolute
+    left-0
+    bottom-0
+    w-full
+    bg-[rgba(245,241,234,0.92)]
+    px-6
+    py-4
+">
+            <p className="
+        font-['Cormorant_Garamond']
+        text-[17px]
+        text-[#2c2b28]
+        leading-[1.45]
+        text-center
+    ">
+                {i === 1 ? "Assembled with care, " : "Made with care · "}{outfit.createdAt}
+            </p>
+        </div>
+
+
+    )
+}
+
+export default {DescriptionOverlay, TitleOverlay, DateOverlay};
