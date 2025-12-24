@@ -8,12 +8,12 @@ function GarmentGrid({ items }) {
         ">
             <h2 className="
                         font-['Cormorant_Garamond']
-                        text-[28px]
+                        text-[22px]
                         leading-tight
                         text-[#2c2b28]
                         font-light
                         mb-5
-                        text-right
+                        
                     ">
                 Pieces
             </h2>

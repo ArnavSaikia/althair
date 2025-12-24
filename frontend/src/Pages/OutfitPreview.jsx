@@ -95,7 +95,7 @@ function OutfitPreview() {
                         <CanvasPreview items={outfit.canvasItems} />
 
                         {/* <DateOverlay2 outfit={outfit} /> */}
-                        <DescriptionOverlay outfit={outfit} />
+                        {/* <DescriptionOverlay outfit={outfit} /> */}
                     </div>
                 </div>
 
@@ -129,9 +129,10 @@ function OutfitPreview() {
                     {outfit.description && (
                         <p className="
                             mt-5
-                            text-[14px]
+                            font-['Cormorant_Garamond']
+                            text-[16px]
                             leading-[1.7]
-                            text-[#3a3936]
+                            text-[#5a5853]
                             max-w-[42ch]
                         ">
                             {outfit.description}
@@ -140,6 +141,35 @@ function OutfitPreview() {
                 </section>
 
                 <GarmentGrid items={outfit.canvasItems}/>
+
+                <section className="
+                    max-w-md
+                    mx-auto
+                    px-6
+                    pb-10
+                ">
+                    <h2 className="
+                        font-['Cormorant_Garamond']
+                        text-[22px]
+                        leading-tight
+                        text-[#2c2b28]
+                        font-light
+                        mb-5
+                    ">
+                        Reflection
+                    </h2>
+
+                    <p className="
+                        font-['Cormorant_Garamond']
+                        text-[16px]
+                        leading-[1.7]
+                        text-[#5a5853]
+                        max-w-[42ch]
+                    ">
+                        A considered balance of relaxed silhouettes and muted tones,
+                        assembled with an emphasis on proportion and restraint.
+                    </p>
+                </section>
 
             </div>
 

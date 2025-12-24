@@ -58,34 +58,33 @@ export function DateOverlay2({outfit}){
     )
 }
 
-export function DescriptionOverlay({outfit}){
+export function DescriptionOverlay({ outfit }) {
     const i = Math.random() > 0.5 ? 1 : 0;
-    return(
+
+    return (
         <div className="
             absolute
             left-0
             bottom-0
             w-full
-            bg-[rgba(245,241,234,0.92)]
             px-6
-            py-4
-            
+            py-5
+            bg-[linear-gradient(180deg,rgba(245,241,234,0)_0%,rgba(245,241,234,0.6)_35%,rgba(245,241,234,0.85)_100%)]
         ">
             <p className="
                 font-['Cormorant_Garamond']
                 text-[17px]
-                text-[#2c2b28]
                 leading-[1.45]
                 text-center
                 tracking-[0.015em]
                 text-[#2a2824]
             ">
-                {i === 1 ? "Assembled with care, " : "Made with care · "}{outfit.createdAt}
+                {i === 1 ? "Assembled with care, " : "Made with care · "}
+                {outfit.createdAt}
             </p>
         </div>
-
-
-    )
+    );
 }
+
 
 export default {DescriptionOverlay, TitleOverlay, DateOverlay};
