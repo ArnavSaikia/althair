@@ -72,7 +72,7 @@ export default function ClothingPreview() {
                     max-w-md
                     mx-auto
                     px-6
-                    pt-6
+                    pt-5
                     pb-10
                 "
             >
@@ -104,9 +104,10 @@ export default function ClothingPreview() {
                     <p
                         className="
                             mt-5
-                            text-[14px]
+                            font-['Cormorant_Garamond']
+                            text-[16px]
                             leading-[1.7]
-                            text-[#3a3936]
+                            text-[#5a5853]
                             max-w-[42ch]
                         "
                     >
@@ -122,13 +123,14 @@ export default function ClothingPreview() {
                         max-w-md
                         mx-auto
                         px-6
-                        pb-12
+                        pb-10
                     "
                 >
                     <h3
                         className="
                             font-['Cormorant_Garamond']
                             text-[22px]
+                            leading-tight
                             text-[#2c2b28]
                             font-light
                             mb-5
@@ -181,16 +183,17 @@ export default function ClothingPreview() {
                         max-w-md
                         mx-auto
                         px-6
-                        pb-12
+                        pb-10
                     "
                 >
                     <h3
                         className="
                             font-['Cormorant_Garamond']
                             text-[22px]
+                            leading-tight
                             text-[#2c2b28]
                             font-light
-                            mb-4
+                            mb-5
                         "
                     >
                         Reflection
@@ -200,8 +203,9 @@ export default function ClothingPreview() {
                         className="
                             font-['Cormorant_Garamond']
                             text-[16px]
-                            leading-[1.6]
+                            leading-[1.7]
                             text-[#5a5853]
+                            max-w-[42ch]
                         "
                     >
                         {item.editorialNote}
@@ -215,7 +219,7 @@ export default function ClothingPreview() {
                     max-w-md
                     mx-auto
                     px-6
-                    pb-16
+                    pb-10
                 "
             >
                 <p

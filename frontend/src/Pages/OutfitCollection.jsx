@@ -83,7 +83,7 @@ function OutfitCollection() {
     return (
         <>
             <Navbar />
-            <div className="min-h-screen bg-[linear-gradient(180deg,#f2f0ec 0%,#edeae4 100%)] px-4 pb-20 pt-12">
+            <div className="min-h-screen px-4 pb-20 pt-12">
                 <CollectionHeader count={outfits.length} />
 
                 {sortedOutfits.length === 0 ? (

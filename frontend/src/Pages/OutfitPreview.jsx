@@ -60,7 +60,7 @@ function OutfitPreview() {
 
             <div className="
                 min-h-screen
-                bg-[linear-gradient(180deg,#f2f0ec_0%,#edeae4_100%)]
+                
             ">
                 {/* Swipe container */}
                 <div className="
@@ -89,8 +89,6 @@ function OutfitPreview() {
                     {/* Slide 2 – reconstructed canvas */}
                     <div className="min-w-full h-full snap-center relative 
                         bg-[radial-gradient(ellipse_at_22%_16%,#fdfbf8_0%,#f3efe9_35%,#ebe6df_60%,#e2ddd6_75%),radial-gradient(ellipse_at_85%_85%,rgba(0,0,0,0.08)_0%,rgba(0,0,0,0)_55%)]
-
-
                     ">
                         <CanvasPreview items={outfit.canvasItems} />
 
