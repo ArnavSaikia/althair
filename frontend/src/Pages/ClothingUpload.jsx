@@ -1,12 +1,21 @@
-import { useState } from "react"
-import Navbar from "@/Components/Navbar";
-import Footer from "@/Components/Footer";
+import { useState, useRef } from "react"
+import Navbar from "@/Components/Navbar"
+import Footer from "@/Components/Footer"
 // import { useNavigate } from "react-router-dom"
 
 export default function ClothingUpload() {
     // const navigate = useNavigate()
+    const CATEGORIES = [
+        "Upperwear",
+        "Bottomwear",
+        "Footwear",
+        "Accessories",
+    ]
 
-    const [imageUrl, setImageUrl] = useState("")
+    const fileInputRef = useRef(null)
+
+    const [imageFile, setImageFile] = useState(null)
+    const [imagePreviewUrl, setImagePreviewUrl] = useState("")
     const [name, setName] = useState("")
     const [category, setCategory] = useState("")
     const [color, setColor] = useState("")
@@ -16,27 +25,44 @@ export default function ClothingUpload() {
     const [status, setStatus] = useState("idle")
     // idle | loading | success
 
-    const canSave = imageUrl && name && category
+    const canSave = imageFile && name && category
+
+    function handleImageSelect(e) {
+        const file = e.target.files?.[0]
+        if (!file) return
+
+        setImageFile(file)
+        setImagePreviewUrl(URL.createObjectURL(file))
+    }
 
     async function handleSave() {
         if (!canSave || status !== "idle") return
 
         setStatus("loading")
 
-        // fake save delay
         setTimeout(() => {
             setStatus("success")
 
             setTimeout(() => {
-                // later: navigate(`/clothing/${id}`) or `/clothing`
                 // navigate("/clothing")
             }, 900)
         }, 1200)
     }
 
+    const fieldBase = `
+        font-['Cormorant_Garamond']
+        font-light
+        tracking-[0.02em]
+        text-[#3b3a36]/80
+        placeholder-[#3b3a36]/70
+        bg-transparent
+        focus:outline-none
+        transition-colors
+    `
+
     return (
         <main className="w-full">
-            <Navbar/>
+            <Navbar />
 
             {/* Image Section */}
             <section
@@ -49,75 +75,87 @@ export default function ClothingUpload() {
                     bg-[radial-gradient(ellipse_at_22%_16%,#fdfbf8_0%,#f3efe9_35%,#ebe6df_60%,#e2ddd6_75%)]
                 "
             >
-                {imageUrl ? (
+                {imagePreviewUrl ? (
                     <img
-                        src={imageUrl}
+                        src={imagePreviewUrl}
                         alt=""
-                        className="max-h-[420px] w-auto object-contain"
+                        className="max-h-[420px] w-auto object-contain cursor-pointer"
+                        onClick={() => fileInputRef.current?.click()}
                     />
                 ) : (
                     <button
-                        onClick={() =>
-                            setImageUrl(
-                                "https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf"
-                            )
-                        }
+                        onClick={() => fileInputRef.current?.click()}
                         className="
-                            text-[14px]
+                            font-['Cormorant_Garamond']
+                            text-[20px]
                             tracking-wide
-                            text-[#6f6c66]
-                            hover:text-[#2c2b28]
+                            text-[#3b3a36]/70
+                            hover:text-[#3b3a36]
                             transition
                         "
                     >
                         Add image
                     </button>
                 )}
+
+                <input
+                    ref={fileInputRef}
+                    type="file"
+                    accept="image/*"
+                    className="hidden"
+                    onChange={handleImageSelect}
+                />
             </section>
 
             {/* Content */}
-            <section className="max-w-md mx-auto px-6 pt-6 pb-16">
+            <section className="max-w-md mx-auto px-6 pt-6 pb-10">
 
                 {/* Name */}
                 <input
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     placeholder="Name"
-                    className="
+                    className={`
                         w-full
                         border-b
-                        border-neutral-300
+                        border-neutral-300/60
                         pb-2
                         mb-4
-                        text-[28px]
+                        text-[25px]
                         leading-tight
-                        font-light
-                        text-[#2c2b28]
-                        placeholder-neutral-400
-                        focus:outline-none
-                        focus:border-neutral-700
-                    "
+                        ${fieldBase}
+                        focus:border-[#6a6761]/70
+                    `}
                 />
 
                 {/* Category */}
-                <input
+                <select
                     value={category}
                     onChange={(e) => setCategory(e.target.value)}
-                    placeholder="Category"
-                    className="
+                    className={`
                         w-full
                         border-b
-                        border-neutral-200
+                        border-neutral-300/50
                         pb-2
                         mb-6
-                        text-[11px]
-                        tracking-wide
-                        text-[#6f6c66]
-                        placeholder-neutral-400
-                        focus:outline-none
-                        focus:border-neutral-500
-                    "
-                />
+                        text-[16px]
+                        
+                        ${fieldBase}
+                        appearance-none
+                        cursor-pointer
+                        focus:border-[#6a6761]/60
+                    `}
+                >
+                    <option value="" disabled hidden>
+                        Category
+                    </option>
+
+                    {CATEGORIES.map((c) => (
+                        <option key={c} value={c}>
+                            {c}
+                        </option>
+                    ))}
+                </select>
 
                 {/* Quiet attributes */}
                 <div className="space-y-4 mb-10">
@@ -125,48 +163,42 @@ export default function ClothingUpload() {
                         value={color}
                         onChange={(e) => setColor(e.target.value)}
                         placeholder="Color"
-                        className="
+                        className={`
                             w-full
                             border-b
-                            border-neutral-200
+                            border-neutral-300/40
                             pb-1
-                            text-[14px]
-                            text-[#3a3936]
-                            placeholder-neutral-400
-                            focus:outline-none
-                        "
+                            text-[16px]
+                            ${fieldBase}
+                        `}
                     />
 
                     <input
                         value={fit}
                         onChange={(e) => setFit(e.target.value)}
                         placeholder="Fit"
-                        className="
+                        className={`
                             w-full
                             border-b
-                            border-neutral-200
+                            border-neutral-300/40
                             pb-1
-                            text-[14px]
-                            text-[#3a3936]
-                            placeholder-neutral-400
-                            focus:outline-none
-                        "
+                            text-[16px]
+                            ${fieldBase}
+                        `}
                     />
 
                     <input
                         value={size}
                         onChange={(e) => setSize(e.target.value)}
                         placeholder="Size"
-                        className="
+                        className={`
                             w-full
                             border-b
-                            border-neutral-200
+                            border-neutral-300/40
                             pb-1
-                            text-[14px]
-                            text-[#3a3936]
-                            placeholder-neutral-400
-                            focus:outline-none
-                        "
+                            text-[16px]
+                            ${fieldBase}
+                        `}
                     />
                 </div>
 
@@ -176,21 +208,18 @@ export default function ClothingUpload() {
                     onChange={(e) => setNotes(e.target.value)}
                     rows={4}
                     placeholder="Notes on wear, texture, memory"
-                    className="
+                    className={`
                         w-full
                         border-b
-                        border-neutral-300
+                        border-neutral-300/50
                         pb-2
                         mb-12
-                        font-['Cormorant_Garamond']
                         text-[16px]
-                        leading-[1.6]
-                        text-[#5a5853]
-                        placeholder-neutral-400
+                        leading-[1.75]
                         resize-none
-                        focus:outline-none
-                        focus:border-neutral-700
-                    "
+                        ${fieldBase}
+                        focus:border-[#6a6761]/60
+                    `}
                 />
 
                 {/* Save */}
@@ -228,33 +257,21 @@ export default function ClothingUpload() {
                         backdrop-blur-sm
                     "
                 >
-                    {status === "loading" && (
-                        <span className="
+                    <span
+                        className="
                             text-[22px]
                             tracking-wide
-                            text-neutral-700
+                            text-[#3b3a36]/80
                             font-['Cormorant_Garamond']
                             font-light
-                        ">
-                            Saving…
-                        </span>
-                    )}
-
-                    {status === "success" && (
-                        <span className="
-                            text-[22px]
-                            tracking-wide
-                            text-neutral-700
-                            font-['Cormorant_Garamond']
-                            font-light
-                        ">
-                            Added to your wardrobe
-                        </span>
-                    )}
+                        "
+                    >
+                        {status === "loading" ? "Saving…" : "Added to your wardrobe"}
+                    </span>
                 </div>
             )}
 
-            <Footer/>
+            <Footer />
         </main>
     )
 }
