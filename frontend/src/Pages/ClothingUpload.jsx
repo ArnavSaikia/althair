@@ -70,6 +70,7 @@ export default function ClothingUpload() {
                     w-full
                     min-h-[60vh]
                     flex
+                    flex-col
                     items-center
                     justify-center
                     bg-[radial-gradient(ellipse_at_22%_16%,#fdfbf8_0%,#f3efe9_35%,#ebe6df_60%,#e2ddd6_75%)]
@@ -83,19 +84,38 @@ export default function ClothingUpload() {
                         onClick={() => fileInputRef.current?.click()}
                     />
                 ) : (
-                    <button
-                        onClick={() => fileInputRef.current?.click()}
-                        className="
-                            font-['Cormorant_Garamond']
-                            text-[20px]
-                            tracking-wide
-                            text-[#3b3a36]/70
-                            hover:text-[#3b3a36]
-                            transition
-                        "
-                    >
-                        Add image
-                    </button>
+                    <>
+                        <button
+                            onClick={() => fileInputRef.current?.click()}
+                            className="
+                                font-['Cormorant_Garamond']
+                                text-[20px]
+                                tracking-wide
+                                text-[#3b3a36]/70
+                                hover:text-[#3b3a36]
+                                transition
+                                
+                            "
+                        >
+                            Add image
+                        </button>
+
+                            <p
+                                className="
+                                    mt-3
+                                    font-['Cormorant_Garamond']
+                                    text-[14px]
+                                    leading-snug
+                                    text-[#8a877f]
+                                    text-center
+                                    px-6
+                                "
+                            >
+                                Images work best when the garment fills the frame, with little space around it.
+                            </p>
+
+                </>
+                    
                 )}
 
                 <input
@@ -239,7 +259,7 @@ export default function ClothingUpload() {
                         }
                     `}
                 >
-                    Save
+                    Add to Wardrobe
                 </button>
             </section>
 
