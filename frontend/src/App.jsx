@@ -11,6 +11,8 @@ import ClothingUpload from './Pages/ClothingUpload';
 import ClothingCollection from './Pages/ClothingCollection';
 import Login from './Pages/Login';
 import Signup from './Pages/Signup';
+import AccountPage from './Pages/AccountPage';
+
 
 function App() {
   return (
@@ -22,7 +24,8 @@ function App() {
     // <ClothingUpload/>
     // <ClothingCollection/>
     // <Login/>
-    <Signup/>
+    // <Signup/>
+    <AccountPage/>
   )
 }
 
