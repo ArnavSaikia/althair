@@ -70,8 +70,8 @@ function ClothingCollection() {
         <>
             <Navbar />
 
-            <div className="min-h-screen px-4 pb-20 pt-12">
-                <CollectionHeader count={clothing.length} title="Wardrobe" />
+            <div className="min-h-screen px-4 py-12">
+                <CollectionHeader count={clothing.length} title="Wardrobe" quantifier="piece"/>
 
                 {clothing.length === 0 ? (
                     <div className="
@@ -100,7 +100,7 @@ function ClothingCollection() {
                 ) : (
                     <>
                         {/* Sort */}
-                        <div className="flex justify-center gap-2 mb-14">
+                        <div className="flex justify-center gap-2 mb-10">
                             {["newest", "oldest"].map(option => (
                                 <button
                                     key={option}

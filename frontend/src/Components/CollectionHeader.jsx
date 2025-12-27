@@ -1,4 +1,4 @@
-function CollectionHeader({ count }) {
+function CollectionHeader({ count, title, quantifier }) {
     return (
         <div className="mb-12 text-center">
             <h1 className="
@@ -9,7 +9,7 @@ function CollectionHeader({ count }) {
                 text-neutral-800
                 mb-2
             ">
-                Collection
+                {title}
             </h1>
 
             <p className="
@@ -17,7 +17,7 @@ function CollectionHeader({ count }) {
                 text-neutral-500
                 tracking-wide
             ">
-                {count} {count === 1 ? "outfit" : "outfits"}
+                {count} {count === 1 ? quantifier : `${quantifier}s`}
             </p>
         </div>
     )

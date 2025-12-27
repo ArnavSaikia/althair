@@ -84,7 +84,7 @@ function OutfitCollection() {
         <>
             <Navbar />
             <div className="min-h-screen px-4 pb-20 pt-12">
-                <CollectionHeader count={outfits.length} />
+                <CollectionHeader count={outfits.length} title={"Collection"} quantifier="outfit"/>
 
                 {sortedOutfits.length === 0 ? (
                     <div className="
