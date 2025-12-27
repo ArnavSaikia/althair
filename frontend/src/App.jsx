@@ -9,6 +9,8 @@ import OutfitPreview from './Pages/OutfitPreview';
 import ClothingPreview from './Pages/ClothingPreview';
 import ClothingUpload from './Pages/ClothingUpload';
 import ClothingCollection from './Pages/ClothingCollection';
+import Login from './Pages/Login';
+import Signup from './Pages/Signup';
 
 function App() {
   return (
@@ -18,7 +20,9 @@ function App() {
     // <OutfitPreview/>
     // <ClothingPreview/>
     // <ClothingUpload/>
-    <ClothingCollection/>
+    // <ClothingCollection/>
+    // <Login/>
+    <Signup/>
   )
 }
 
