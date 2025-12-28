@@ -12,6 +12,7 @@ import ClothingCollection from './Pages/ClothingCollection';
 import Login from './Pages/Login';
 import Signup from './Pages/Signup';
 import AccountPage from './Pages/AccountPage';
+import CuratedCollection from './Pages/CuratedCollection';
 
 
 function App() {
@@ -25,7 +26,8 @@ function App() {
     // <ClothingCollection/>
     // <Login/>
     // <Signup/>
-    <AccountPage/>
+    // <AccountPage/>
+    <CuratedCollection/>
   )
 }
 
