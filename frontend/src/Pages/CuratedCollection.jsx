@@ -1,3 +1,4 @@
+import { useState } from "react"
 import Navbar from "@/Components/Navbar"
 import Footer from "@/Components/Footer"
 
@@ -9,24 +10,28 @@ function CuratedCollection() {
             name: "Ivory linen shirt",
             category: "Upperwear",
             preview: "./BuildOutfit/dress.png",
+            gender: "men",
         },
         {
             id: 2,
             name: "Charcoal trousers",
             category: "Bottomwear",
             preview: "./BuildOutfit/jeans.png",
+            gender: "men",
         },
         {
             id: 3,
             name: "Black leather loafers",
             category: "Footwear",
             preview: "./BuildOutfit/boots.png",
+            gender: "women",
         },
         {
             id: 4,
             name: "Silver chain",
             category: "Accessories",
             preview: "./BuildOutfit/watch.png",
+            gender: "women",
         },
     ]
 
@@ -37,9 +42,17 @@ function CuratedCollection() {
         "Accessories",
     ]
 
+    const [genderFilter, setGenderFilter] = useState("all")
+    // "all" | "men" | "women"
+
+    const filteredClothing =
+        genderFilter === "all"
+            ? curatedClothing
+            : curatedClothing.filter(item => item.gender === genderFilter)
+
     const groupedByCategory = CATEGORIES.map(category => ({
         category,
-        items: curatedClothing.filter(item => item.category === category),
+        items: filteredClothing.filter(item => item.category === category),
     }))
 
     return (
@@ -48,7 +61,7 @@ function CuratedCollection() {
 
             <div className="min-h-screen px-4 py-12">
                 {/* Intro text */}
-                <div className="mb-12 text-center">
+                <div className="mb-10 text-center">
                     <h1 className="
                         text-[42px]
                         leading-tight
@@ -65,12 +78,39 @@ function CuratedCollection() {
                         text-neutral-500
                         tracking-wide
                     ">
-                        Selected pieces you can add to your own archive
+                        Selected pieces you may add to your archive
                     </p>
                 </div>
 
+                {/* Gender filter */}
+                <div className="flex justify-center gap-2 mb-10">
+                    {["all", "men", "women"].map(option => (
+                        <button
+                            key={option}
+                            onClick={() => setGenderFilter(option)}
+                            className={`
+                                px-5
+                                py-2
+                                rounded-full
+                                text-xs
+                                tracking-wide
+                                transition
+                                ${genderFilter === option
+                                    ? "bg-neutral-800 text-white"
+                                    : "bg-white/70 text-neutral-600 hover:bg-white border border-neutral-300"
+                                }
+                            `}
+                        >
+                            {option === "all"
+                                ? "All"
+                                : option === "men"
+                                    ? "Men"
+                                    : "Women"}
+                        </button>
+                    ))}
+                </div>
 
-                {curatedClothing.length === 0 ? (
+                {filteredClothing.length === 0 ? (
                     <div className="
                         flex
                         flex-col
@@ -87,11 +127,11 @@ function CuratedCollection() {
                             text-neutral-800
                             mb-2
                         ">
-                            No curated pieces yet
+                            No pieces in this selection
                         </p>
 
                         <p className="text-sm max-w-sm">
-                            This space will evolve with editor-selected garments.
+                            Curations will expand over time.
                         </p>
                     </div>
                 ) : (
@@ -147,4 +187,4 @@ function CuratedCollection() {
     )
 }
 
-export default CuratedCollection;
+export default CuratedCollection
