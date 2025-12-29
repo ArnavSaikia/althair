@@ -2,6 +2,20 @@ const bcrypt = require('bcryptjs');
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
+const wardrobeItemSchema = new Schema(
+    {
+        clothing: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Clothing",
+            required: true,
+        },
+    },
+    {
+        timestamps: true, // createdAt, updatedAt PER wardrobe entry
+        _id: false
+    }
+);
+
 const userSchema = new Schema({
     name: {
         type: String,
@@ -17,7 +31,9 @@ const userSchema = new Schema({
     password: {
         type: String,
         required: true
-    }
+    },
+
+    wardrobe: [wardrobeItemSchema]
 }, {timestamps: true});
 
 userSchema.pre("save", async function (next) {

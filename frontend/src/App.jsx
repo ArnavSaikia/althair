@@ -17,7 +17,7 @@ import CuratedCollection from './Pages/CuratedCollection';
 
 function App() {
   return (
-    // <Landing/>
+    <Landing/>
     // <BuildOutfit/>
     // <OutfitCollection/>
     // <OutfitPreview/>
@@ -27,7 +27,7 @@ function App() {
     // <Login/>
     // <Signup/>
     // <AccountPage/>
-    <CuratedCollection/>
+    // <CuratedCollection/>
   )
 }
 

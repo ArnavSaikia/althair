@@ -10,6 +10,16 @@ const clothingSchema = new Schema({
     size: String,
     additionalNotes: String,
     imageUrl: String,
+    editorialNote: String,
+    source: String,
+    isCurated: {
+        type: Boolean,
+        default: false,
+    },
+    gender: {
+        type: String,
+        enum: ["men", "women", "unisex"]
+    }
 }, { timestamps: true });
 
 const Clothing = mongoose.model('Clothing', clothingSchema);
