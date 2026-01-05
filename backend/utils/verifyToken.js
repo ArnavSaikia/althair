@@ -1,17 +1,19 @@
-const jwt = require('jsonwebtoken');
-const User = require('../models/userModel');
+const jwt = require("jsonwebtoken");
+const User = require("../models/userModel");
 
 const verifyToken = async (req) => {
-        const token = req.cookies.jwt;
+        const token = req.cookies?.jwt;
+        if (!token) return null;
 
-        if(!token) return res.status(400).json({message: "No token found in the request"});
+        try {
+                const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-        const decoded = jwt.verify(token , process.env.JWT_SECRET);
+                const user = await User.findById(decoded.userId).select("-password");
+                return user || null;
 
-        const user = await User.findById(decoded.userId).select("-password");
-
-        if (user) return user;
-        else return null;
-}
+        } catch (err) {
+                return null;
+        }
+};
 
 module.exports = verifyToken;

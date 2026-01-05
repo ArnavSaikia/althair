@@ -1,41 +1,45 @@
 const verifyToken = require('../utils/verifyToken');
 const Outfit = require('../models/OutfitModel');
 const Clothing = require('../models/ClothingModel');
+const User = require('../models/userModel');
 const mongoose = require('mongoose');
 
 const uploadOutfit = async (req,res) => {
     try{
         const user = await verifyToken(req);
-        if(!user) return res.status(400).json({message: "User not logged in or invalid token"});
+        if(!user) return res.status(401).json({message: "User not logged in or invalid token"});
 
-        const {name, description, items} = req.body;
+        const {name, description, referenceImage, canvasItems} = req.body;
 
-        if (!name || !items || !Array.isArray(items) || items.length == 0){
-            return res.status(400).json({message: "An outfit must have a name and at least one clothing item"});
+        if (!name || !Array.isArray(canvasItems) || canvasItems.length === 0) {
+            return res.status(400).json({
+                message: "Outfit must have a name and at least one canvas item",
+            });
         }
 
-        const clothingItems = await Clothing.find({
-            _id: { $in: items.map(id => new mongoose.Types.ObjectId(id)) },
-            user: new mongoose.Types.ObjectId(user._id)
-        });
-        console.log(clothingItems);
-        if (clothingItems.length !== items.length) return res.status(403).json({message: "One or more of the items are not present in the user's wardrobe"});
+        const wardrobeSet = new Set(user.wardrobe.map(item => item.clothing.toString()));
+
+        const anyInvalidItem = canvasItems.find( item => !wardrobeSet.has(item.clothingId?.toString()));
+        if (anyInvalidItem){
+            return res.status(403).json(
+                {
+                    message: "One or more items are not in your wardrobe",
+                }
+            )
+        };
 
         const newOutfit = new Outfit({
             user: user._id,
             name,
             description,
-            items
+            referenceImage,
+            canvasItems,
         });
 
         const savedOutfit = await newOutfit.save();
-
-        res.status(201).json({
-            message: "Outfit created successfully",
-            outfit: savedOutfit
-        });
+        return res.status(201).json({ outfit: savedOutfit });
     }
-    catch (err){
+    catch(err){
         res.status(500).json({message: err.message});
     }
 };
