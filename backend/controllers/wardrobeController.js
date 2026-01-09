@@ -4,10 +4,22 @@ const { S3Client, PutObjectCommand, DeleteObjectCommand } = require('@aws-sdk/cl
 
 // for the route POST /wardrobe/add
 //using form data here. might need to change later
+//this func is intended only for user uploads. I intend to add curated items directly from mongo and aws dashboard
 const addClothingItem = async(req , res) =>{
     try{
         const user = await verifyToken(req);
         if(!user) return res.status(400).json({message: "User not logged in or invalid token"});
+
+        const userId = user._id;
+        const { name, category, color, fit, size, additionalNotes } = req.body;
+
+        if (!name || !category) {
+            return res.status(400).json({ message: "Name and category are required" });
+        }
+
+        const file = req.file;
+
+        if (!file) return res.status(400).json({ message: "Image is required" });
 
         const s3 = new S3Client({
             region: process.env.AWS_REGION,
@@ -16,12 +28,6 @@ const addClothingItem = async(req , res) =>{
                 secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
             },
         });
-
-        const userId = user._id;
-        const {name,category,color,fit,size,additionalNotes} = req.body;
-        const file = req.file;
-
-        if (!file) return res.status(400).json({ message: "Image is required" });
 
         const params = {
             Bucket: process.env.S3_BUCKET_NAME,
@@ -33,17 +39,22 @@ const addClothingItem = async(req , res) =>{
         await s3.send(new PutObjectCommand(params));
 
         const newClothing = new Clothing({
-            user: userId,
             name,
             category,
             color: color || null,
             fit: fit || null,
             size: size || null,
             additionalNotes: additionalNotes || null,
-            imageUrl: `https://${process.env.S3_BUCKET_NAME}.s3.${process.env.AWS_REGION}.amazonaws.com/${params.Key}`
+            imageUrl: `https://${process.env.S3_BUCKET_NAME}.s3.${process.env.AWS_REGION}.amazonaws.com/${params.Key}`,
+            source: "user",
+            isCurated: false,
         });
 
         await newClothing.save();
+
+        user.wardrobe.push({ clothing: clothing._id });
+        await user.save();
+
         res.status(201).json({message: "Successfully Uploaded the Item", item: newClothing});
     }
     catch(err) {

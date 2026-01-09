@@ -11,7 +11,10 @@ const clothingSchema = new Schema({
     additionalNotes: String,
     imageUrl: String,
     editorialNote: String,
-    source: String,
+    source: {
+        type: String,
+        enum: ["users" , "curated"]
+    },
     isCurated: {
         type: Boolean,
         default: false,
