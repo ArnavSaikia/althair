@@ -76,9 +76,9 @@ const fetchSpecificOutfit = async (req, res) => {
         const outfit = await Outfit.findOne({
             user: user._id,
             _id: id
-        }).populate('items');
+        }).populate("canvasItems.clothingId");
 
-        if (!outfit) return res.status(404).json({message: `Outfit with ID ${id} nout found`});
+        if (!outfit) return res.status(404).json({message: `Outfit with ID ${id} not found`});
 
         return res.status(200).json({outfit});
     }
@@ -94,39 +94,50 @@ const updateOutfit = async (req, res) => {
         if(!user) return res.status(400).json({message: "User not logged in or invalid token"});
 
         const id = req.params.id;
-        const {name, description, items} = req.body;
+        const { name, description, referenceImage, canvasItems } = req.body;
+
+        if (!Array.isArray(canvasItems) || canvasItems.length === 0) {
+            return res.status(400).json({
+                message: "Canvas items are required to update an outfit",
+            });
+        }
 
         const outfit = await Outfit.findOne({
             user: user._id,
             _id: id
-        }).populate('items');
+        });
         
         if(!outfit) res.status(404).json({message: `Outfit with ID ${id} nout found`});
 
-        if(name) outfit.name = name;
-        if(description) outfit.description = description;
+        const wardrobeSet = new Set(
+            user.wardrobe.map(entry => entry.clothing.toString())
+        );
 
-        if (items && Array.isArray(items) && items.length > 0){
-            const clothingItems = await Clothing.find({
-                _id: { $in: items.map((id) => new mongoose.Types.ObjectId(id))},
-                user: new mongoose.Types.ObjectId(user._id),
+        const invalidItem = canvasItems.find(
+            item => !wardrobeSet.has(item.clothingId?.toString())
+        );
+
+        if (invalidItem) {
+            return res.status(403).json({
+                message: "One or more canvas items are not in your wardrobe",
             });
-
-            if (clothingItems.length !== items.length) return res.status(403).json({message: "Trying to update with items not in ur wardrobe"});
-
-            outfit.items = items;
         }
+
+        if (name !== undefined) outfit.name = name;
+        if (description !== undefined) outfit.description = description;
+        if (referenceImage !== undefined) outfit.referenceImage = referenceImage;
+
+        outfit.canvasItems = canvasItems;
 
         const updatedOutfit = await outfit.save();
 
-        res.status(200).json({
-            message: `Outfit ${outfit._id} updated successfully`,
+        return res.status(200).json({
+            message: "Outfit updated successfully",
             outfit: updatedOutfit,
         });
     }
-
-    catch(err) {
-        res.status(500).json({message: err.message});
+    catch(err){
+        return res.status(500).json({message: err.message})
     }
 }
 
@@ -141,7 +152,7 @@ const deleteOutfit = async (req, res) => {
             _id: id
         });
 
-        if (!outfit) return res.status(404).json({message: `Outfit with ID ${id} nout found`});
+        if (!outfit) return res.status(404).json({message: `Outfit with ID ${id} not found`});
 
         await Outfit.deleteOne({_id: id});
         res.status(200).json({ message: `Outfit ${outfit._id} successfully deleted` });
@@ -159,13 +170,20 @@ const searchOutfit = async (req, res) => {
 
         const {query} = req.query;
 
+        if (!query || !query.trim()) {
+            return res.status(400).json({
+                message: "Search query is required",
+            });
+        }
+
         const outfits = await Outfit.find({
             user: user._id,
             $or: [
                 { name: { $regex: query, $options: "i" } },
                 { description: { $regex: query, $options: "i" } }
             ]
-        }).populate("items");
+        }).sort({ updatedAt: -1 })
+        .populate("canvasItems.clothingId");    //might remove populate later. added for now because user may not have uploaded a preview/referenceImage
 
         return res.status(200).json(outfits);
     }
