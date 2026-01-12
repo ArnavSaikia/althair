@@ -67,10 +67,10 @@ const addClothingItem = async(req , res) =>{
 const fetchWardrobe = async (req,res) => {
     try {
         const user = await verifyToken(req);
-        if(!user) return res.status(400).json({message: "User not logged in or invalid token"});
+        if(!user) return res.status(401).json({message: "User not logged in or invalid token"});
 
-        const items = await Clothing.find({user: user._id});
-        res.status(200).json(items);    //might add pagination here if scale grows
+        const populatedUser = await user.populate("wardrobe.clothing");
+        res.status(200).json(populatedUser.wardrobe.map(wEntry => wEntry.clothing));    //might add pagination here if scale grows
     }
 
     catch(err) {
@@ -82,12 +82,22 @@ const fetchWardrobe = async (req,res) => {
 const fetchItem = async (req,res) => {
     try{
         const user = await verifyToken(req);
-        if(!user) return res.status(400).json({message: "User not logged in or invalid token"});
+        if(!user) return res.status(401).json({message: "User not logged in or invalid token"});
 
         const _id = req.params.id;
         const item = await Clothing.findOne({_id});
-        if(!item) res.status(400).json({message: `No item found with ID ${_id}`});
-        else res.status(200).json(item);
+
+        if(!item) res.status(404).json({message: `No item found with ID ${_id}`});
+        
+        if(item.isCurated) {
+            res.status(200).json(item);
+        }
+
+        const itemOwnedFlag = user.wardrobe.some(entry => entry.clothing.equals(item._id));
+
+        if(!itemOwnedFlag) res.status(403).json({message: "clothing not in user's wardrobe"});
+
+        res.status(200).json(item);
     }
 
     catch(err) {
