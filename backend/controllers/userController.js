@@ -12,7 +12,12 @@ const registerUser = async (req , res) => {
             res.status(400).json({message: "Email is already associated with an account"})
         }
         
-        let createdUser = new User({name , email , password});
+        let createdUser = new User({
+            name,
+            email,
+            password,
+            wardrobe: []
+        });
         createdUser = await createdUser.save();
 
         if(createdUser){
@@ -76,13 +81,19 @@ const logoutUser = (req,res) => {
 const fetchUserDetails = async (req,res) => {
     try{
         const user = await verifyToken(req);
-        res.status(200).json(user);
-    }
-    catch(err){
-        res.status(500).json({message: err.message});
-    }
-}
+        const safeUser = {
+            _id: user._id,
+            name: user.name,
+            email: user.email,
+            wardrobeCount: user.wardrobe?.length || 0
+        };
 
+        res.status(200).json(safeUser);
+    }
+    catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+};
 
 // update user details
 const updateUserDetails = async (req , res) => {
@@ -97,7 +108,10 @@ const updateUserDetails = async (req , res) => {
 
             if(name) user.name = name;
             if(email){
-                if(await User.findOne({email}) !== user) return res.status(400).json({message: "This email is already registered with another account"})
+                const existing = await User.findOne({ email });
+                if (existing && existing._id.toString() !== user._id.toString()) {
+                    return res.status(400).json({ message: "This email is already registered" });
+                }
                 user.email = email;
             }
             if(password) user.password = password;
