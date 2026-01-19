@@ -62,6 +62,35 @@ const addClothingItem = async(req , res) =>{
     }
 }
 
+//only adds the curated clothing reference to the user's wardrobe field
+const addCuratedToWardrobe = async (req,res) => {
+    try {
+        const user = await verifyToken(req);
+        if (!user) return res.status(401).json({ message: "Unauthorized" });
+
+        const clothing = await Clothing.findById(req.params.id);
+        if (!clothing || !clothing.isCurated) {
+            return res.status(404).json({ message: "Curated item not found" });
+        }
+
+        const alreadyExists = user.wardrobe.some(w =>
+            w.clothing.equals(clothing._id)
+        );
+
+        if (alreadyExists) {
+            return res.status(400).json({ message: "Already in wardrobe" });
+        }
+
+        user.wardrobe.push({ clothing: clothing._id });
+        await user.save();
+
+        res.status(200).json({ message: "Added to wardrobe" });
+    }
+    catch(err){
+        res.status(500).json({message: err.message});
+    }
+};
+
 
 // for the route GET /wardrobe
 const fetchWardrobe = async (req,res) => {
@@ -77,6 +106,21 @@ const fetchWardrobe = async (req,res) => {
         res.status(500).json({message: err.message});
     }
 
+};
+
+const fetchCurated = async (req,res) => {
+    try{
+        const { gender } = req.query;
+
+        const filters = { isCurated: true };
+        if (gender) filters.gender = gender;
+
+        const items = await Clothing.find(filters);
+        res.status(200).json(items);
+    }
+    catch(err) {
+        res.status(500).json({message: err.message});
+    }
 };
 
 const fetchItem = async (req,res) => {
@@ -105,27 +149,36 @@ const fetchItem = async (req,res) => {
     }
 }
 
-const updateItem = async (req,res) => {
-    try{
+const updateItem = async (req, res) => {
+    try {
         const user = await verifyToken(req);
-        if(!user) return res.status(400).json({message: "User not logged in or invalid token"});
+        if (!user) return res.status(401).json({ message: "Unauthorized" });
 
-        const _id = req.params.id;
-        const item = await Clothing.findOne({_id});
-        if (!item) return res.status(400).json({message: "Item Not Found"});
+        const clothing = await Clothing.findById(req.params.id);
+        if (!clothing || clothing.isCurated) {
+            return res.status(403).json({ message: "Cannot modify curated item" });
+        }
 
-        Object.keys(req.body).forEach((key) => {
-            item[key] = req.body[key];
+        const ownsItem = user.wardrobe.some(w =>
+            w.clothing.equals(clothing._id)
+        );
+
+        if (!ownsItem) {
+            return res.status(403).json({ message: "Not in your wardrobe" });
+        }
+
+        const allowed = ["name", "category", "color", "fit", "size", "additionalNotes"];
+        allowed.forEach(field => {
+            if (req.body[field] !== undefined) clothing[field] = req.body[field];
         });
 
-        const updatedItem = await item.save();
+        await clothing.save();
+        res.status(200).json(clothing);
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+};
 
-        res.status(200).json({message: `Item ${item._id} successfully update`, updatedItem});
-    }
-    catch(err){
-        res.status(500).json({message: err.message});
-    }
-}
 
 //for now this func is strictly for deleting user's own uploaded items. DO NOT ATTEMPT to use it on a webscraped item
 //possible soln i can think of rn: creating a new folder in s3 for web scraped items and adding a guard in this func to not touch that folder
