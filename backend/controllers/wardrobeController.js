@@ -187,18 +187,46 @@ const deleteItem = async (req,res) => {
         const user = await verifyToken(req);
         if(!user) return res.status(400).json({message: "User not logged in or invalid token"});
 
-        const _id = req.params.id;
-        const item = await Clothing.findOne({_id});
-        if (!item) return res.status(400).json({message: "Item Not Found"});
+        const { id } = req.params;
 
-        if (item.user.toString() !== user._id.toString()) {
-            return res.status(403).json({ message: "Not authorized to delete this item" });
+        const clothing = await Clothing.findById(id);
+        if (!clothing) {
+            return res.status(404).json({ message: "Item not found" });
         }
 
-        const url = item.imageUrl;
-        const urlParts = url.split('/');
-        const keyIndex = urlParts.findIndex(part => part === 'clothing'); // or wherever your folder starts
-        const s3Key = urlParts.slice(keyIndex).join('/');
+        // Check if item exists in user's wardrobe
+        const inWardrobe = user.wardrobe.some(entry =>
+            entry.clothing.equals(clothing._id)
+        );
+
+        if (!inWardrobe) {
+            return res.status(403).json({ message: "Item is not in your wardrobe" });
+        }
+
+        // curated item
+        if (clothing.isCurated) {
+            user.wardrobe = user.wardrobe.filter(
+                entry => !entry.clothing.equals(clothing._id)
+            );
+
+            await user.save();
+
+            return res.status(200).json({
+                message: "Removed curated item from your wardrobe"
+            });
+        }
+
+        //user's own item
+        // Remove from user's wardrobe first
+        user.wardrobe = user.wardrobe.filter(
+            entry => !entry.clothing.equals(clothing._id)
+        );
+        await user.save();
+
+        // Delete from S3
+        const urlParts = clothing.imageUrl.split("/");
+        const keyIndex = urlParts.findIndex(part => part === "clothing");
+        const s3Key = urlParts.slice(keyIndex).join("/");
 
         const s3 = new S3Client({
             region: process.env.AWS_REGION,
@@ -208,44 +236,64 @@ const deleteItem = async (req,res) => {
             },
         });
 
-        await s3.send(new DeleteObjectCommand({
-            Bucket: process.env.S3_BUCKET_NAME,
-            Key: s3Key,
-        }));
+        await s3.send(
+            new DeleteObjectCommand({
+                Bucket: process.env.S3_BUCKET_NAME,
+                Key: s3Key,
+            })
+        );
 
-        await Clothing.deleteOne({ _id });
+        // Finally delete the Clothing document
+        await Clothing.deleteOne({ _id: clothing._id });
 
-        res.status(200).json({message: `Item ${item._id} successfully deleted`});
+        res.status(200).json({
+            message: "Deleted clothing item and its image"
+        });
+
+    } catch (err) {
+        res.status(500).json({ message: err.message });
     }
-
-    catch(err) {
-        res.status(500).json({message: err.message});
-    }
-}
+};
 
 //using query params instead of body params cuz this is going to be a GET request
 //on the front end probably should implemnent blocks for each param in the search box. name being the default value of the box with params being the sub boxes
-const searchClothingItems = async (req,res) => {
-    try{
+const searchClothingItems = async (req, res) => {
+    try {
         const user = await verifyToken(req);
-        if(!user) return res.status(400).json({message: "User not logged in or invalid token"});
+        if (!user) {
+            return res.status(401).json({ message: "User not logged in or invalid token" });
+        }
 
-        const filters = { user: user._id };
+        const { q } = req.query;
 
-        const {category, color, size, fit, name} = req.query;
-        if (category) filters.category = category;
-        if (color) filters.color = color;
-        if (size) filters.size = size;
-        if (fit) filters.fit = fit;
-        if (name) filters.name = { $regex: name, $options: 'i' };
+        // If no query provided, just return full wardrobe
+        const populatedUser = await user.populate("wardrobe.clothing");
+        const wardrobeIds = populatedUser.wardrobe.map(entry => entry.clothing._id);
 
-        const items = await Clothing.find(filters);
+        if (!q) {
+            const allItems = await Clothing.find({ _id: { $in: wardrobeIds } });
+            return res.status(200).json({ items: allItems });
+        }
+
+        const regex = { $regex: q, $options: "i" };
+
+        const items = await Clothing.find({
+            _id: { $in: wardrobeIds },
+            $or: [
+                { name: regex },
+                { category: regex },
+                { color: regex },
+                { fit: regex },
+                { size: regex },
+                { additionalNotes: regex }
+            ]
+        });
+
         res.status(200).json({ items });
-    }
 
-    catch(err){
-        res.status(500).json({message: err.message});
+    } catch (err) {
+        res.status(500).json({ message: err.message });
     }
-}
+};
 
-module.exports = {addClothingItem , fetchWardrobe , fetchItem, updateItem, deleteItem, searchClothingItems};
+module.exports = {addClothingItem , addCuratedToWardrobe, fetchWardrobe , fetchItem, fetchCurated, updateItem, deleteItem, searchClothingItems};
