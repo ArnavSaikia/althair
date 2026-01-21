@@ -1,9 +1,15 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
+const cors = require("cors");
 require('dotenv').config();
 
 const app = express();
+
+app.use(cors({
+    origin: process.env.CLIENT_URL,
+    credentials: true,
+}));
 
 mongoose.connect(process.env.MONGO_URI)
 .then(() => app.listen(3000 , console.log("Server up on 3000")))

@@ -4,6 +4,8 @@ import AuthDivider from "@/Components/auth/AuthDivider"
 import { useState } from "react"
 
 function Signup() {
+    const API_URL = import.meta.env.VITE_API_BASE_URL;
+
     const diaryInputClass = `
         w-[85vw]
         max-w-md
@@ -20,22 +22,48 @@ function Signup() {
     `
 
 
-
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [confirmPassword, setConfirmPassword] = useState("")
+    const [name, setName] = useState("")
+    const [statusMessage, setStatusMessage] = useState("");
 
     const passwordsMatch =
         password !== "" &&
         confirmPassword !== "" &&
-        password === confirmPassword
+        password === confirmPassword;
 
     const isSignupValid =
         email.trim() !== "" &&
         password.trim() !== "" &&
         confirmPassword.trim() !== "" &&
-        passwordsMatch
+        passwordsMatch;
 
+    async function performSignUp(name, email, password) {
+        if (!isSignupValid) return null;
+        const response = await fetch(`${API_URL}/users/register`, {
+            method: "POST",
+            credentials: "include",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                name,
+                email,
+                password
+            })
+        });
+
+        const data = await response.json();
+        if (response.status >= 500) {
+            setStatusMessage("An internal error occurred");
+        } else if (response.status >= 400) {
+            setStatusMessage(data.message);
+        }
+        if(response.ok) console.log("Success signing in")
+        
+        //need to add navigation to home page after this when react router has been set up
+    }
 
     return (
         <AuthLayout title="Create your account">
@@ -44,6 +72,15 @@ function Signup() {
             <AuthDivider />
 
             <form className="space-y-4 flex flex-col items-center">
+                <input
+                    type="text"
+                    placeholder="Name"
+                    className={diaryInputClass}
+                    onChange={(e) => {
+                        setName(e.target.value)
+                    }}
+                />
+
                 <input
                     type="email"
                     placeholder="Email"
@@ -79,13 +116,20 @@ function Signup() {
                         text-[#8a877f]
                         text-center
                     ">
-                        Passwords don’t match
+                        Passwords don't match
                     </p>
                 )}
 
+                {statusMessage && (
+                    <span
+                        className="w-full text-center text-red"
+                    >{statusMessage}</span>
+                )}
 
                 <button
+                    onClick={() => performSignUp(name, email, password)}
                     disabled={!isSignupValid}
+                    type="button"
                     className={`
                         w-full
                         bg-neutral-800
