@@ -122,7 +122,16 @@ function Signup() {
 
                 {statusMessage && (
                     <span
-                        className="w-full text-center text-red"
+                        className="
+                        mt-2
+                        max-w-md
+                        text-center
+                        font-['Cormorant_Garamond']
+                        text-[14px]
+                        tracking-wide
+                        text-[#8a877f]
+                        leading-relaxed
+                    "
                     >{statusMessage}</span>
                 )}
 
