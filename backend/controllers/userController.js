@@ -10,6 +10,7 @@ const registerUser = async (req , res) => {
         const anyExisting = await User.findOne({email});
         if(anyExisting){
             res.status(400).json({message: "Email is already associated with an account"})
+            return
         }
         
         let createdUser = new User({

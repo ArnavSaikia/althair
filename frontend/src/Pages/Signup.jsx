@@ -60,7 +60,10 @@ function Signup() {
         } else if (response.status >= 400) {
             setStatusMessage(data.message);
         }
-        if(response.ok) console.log("Success signing in")
+        if(response.ok){
+            console.log("Success signing in");
+            setStatusMessage("");
+        }
         
         //need to add navigation to home page after this when react router has been set up
     }
@@ -71,7 +74,10 @@ function Signup() {
 
             <AuthDivider />
 
-            <form className="space-y-4 flex flex-col items-center">
+            <form className="space-y-4 flex flex-col items-center" onSubmit={(e) => {
+                e.preventDefault();
+                performSignUp(name, email, password);
+            }}>
                 <input
                     type="text"
                     placeholder="Name"
@@ -83,6 +89,8 @@ function Signup() {
 
                 <input
                     type="email"
+                    name="email"
+                    autoComplete="email"
                     placeholder="Email"
                     className={diaryInputClass}
                     onChange={(e) => {
@@ -92,6 +100,8 @@ function Signup() {
 
                 <input
                     type="password"
+                    name="password"
+                    autoComplete="new-password"
                     placeholder="Password"
                     className={diaryInputClass}
                     onChange={(e) => {
@@ -136,9 +146,8 @@ function Signup() {
                 )}
 
                 <button
-                    onClick={() => performSignUp(name, email, password)}
                     disabled={!isSignupValid}
-                    type="button"
+                    type="submit"
                     className={`
                         w-full
                         bg-neutral-800
