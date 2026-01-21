@@ -1,12 +1,28 @@
 import Navbar from "@/Components/Navbar";
 import Footer from "@/Components/Footer";
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useState , useEffect } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 
 function AccountPage() {
     const API_URL = import.meta.env.VITE_API_BASE_URL;
     const [details , setDetails] = useState(null);
+    const [loggingOut, setLoggingOut] = useState(false);
+    const [disableLogout, setDisableLogout] = useState(true);
+
+    async function logout() {
+        console.log(34);
+        setLoggingOut(true);
+        await fetch(`${API_URL}/users/logout`, {
+            method: "POST",
+            credentials: "include",
+            headers: {
+                "Content-Type": "application/json"
+            }
+        });
+        setLoggingOut(false);
+        await fetchDetails();
+    }
 
     async function fetchDetails() {
         const response = await fetch(`${API_URL}/users/profile`, {
@@ -19,6 +35,7 @@ function AccountPage() {
         const data = await response.json();
         if(response.ok){
             setDetails(data);
+            setDisableLogout(false);
             return;
         }
         setDetails({
@@ -28,18 +45,13 @@ function AccountPage() {
             clothingCount: "—",
             archiveStarted: "Date unknown",
         });
+        setDisableLogout(true);
 
     }
 
-    fetchDetails();
-
-    const user = {
-        name: "Arnav Saikia",
-        email: "arnav@email.com",
-        outfitsCount: 17,
-        clothingCount: 42,
-        archiveStarted: "March 2025",
-    }
+    useEffect(() => {
+        fetchDetails();
+    }, []);
 
     return (
         <div className="min-h-screen flex flex-col text-[#2f2e2b]">
@@ -124,22 +136,26 @@ function AccountPage() {
                     <div className="border-t border-[#3b3a36]/30" />
 
                     {/* Logout */}
-                    <button
-                        className="
-                        w-full
-                        border
-                        border-[#3b3a36]/40
-                        py-3
-                        font-['Cormorant_Garamond']
-                        text-[15px]
-                        text-[#2f2e2b]
-                        hover:opacity-70
-                        transition
-                        rounded-full
-                    "
-                    >
-                        Log out
-                    </button>
+                    {!disableLogout && (
+                        <button
+                            onClick={logout}
+                            disabled={loggingOut}
+                            className="
+                                w-full
+                                border
+                                border-[#3b3a36]/40
+                                py-3
+                                font-['Cormorant_Garamond']
+                                text-[15px]
+                                text-[#2f2e2b]
+                                hover:opacity-70
+                                transition
+                                rounded-full
+                            "
+                        >
+                            {loggingOut ? "Logging out…" : "Log out"}
+                        </button>
+                    )}
                 </section>
             </main>
 
