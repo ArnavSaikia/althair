@@ -1,4 +1,5 @@
 const User = require('../models/userModel');
+const Outfit = require('../models/OutfitModel');
 const generateToken = require('../utils/generateToken');
 const verifyToken = require('../utils/verifyToken');
 
@@ -82,11 +83,14 @@ const logoutUser = (req,res) => {
 const fetchUserDetails = async (req,res) => {
     try{
         const user = await verifyToken(req);
+        const outfitsOwned = await Outfit.find({user: user._id});
         const safeUser = {
             _id: user._id,
             name: user.name,
             email: user.email,
-            wardrobeCount: user.wardrobe?.length || 0
+            createdAt: user.createdAt,
+            wardrobeCount: user.wardrobe?.length || 0,
+            outfitCount : outfitsOwned.length
         };
 
         res.status(200).json(safeUser);

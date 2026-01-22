@@ -46,13 +46,13 @@ const addClothingItem = async(req , res) =>{
             size: size || null,
             additionalNotes: additionalNotes || null,
             imageUrl: `https://${process.env.S3_BUCKET_NAME}.s3.${process.env.AWS_REGION}.amazonaws.com/${params.Key}`,
-            source: "user",
+            source: "users",
             isCurated: false,
         });
 
         await newClothing.save();
 
-        user.wardrobe.push({ clothing: clothing._id });
+        user.wardrobe.push({ clothing: newClothing._id });
         await user.save();
 
         res.status(201).json({message: "Successfully Uploaded the Item", item: newClothing});

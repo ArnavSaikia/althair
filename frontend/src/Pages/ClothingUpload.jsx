@@ -4,6 +4,8 @@ import Footer from "@/Components/Footer"
 // import { useNavigate } from "react-router-dom"
 
 export default function ClothingUpload() {
+    const API_URL = import.meta.env.VITE_API_BASE_URL;
+
     // const navigate = useNavigate()
     const CATEGORIES = [
         "Upperwear",
@@ -23,6 +25,7 @@ export default function ClothingUpload() {
     const [size, setSize] = useState("")
     const [notes, setNotes] = useState("")
     const [status, setStatus] = useState("idle")
+    const [statusMessage, setStatusMessage] = useState("");
     // idle | loading | success
 
     const canSave = imageFile && name && category
@@ -35,18 +38,59 @@ export default function ClothingUpload() {
         setImagePreviewUrl(URL.createObjectURL(file))
     }
 
-    async function handleSave() {
-        if (!canSave || status !== "idle") return
+    // async function handleSave() {
+    //     if (!canSave || status !== "idle") return
 
-        setStatus("loading")
+    //     setStatus("loading")
 
-        setTimeout(() => {
-            setStatus("success")
+    //     setTimeout(() => {
+    //         setStatus("success")
 
+    //         setTimeout(() => {
+    //             // navigate("/clothing")
+    //         }, 900)
+    //     }, 1200)
+    // }
+
+    async function handleSave({name,category,color,fit,size,notes,imageFile}) {
+        if(!canSave || status !== "idle") return;
+        setStatus('loading');
+
+        const formData = new FormData();
+
+        formData.append("name", name);
+        formData.append("category", category);
+        formData.append("color", color);
+        formData.append("fit", fit);
+        formData.append("size", size);
+        formData.append("additionalNotes", notes);
+        formData.append("image", imageFile);
+
+        const response = await fetch(`${API_URL}/wardrobe/`, {
+            "method": "POST",
+            "credentials": "include",
+            "body": formData
+        });
+
+        const data  = await response.json();
+
+        if(response.ok){
+            console.log("success");
+            setStatus("success");
+            setStatusMessage("");
             setTimeout(() => {
-                // navigate("/clothing")
-            }, 900)
-        }, 1200)
+                // navigate to wardrobe collection
+            }, 900);
+        }
+
+        if (response.status >= 500) {
+            console.log(data.message);
+            setStatus("idle");
+            setStatusMessage("An internal error occurred");
+        } else if (response.status >= 400) {
+            setStatus("idle");
+            setStatusMessage(data.message);
+        }
     }
 
     const fieldBase = `
@@ -242,9 +286,25 @@ export default function ClothingUpload() {
                     `}
                 />
 
+                {statusMessage && (
+                    <span
+                        className="
+                        block
+                        mb-4
+                        max-w-md
+                        text-center
+                        font-['Cormorant_Garamond']
+                        text-[14px]
+                        tracking-wide
+                        text-[#8a877f]
+                        leading-relaxed
+                    "
+                    >{statusMessage}</span>
+                )}
+
                 {/* Save */}
                 <button
-                    onClick={handleSave}
+                    onClick={() => handleSave({name,category,color,fit,size,notes,imageFile})}
                     disabled={!canSave}
                     className={`
                         w-full

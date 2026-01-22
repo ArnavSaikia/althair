@@ -22,11 +22,11 @@ function App() {
     // <OutfitCollection/>
     // <OutfitPreview/>
     // <ClothingPreview/>
-    // <ClothingUpload/>
+    <ClothingUpload/>
     // <ClothingCollection/>
     // <Login/>
     // <Signup/>
-    <AccountPage/>
+    // <AccountPage/>
     // <CuratedCollection/>
   )
 }
