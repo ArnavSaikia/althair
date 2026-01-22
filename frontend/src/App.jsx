@@ -22,8 +22,8 @@ function App() {
     // <OutfitCollection/>
     // <OutfitPreview/>
     // <ClothingPreview/>
-    <ClothingUpload/>
-    // <ClothingCollection/>
+    // <ClothingUpload/>
+    <ClothingCollection/>
     // <Login/>
     // <Signup/>
     // <AccountPage/>

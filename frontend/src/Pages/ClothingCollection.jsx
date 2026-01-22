@@ -1,48 +1,82 @@
-import { useState } from "react"
+import { useState, useEffect} from "react"
 import Navbar from "@/Components/Navbar"
 import Footer from "@/Components/Footer"
 import CollectionHeader from "@/Components/CollectionHeader"
 import OutfitGrid from "@/Components/OutiftGrid"
 
 function ClothingCollection() {
+    const API_URL = import.meta.env.VITE_API_BASE_URL;
     // fake data for now
-    const clothing = [
-        {
-            id: 1,
-            name: "Ivory linen shirt",
-            category: "Upperwear",
-            preview: "./BuildOutfit/dress.png",
-            createdAt: "12 Dec 2025",
-        },
-        {
-            id: 2,
-            name: "Charcoal trousers",
-            category: "Bottomwear",
-            preview: "./BuildOutfit/jeans.png",
-            createdAt: "25 Dec 2025",
-        },
-        {
-            id: 3,
-            name: "Black leather loafers",
-            category: "Footwear",
-            preview: "./BuildOutfit/boots.png",
-            createdAt: "8 Jan 2026",
-        },
-        {
-            id: 4,
-            name: "Silver chain",
-            category: "Accessories",
-            preview: "./BuildOutfit/watch.png",
-            createdAt: "15 Jan 2026",
-        },
-        {
-            id: 5,
-            name: "Soft cotton tee",
-            category: "Upperwear",
-            preview: "./BuildOutfit/blueHoodie.png",
-            createdAt: "3 Feb 2026",
-        },
-    ]
+    // const clothing = [
+    //     {
+    //         id: 1,
+    //         name: "Ivory linen shirt",
+    //         category: "Upperwear",
+    //         preview: "./BuildOutfit/dress.png",
+    //         createdAt: "12 Dec 2025",
+    //     },
+    //     {
+    //         id: 2,
+    //         name: "Charcoal trousers",
+    //         category: "Bottomwear",
+    //         preview: "./BuildOutfit/jeans.png",
+    //         createdAt: "25 Dec 2025",
+    //     },
+    //     {
+    //         id: 3,
+    //         name: "Black leather loafers",
+    //         category: "Footwear",
+    //         preview: "./BuildOutfit/boots.png",
+    //         createdAt: "8 Jan 2026",
+    //     },
+    //     {
+    //         id: 4,
+    //         name: "Silver chain",
+    //         category: "Accessories",
+    //         preview: "./BuildOutfit/watch.png",
+    //         createdAt: "15 Jan 2026",
+    //     },
+    //     {
+    //         id: 5,
+    //         name: "Soft cotton tee",
+    //         category: "Upperwear",
+    //         preview: "./BuildOutfit/blueHoodie.png",
+    //         createdAt: "3 Feb 2026",
+    //     },
+    // ]
+
+    const [clothing, setClothing] = useState([]);
+
+    useEffect(() => {
+        let isMounted = true;
+
+        async function fetchClothing() {
+            try {
+                const response = await fetch(`${API_URL}/wardrobe/`, {
+                    method: "GET",
+                    credentials: "include",
+                });
+
+                if (!response.ok) {
+                    if (isMounted) setClothing([]);
+                    return;
+                }
+
+                const data = await response.json();
+                if (isMounted) setClothing(data);
+            } catch (err) {
+                if (isMounted) setClothing([]);
+            }
+        }
+
+        fetchClothing();
+
+        return () => {
+            isMounted = false;
+        };
+    }, []);
+
+
 
     const CATEGORIES = [
         "Upperwear",
@@ -63,7 +97,7 @@ function ClothingCollection() {
 
     const groupedByCategory = CATEGORIES.map(category => ({
         category,
-        items: sortedClothing.filter(item => item.category === category),
+        items: sortedClothing.filter(item => item.category?.toLowerCase() === category.toLowerCase()),
     }))
 
     return (
@@ -150,8 +184,8 @@ function ClothingCollection() {
                                         >
                                             {items.map(item => (
                                                 <img
-                                                    key={item.id}
-                                                    src={item.preview}
+                                                    key={item._id}
+                                                    src={item.imageUrl}
                                                     alt=""
                                                     className="
                                                         w-full
