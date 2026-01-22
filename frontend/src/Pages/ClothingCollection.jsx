@@ -6,45 +6,6 @@ import OutfitGrid from "@/Components/OutiftGrid"
 
 function ClothingCollection() {
     const API_URL = import.meta.env.VITE_API_BASE_URL;
-    // fake data for now
-    // const clothing = [
-    //     {
-    //         id: 1,
-    //         name: "Ivory linen shirt",
-    //         category: "Upperwear",
-    //         preview: "./BuildOutfit/dress.png",
-    //         createdAt: "12 Dec 2025",
-    //     },
-    //     {
-    //         id: 2,
-    //         name: "Charcoal trousers",
-    //         category: "Bottomwear",
-    //         preview: "./BuildOutfit/jeans.png",
-    //         createdAt: "25 Dec 2025",
-    //     },
-    //     {
-    //         id: 3,
-    //         name: "Black leather loafers",
-    //         category: "Footwear",
-    //         preview: "./BuildOutfit/boots.png",
-    //         createdAt: "8 Jan 2026",
-    //     },
-    //     {
-    //         id: 4,
-    //         name: "Silver chain",
-    //         category: "Accessories",
-    //         preview: "./BuildOutfit/watch.png",
-    //         createdAt: "15 Jan 2026",
-    //     },
-    //     {
-    //         id: 5,
-    //         name: "Soft cotton tee",
-    //         category: "Upperwear",
-    //         preview: "./BuildOutfit/blueHoodie.png",
-    //         createdAt: "3 Feb 2026",
-    //     },
-    // ]
-
     const [clothing, setClothing] = useState([]);
 
     useEffect(() => {

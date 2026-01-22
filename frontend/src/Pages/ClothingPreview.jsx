@@ -2,6 +2,8 @@ import Navbar from "@/components/Navbar"
 import Footer from "@/Components/Footer"
 
 export default function ClothingPreview() {
+    const API_URL = import.meta.env.VITE_API_BASE_URL;
+    
     // Temporary boilerplate data
     const item = {
         _id: "mock-clothing-id",

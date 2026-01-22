@@ -1,5 +1,6 @@
 const verifyToken = require('../utils/verifyToken');
 const Clothing = require('../models/ClothingModel');
+const Outfit = require('../models/OutfitModel');
 const { S3Client, PutObjectCommand, DeleteObjectCommand } = require('@aws-sdk/client-s3');
 
 // for the route POST /wardrobe/add
@@ -131,17 +132,31 @@ const fetchItem = async (req,res) => {
         const _id = req.params.id;
         const item = await Clothing.findOne({_id});
 
-        if(!item) res.status(404).json({message: `No item found with ID ${_id}`});
+        if(!item) {
+            res.status(404).json({message: `No item found with ID ${_id}`});
+            return;
+        }
         
         if(item.isCurated) {
             res.status(200).json(item);
+            return;
         }
 
         const itemOwnedFlag = user.wardrobe.some(entry => entry.clothing.equals(item._id));
 
-        if(!itemOwnedFlag) res.status(403).json({message: "clothing not in user's wardrobe"});
+        if(!itemOwnedFlag){
+            res.status(403).json({message: "clothing not in user's wardrobe"});
+            return;
+        }
 
-        res.status(200).json(item);
+        const presentIn = await Outfit.find({
+            user: user._id,
+            "canvasItem.clothingId": item._id
+        }).populate('canvasItem.clothingId');
+        
+        const itemObj = item.toObject();
+        itemObj.presentIn = presentIn;
+        res.status(200).json(itemObj);
     }
 
     catch(err) {
