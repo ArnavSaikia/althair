@@ -24,6 +24,17 @@ export default function ClothingPreview() {
         }
     }
 
+    async function addToWardrobe(){
+        const response = await fetch(`${API_URL}/wardrobe/add-curated/${id}` , {
+            "method": "POST",
+            "credentials": "include"
+        });
+        const data  = await response.json();
+        if(response.ok){
+            //redirect to wardrobe collection
+        }
+    }
+
     useEffect(() => {
         fetchOutfit(id)
     }, [id]);
@@ -292,6 +303,32 @@ export default function ClothingPreview() {
                 )}
             </section>
 
+            {item.isCurated && (
+                <section className="max-w-md mx-auto px-6 pb-12">
+                    <button
+                        onClick={addToWardrobe}
+                        className="
+                            w-full
+                            py-3
+                            rounded-full
+                            border
+                            border-neutral-800
+                            text-[13px]
+                            tracking-wide
+                            font-['Cormorant_Garamond']
+                            text-neutral-900
+                            transition
+                            hover:bg-neutral-900
+                            hover:text-white
+                            disabled:opacity-50
+                            disabled:cursor-not-allowed
+                        "
+                    >
+                        Add to wardrobe
+                    </button>
+                </section>
+            )}
+
 
             {/* Provenance */}
             <section
@@ -312,7 +349,11 @@ export default function ClothingPreview() {
                             text-[#8a877f]
                         "
                     >
-                        Added {item.createdAt} · {item.source}
+                            Added {new Date(item.createdAt).toLocaleDateString('en-US', {
+                                day: 'numeric',
+                                month: 'short',
+                                year: 'numeric'
+                            })} ·
                     </p>
                 )}
             </section>
