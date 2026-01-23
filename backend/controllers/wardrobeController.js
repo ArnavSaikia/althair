@@ -152,8 +152,9 @@ const fetchItem = async (req,res) => {
         const presentIn = await Outfit.find({
             user: user._id,
             "canvasItem.clothingId": item._id
-        }).populate('canvasItem.clothingId');
-        
+        })
+        // .populate('canvasItem.clothingId'); not quite sure if we need to populate here since we already have src for the canvasItems
+
         const itemObj = item.toObject();
         itemObj.presentIn = presentIn;
         res.status(200).json(itemObj);
