@@ -58,13 +58,13 @@ export default function ClothingUpload() {
 
         const formData = new FormData();
 
-        formData.append("name", name);
-        formData.append("category", category);
-        formData.append("color", color);
-        formData.append("fit", fit);
-        formData.append("size", size);
-        formData.append("additionalNotes", notes);
-        formData.append("image", imageFile);
+        if (name?.trim()) formData.append("name", name.trim());
+        if (category) formData.append("category", category);
+        if (color?.trim()) formData.append("color", color.trim());
+        if (fit) formData.append("fit", fit);
+        if (size) formData.append("size", size);
+        if (notes?.trim()) formData.append("additionalNotes", notes.trim());
+        if (imageFile) formData.append("image", imageFile);
 
         const response = await fetch(`${API_URL}/wardrobe/`, {
             "method": "POST",

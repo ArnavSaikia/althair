@@ -1,46 +1,73 @@
 import Navbar from "@/components/Navbar"
-import Footer from "@/Components/Footer"
+import Footer from "@/Components/Footer";
+import { useState , useEffect } from "react";
+import { useParams } from "react-router-dom";
+import { Skeleton } from "@/components/ui/skeleton"
 
 export default function ClothingPreview() {
     const API_URL = import.meta.env.VITE_API_BASE_URL;
-    
-    // Temporary boilerplate data
-    const item = {
-        _id: "mock-clothing-id",
-        user: "mock-user-id",
+    const {id} = useParams();
 
-        name: "Draped Red Dress",
-        category: "Outerwear",
-        color: "Blood Red",
-        fit: "Relaxed",
-        size: "M",
-
-        additionalNotes:
-            "Softened through repeated wear. Slight fading at the cuffs.",
-
-        imageUrl:
-            "./BuildOutfit/dress.png",
-
-        // Fake relational data
-        usedIn: [
-            {
-                id: "outfit-1",
-                preview:
-                    "/redOutfit.jpg",
-            },
-            {
-                id: "outfit-2",
-                preview:
-                    "/redOutfit2.jpg",
-            },
-        ],
-
-        editorialNote:
-            "A dependable layer. Chosen more often for comfort than intention, yet it quietly anchors most transitional outfits.",
-
-        createdAt: "Mar 2025",
-        source: "Personal wardrobe",
+    async function fetchOutfit(id){
+        const response = await fetch(`${API_URL}/wardrobe/${id}`, {
+            "method": "GET",
+            "credentials": "include"
+        });
+        const data = await response.json();
+        if(response.ok) {
+            setItem(data);
+            setIsLoading(false);
+        }
+        if(response.status == 404){
+            // navigate to 404 page
+        }
     }
+
+    useEffect(() => {
+        fetchOutfit(id)
+    }, [id]);
+
+
+    // Temporary boilerplate data
+    // const item = {
+    //     _id: "mock-clothing-id",
+    //     user: "mock-user-id",
+
+    //     name: "Draped Red Dress",
+    //     category: "Outerwear",
+    //     color: "Blood Red",
+    //     fit: "Relaxed",
+    //     size: "M",
+
+    //     additionalNotes:
+    //         "Softened through repeated wear. Slight fading at the cuffs.",
+
+    //     imageUrl:
+    //         "./BuildOutfit/dress.png",
+
+    //     // Fake relational data
+    //     usedIn: [
+    //         {
+    //             id: "outfit-1",
+    //             preview:
+    //                 "/redOutfit.jpg",
+    //         },
+    //         {
+    //             id: "outfit-2",
+    //             preview:
+    //                 "/redOutfit2.jpg",
+    //         },
+    //     ],
+
+    //     editorialNote:
+    //         "A dependable layer. Chosen more often for comfort than intention, yet it quietly anchors most transitional outfits.",
+
+    //     createdAt: "Mar 2025",
+    //     source: "Personal wardrobe",
+    // }
+
+    const [item , setItem] = useState({});
+    const [isLoading , setIsLoading ] = useState(true);
 
     return (
         <main className="w-full">
@@ -57,15 +84,16 @@ export default function ClothingPreview() {
                     bg-[radial-gradient(ellipse_at_22%_16%,#fdfbf8_0%,#f3efe9_35%,#ebe6df_60%,#e2ddd6_75%),radial-gradient(ellipse_at_85%_85%,rgba(0,0,0,0.08)_0%,rgba(0,0,0,0)_55%)]
                 "
             >
-                <img
-                    src={item.imageUrl}
-                    alt=""
-                    className="
-                        max-h-[420px]
-                        w-auto
-                        object-contain
-                    "
-                />
+                {isLoading ? (
+                    <Skeleton className="h-[320px] w-[220px] rounded-xl" />
+                ) : (
+                    <img
+                        src={item.imageUrl}
+                        alt=""
+                        className="max-h-[420px] w-auto object-contain"
+                    />
+                )}
+
             </section>
 
             {/* Metadata */}
@@ -78,33 +106,50 @@ export default function ClothingPreview() {
                     pb-10
                 "
             >
-                <h2
-                    className="
+                {isLoading ? (
+                    <Skeleton className="h-8 w-[220px]" />
+                ) : (
+                    <h2
+                        className="
                         font-['Cormorant_Garamond']
                         text-[28px]
                         leading-tight
                         text-[#2c2b28]
                         font-light
                     "
-                >
-                    {item.name}
-                </h2>
+                    >
+                        {item.name}
+                    </h2>
+                )}
 
-                <p
-                    className="
+
+                {isLoading ? (
+                    <Skeleton className="mt-2 h-3 w-[160px]" />
+                ) : (
+                    <p
+                        className="
                         mt-2
                         text-[11px]
                         tracking-wide
                         text-[#6f6c66]
                     "
-                >
-                    {item.category}
-                    {item.color && ` · ${item.color}`}
-                </p>
+                    >
+                        {item.category ? item.category : "Unknown Category"}
+                        {item.color ? ` · ${item.color}` : " · Unknown color"}
+                    </p>
+                )}
 
-                {item.additionalNotes && (
-                    <p
-                        className="
+
+                {isLoading ? (
+                    <div className="mt-5 space-y-2">
+                        <Skeleton className="h-4 w-[240px]" />
+                        <Skeleton className="h-4 w-[200px]" />
+                        <Skeleton className="h-4 w-[180px]" />
+                    </div>
+                ) : (
+                    (
+                        <p
+                            className="
                             mt-5
                             font-['Cormorant_Garamond']
                             text-[16px]
@@ -112,108 +157,135 @@ export default function ClothingPreview() {
                             text-[#5a5853]
                             max-w-[42ch]
                         "
-                    >
-                        {item.additionalNotes}
-                    </p>
+                        >
+                            {item.additionalNotes ? item.additionalNotes : "Piece Not Described"}
+                        </p>
+                    )
                 )}
+
             </section>
 
             {/* Appears In */}
-            {item.usedIn?.length > 0 && (
-                <section
-                    className="
-                        max-w-md
-                        mx-auto
-                        px-6
-                        pb-10
-                    "
-                >
-                    <h3
-                        className="
-                            font-['Cormorant_Garamond']
-                            text-[22px]
-                            leading-tight
-                            text-[#2c2b28]
-                            font-light
-                            mb-5
-                        "
-                    >
-                        Appears in
-                    </h3>
-
-                    <div
-                        className="
-                            flex
-                            gap-4
-                            overflow-x-auto
-                        "
-                    >
-                        {item.usedIn.map((outfit) => (
-                            <button
-                                key={outfit.id}
-                                className="
-                                    flex-shrink-0
-                                    w-[96px]
-                                    h-[128px]
-                                    overflow-hidden
-                                    cursor-pointer
-                                "
-                            >
-                                <img
-                                    src={outfit.preview}
-                                    alt=""
-                                    className="
-                                        w-full
-                                        h-full
-                                        object-cover
-                                        transition-opacity
-                                        duration-200
-                                        hover:opacity-80
-                                        rounded-lg
-                                    "
-                                />
-                            </button>
+            {isLoading ? (
+                <section className="max-w-md mx-auto px-6 pb-10">
+                    <Skeleton className="h-6 w-[120px] mb-5" />
+                    <div className="flex gap-4">
+                        {[...Array(3)].map((_, i) => (
+                            <Skeleton
+                                key={i}
+                                className="w-[96px] h-[128px] rounded-lg"
+                            />
                         ))}
                     </div>
                 </section>
+                ) : (
+                    item.usedIn?.length > 0 && (
+                        <section
+                            className="
+                                max-w-md
+                                mx-auto
+                                px-6
+                                pb-10
+                            "
+                        >
+                            <h3
+                                className="
+                                    font-['Cormorant_Garamond']
+                                    text-[22px]
+                                    leading-tight
+                                    text-[#2c2b28]
+                                    font-light
+                                    mb-5
+                                "
+                            >
+                                Appears in
+                            </h3>
+
+                            <div
+                                className="
+                                    flex
+                                    gap-4
+                                    overflow-x-auto
+                                "
+                            >
+                                {item.usedIn.map((outfit) => (
+                                    <button
+                                        key={outfit.id}
+                                        className="
+                                            flex-shrink-0
+                                            w-[96px]
+                                            h-[128px]
+                                            overflow-hidden
+                                            cursor-pointer
+                                        "
+                                    >
+                                        <img
+                                            src={outfit.preview}
+                                            alt=""
+                                            className="
+                                                w-full
+                                                h-full
+                                                object-cover
+                                                transition-opacity
+                                                duration-200
+                                                hover:opacity-80
+                                                rounded-lg
+                                            "
+                                        />
+                                    </button>
+                                ))}
+                            </div>
+                        </section>
+                )
             )}
+
 
             {/* Reflection */}
-            {item.editorialNote && (
-                <section
-                    className="
-                        max-w-md
-                        mx-auto
-                        px-6
-                        pb-10
-                    "
-                >
-                    <h3
-                        className="
-                            font-['Cormorant_Garamond']
-                            text-[22px]
-                            leading-tight
-                            text-[#2c2b28]
-                            font-light
-                            mb-5
-                        "
-                    >
-                        Reflection
-                    </h3>
+            <section
+                className="
+                    max-w-md
+                    mx-auto
+                    px-6
+                    pb-10
+                "
+            >
+                {isLoading ? (
+                    <div className="space-y-3 max-w-[42ch]">
+                        <Skeleton className="h-4 w-full" />
+                        <Skeleton className="h-4 w-[90%]" />
+                        <Skeleton className="h-4 w-[75%]" />
+                    </div>
+                ) : (
+                     (
+                        <>
+                            <h3
+                                className="
+                                font-['Cormorant_Garamond']
+                                text-[22px]
+                                leading-tight
+                                text-[#2c2b28]
+                                font-light
+                                mb-5
+                            "
+                            >
+                                Reflection
+                            </h3>
+                            <p
+                                className="
+                                    font-['Cormorant_Garamond']
+                                    text-[16px]
+                                    leading-[1.7]
+                                    text-[#5a5853]
+                                    max-w-[42ch]
+                                "
+                            >
+                                {item.editorialNote ? item.editorialNote : "Recommendations not available at the moment"}
+                            </p>
+                        </>
+                    )
+                )}
+            </section>
 
-                    <p
-                        className="
-                            font-['Cormorant_Garamond']
-                            text-[16px]
-                            leading-[1.7]
-                            text-[#5a5853]
-                            max-w-[42ch]
-                        "
-                    >
-                        {item.editorialNote}
-                    </p>
-                </section>
-            )}
 
             {/* Provenance */}
             <section
@@ -224,15 +296,19 @@ export default function ClothingPreview() {
                     pb-10
                 "
             >
-                <p
-                    className="
-                        text-[11px]
-                        tracking-wide
-                        text-[#8a877f]
-                    "
-                >
-                    Added {item.createdAt} · {item.source}
-                </p>
+                {isLoading ? (
+                    <Skeleton className="h-3 w-[220px]" />
+                ) : (
+                    <p
+                       x className="
+                            text-[11px]
+                            tracking-wide
+                            text-[#8a877f]
+                        "
+                    >
+                        Added {item.createdAt} · {item.source}
+                    </p>
+                )}
             </section>
 
             <Footer/>
