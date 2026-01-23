@@ -1,5 +1,6 @@
 import Navbar from "@/components/Navbar"
 import Footer from "@/Components/Footer";
+import CanvasPreview from "@/Components/CanvasPreview";
 import { useState , useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Skeleton } from "@/components/ui/skeleton"
@@ -219,8 +220,8 @@ export default function ClothingPreview() {
                                             cursor-pointer
                                         "
                                     >
-                                        <img
-                                            src={outfit.preview}
+                                        {outfit.referenceImage ? (<img
+                                            src={outfit.referenceImage}
                                             alt=""
                                             className="
                                                 w-full
@@ -231,7 +232,12 @@ export default function ClothingPreview() {
                                                 hover:opacity-80
                                                 rounded-lg
                                             "
-                                        />
+                                            />) :
+                                            (
+                                                <CanvasPreview items={outfit.canvasItems}/>
+                                            )
+                                    
+                                        }
                                     </button>
                                 ))}
                             </div>
