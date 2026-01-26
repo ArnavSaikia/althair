@@ -1,38 +1,58 @@
-import { useState, useRef } from "react"
+import { useState, useRef, useEffect} from "react"
 import DraggableItem from "@/Components/DraggableItem"
 import Navbar from "../Components/Navbar"
 import SaveOutfitModal from "@/Components/SaveOutfitModal"
 
 
-const wardrobeItems = [
-    { id: 1, src: "BuildOutfit/jacket.png", type: "top" },
-    { id: 2, src: "BuildOutfit/jeans.png", type: "bottom" },
-    { id: 3, src: "BuildOutfit/boots.png", type: "shoes" },
-    { id: 4, src: "BuildOutfit/jacket.png", type: "top" },
-    { id: 5, src: "BuildOutfit/jeans.png", type: "bottom" },
-    { id: 6, src: "BuildOutfit/boots.png", type: "shoes" },
-    { id: 7, src: "BuildOutfit/jacket.png", type: "top" },
-    { id: 8, src: "BuildOutfit/jeans.png", type: "bottom" },
-    { id: 9, src: "BuildOutfit/boots.png", type: "shoes" },
-    { id: 10, src: "BuildOutfit/jacket.png", type: "top" },
-    { id: 11, src: "BuildOutfit/jeans.png", type: "bottom" },
-    { id: 12, src: "BuildOutfit/boots.png", type: "shoes" }
-];
+// const wardrobeItems = [
+//     { id: 1, src: "BuildOutfit/jacket.png", type: "top" },
+//     { id: 2, src: "BuildOutfit/jeans.png", type: "bottom" },
+//     { id: 3, src: "BuildOutfit/boots.png", type: "shoes" },
+//     { id: 4, src: "BuildOutfit/jacket.png", type: "top" },
+//     { id: 5, src: "BuildOutfit/jeans.png", type: "bottom" },
+//     { id: 6, src: "BuildOutfit/boots.png", type: "shoes" },
+//     { id: 7, src: "BuildOutfit/jacket.png", type: "top" },
+//     { id: 8, src: "BuildOutfit/jeans.png", type: "bottom" },
+//     { id: 9, src: "BuildOutfit/boots.png", type: "shoes" },
+//     { id: 10, src: "BuildOutfit/jacket.png", type: "top" },
+//     { id: 11, src: "BuildOutfit/jeans.png", type: "bottom" },
+//     { id: 12, src: "BuildOutfit/boots.png", type: "shoes" }
+// ];
 
 const wardrobeCategories = [
-    { key: "top", label: "Topwear" },
-    { key: "bottom", label: "Bottomwear" },
-    { key: "shoes", label: "Footwear" },
-    { key: "accessories", label: "Accessories" }
+    { key: "Upperwear", label: "Upperwear" },
+    { key: "Bottomwear", label: "Bottomwear" },
+    { key: "Footwear", label: "Footwear" },
+    { key: "Accessories", label: "Accessories" }
 ];
 
 
 function BuildOutfit() {
+    const API_URL = import.meta.env.VITE_API_BASE_URL;
+
     const [isWardrobeOpen, setIsWardrobeOpen] = useState(false)
     const [canvasItems, setCanvasItems] = useState([])  //the x and y here are normalized w.r.t to the canvas' width nd height respectively
     const [selectedId, setSelectedId] = useState(null)
     const [referenceImage, setReferenceImage] = useState(null)
     const fileInputRef = useRef(null)   //for reference outfit image upload
+
+    const [wardrobeItems, setWardrobeItems] = useState([]);
+    useEffect(() => {
+        const fetchWardrobe = async () => {
+            const response = await fetch(`${API_URL}/wardrobe/`, {
+                method: "GET",
+                credentials: "include",
+            });
+
+            const data = await response.json();
+            console.log(data);
+
+            if (response.ok) setWardrobeItems(data);
+        };
+
+        fetchWardrobe();
+    }, []);
+
 
     //for propagating x and y values of each item back to main page component
     const canvasRef = useRef(null);
@@ -368,7 +388,7 @@ function BuildOutfit() {
 
                     {wardrobeCategories.map(category => {
                         const items = wardrobeItems.filter(
-                            item => item.type === category.key
+                            item => item.category === category.key
                         )
 
                         if (items.length === 0) return null
@@ -405,7 +425,7 @@ function BuildOutfit() {
                                             "
                                         >
                                             <img
-                                                src={item.src}
+                                                src={item.imageUrl}
                                                 alt=""
                                                 className="
                                                     w-full h-full object-cover

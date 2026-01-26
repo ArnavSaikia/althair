@@ -8,12 +8,12 @@ router.get('/', fetchWardrobe);
 
 router.post('/add-curated/:id', addCuratedToWardrobe);
 
-router.get('/search', searchClothingItems);
+router.get('/search', searchClothingItems); //not implemented on frontend yet
 
 router.get('/:id', fetchItem);
 
-router.put('/:id', updateItem);
+router.put('/:id', updateItem); //not implemented on frontend yet
 
-router.delete('/:id', deleteItem);
+router.delete('/:id', deleteItem);  //not implemented on frontend yet
 
 module.exports = router;
