@@ -509,7 +509,7 @@ function BuildOutfit() {
                     });
                     const data = await response.json();
                     if(response.ok) console.log("Successfully uploaded");
-                    else console.log(data.message);
+                    else throw new Error(data.message || "Failed to save outfit");
                 }}
             />
 

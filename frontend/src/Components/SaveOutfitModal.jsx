@@ -216,8 +216,8 @@ function SaveOutfitModal({ isOpen, onClose, onSave, referenceImageFile, referenc
                         Something went wrong
                     </span>
                     <button
-                    onClick={() => setStatus("idle")}
-                    className="text-sm underline"
+                        onClick={() => setStatus("idle")}
+                        className="text-sm underline"
                     >
                         Try again
                     </button>
