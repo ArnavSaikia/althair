@@ -99,7 +99,7 @@ function DraggableItem({ item, onScale, onSelect, isSelected, onDelete, onDragEn
             )}
 
           <img
-            src={item.src}
+            src={item.imageUrl}
             draggable={false}
             onTouchMove={handleTouchMove}
             onTouchEnd={handleTouchEnd}
