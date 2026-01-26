@@ -6,6 +6,7 @@ function SaveOutfitModal({ isOpen, onClose, onSave, referenceImageFile, referenc
     const [description, setDescription] = useState("")
     const [status, setStatus] = useState("idle")
     // "idle" | "loading" | "success" | "error"
+    const navigate = useNavigate();
 
     async function handleSave() {
         if (name.length === 0 || status === "loading") return;
@@ -17,8 +18,7 @@ function SaveOutfitModal({ isOpen, onClose, onSave, referenceImageFile, referenc
             setStatus("success");
 
             setTimeout(() => {
-                onClose()
-                const navigate = useNavigate();
+                onClose();
                 navigate("/outfits");
             }, 1300);
         } catch (e) {

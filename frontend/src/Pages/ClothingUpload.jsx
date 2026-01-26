@@ -1,9 +1,11 @@
 import { useState, useRef } from "react"
 import Navbar from "@/Components/Navbar"
-import Footer from "@/Components/Footer"
+import Footer from "@/Components/Footer";
+import { useNavigate } from "react-router-dom";
 // import { useNavigate } from "react-router-dom"
 
 export default function ClothingUpload() {
+    const navigate = useNavigate();
     const API_URL = import.meta.env.VITE_API_BASE_URL;
 
     // const navigate = useNavigate()
@@ -79,7 +81,7 @@ export default function ClothingUpload() {
             setStatus("success");
             setStatusMessage("");
             setTimeout(() => {
-                // navigate to wardrobe collection
+                navigate('/wardrobe');
             }, 900);
         }
 
