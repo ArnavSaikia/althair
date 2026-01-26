@@ -461,6 +461,10 @@ function BuildOutfit() {
                     formData.append("name", name.trim());
                     if (description?.trim()) formData.append("description", description.trim());
                     if (referenceImageFile) formData.append("referenceImage", referenceImageFile);
+                    formData.append(
+                        "canvasItems",
+                        JSON.stringify(canvasItems)
+                    );
 
                     const response = await fetch(`${API_URL}/outfits/`, {
                         method: "POST",
