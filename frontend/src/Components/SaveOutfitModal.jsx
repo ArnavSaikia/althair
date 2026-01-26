@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function SaveOutfitModal({ isOpen, onClose, onSave, referenceImageFile, referenceImagePreview }) {
     const [name, setName] = useState("")
@@ -18,7 +18,8 @@ function SaveOutfitModal({ isOpen, onClose, onSave, referenceImageFile, referenc
 
             setTimeout(() => {
                 onClose()
-                Navigate("/outfits")
+                const navigate = useNavigate();
+                navigate("/outfits");
             }, 1300);
         } catch (e) {
             console.log(e);

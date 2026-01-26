@@ -113,17 +113,29 @@ function BuildOutfit() {
 
 
     const addToCanvas = (item) => {
+        const canvasWidth =
+            canvasRef.current.getBoundingClientRect().width;
+        const canvasHeight =
+            canvasRef.current.getBoundingClientRect().height;
+
+        const DEFAULT_WIDTH = 128;
+
         setCanvasItems(prev => [
             ...prev,
             {
                 ...item,
+                clothingId: item._id,
+                src: item.imageUrl,
+                type: item.category,
                 canvasId: crypto.randomUUID(),
                 x: 0,
                 y: 0,
                 scale: 1,
                 normalizedScale: 128/canvasRef.current.getBoundingClientRect().width,
                 // because default image size is w-32 in the code which is equal to 128 pixels
-                zIndex: canvasItems.length
+                zIndex: canvasItems.length,
+                xCenter: (DEFAULT_WIDTH / 2) / canvasWidth,
+                yCenter: (DEFAULT_WIDTH / 2) / canvasHeight,
             }
         ])
         setIsWardrobeOpen(false)
@@ -134,6 +146,28 @@ function BuildOutfit() {
             prev.filter(item => item.canvasId !== canvasId)
         )
     }
+
+    const cleanCanvasItems = (canvasItems) => { //cleans the canvasItems array for abiding by the backend api so it can be POSTed
+        return canvasItems.map(item => ({
+            clothingId: item.clothingId,
+            src: item.src,
+            type: item.type,
+
+            canvasId: item.canvasId,
+
+            x: item.x,
+            y: item.y,
+
+            scale: item.scale,
+            normalizedScale: item.normalizedScale,
+
+            zIndex: item.zIndex,
+
+            xCenter: item.xCenter ?? null,
+            yCenter: item.yCenter ?? null,
+        }));
+    };
+
 
 
     return (
@@ -461,9 +495,11 @@ function BuildOutfit() {
                     formData.append("name", name.trim());
                     if (description?.trim()) formData.append("description", description.trim());
                     if (referenceImageFile) formData.append("referenceImage", referenceImageFile);
+
+                    const cleanedCanvasItems = cleanCanvasItems(canvasItems);
                     formData.append(
                         "canvasItems",
-                        JSON.stringify(canvasItems)
+                        JSON.stringify(cleanedCanvasItems)
                     );
 
                     const response = await fetch(`${API_URL}/outfits/`, {
