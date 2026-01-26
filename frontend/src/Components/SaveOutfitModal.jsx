@@ -1,25 +1,27 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect } from "react";
+import { Navigate } from "react-router-dom";
 
-function SaveOutfitModal({ isOpen, onClose, onSave, referenceImage }) {
+function SaveOutfitModal({ isOpen, onClose, onSave, referenceImageFile, referenceImagePreview }) {
     const [name, setName] = useState("")
     const [description, setDescription] = useState("")
     const [status, setStatus] = useState("idle")
     // "idle" | "loading" | "success" | "error"
 
     async function handleSave() {
-        if (name.length === 0 || status === "loading") return
+        if (name.length === 0 || status === "loading") return;
 
         setStatus("loading")
 
         try {
-            await onSave({ name, description });
+            await onSave(name, description);
             setStatus("success");
 
             setTimeout(() => {
                 onClose()
-                // later: navigate("/outfits")
-            }, 1300)
+                Navigate("/outfits")
+            }, 1300);
         } catch (e) {
+            console.log(e);
             setStatus("error")
         }
     }
@@ -66,10 +68,10 @@ function SaveOutfitModal({ isOpen, onClose, onSave, referenceImage }) {
                 </h2>
 
             {/* Reference image preview */}
-            {referenceImage && (
+            {referenceImagePreview && (
             <div className="mb-5">
                 <img
-                src={referenceImage}
+                src={referenceImagePreview}
                 alt="Reference"
                 className="w-full h-40 object-cover rounded-lg opacity-95"
                 />

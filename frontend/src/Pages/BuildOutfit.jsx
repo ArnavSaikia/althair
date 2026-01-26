@@ -3,22 +3,6 @@ import DraggableItem from "@/Components/DraggableItem"
 import Navbar from "../Components/Navbar"
 import SaveOutfitModal from "@/Components/SaveOutfitModal"
 
-
-// const wardrobeItems = [
-//     { id: 1, src: "BuildOutfit/jacket.png", type: "top" },
-//     { id: 2, src: "BuildOutfit/jeans.png", type: "bottom" },
-//     { id: 3, src: "BuildOutfit/boots.png", type: "shoes" },
-//     { id: 4, src: "BuildOutfit/jacket.png", type: "top" },
-//     { id: 5, src: "BuildOutfit/jeans.png", type: "bottom" },
-//     { id: 6, src: "BuildOutfit/boots.png", type: "shoes" },
-//     { id: 7, src: "BuildOutfit/jacket.png", type: "top" },
-//     { id: 8, src: "BuildOutfit/jeans.png", type: "bottom" },
-//     { id: 9, src: "BuildOutfit/boots.png", type: "shoes" },
-//     { id: 10, src: "BuildOutfit/jacket.png", type: "top" },
-//     { id: 11, src: "BuildOutfit/jeans.png", type: "bottom" },
-//     { id: 12, src: "BuildOutfit/boots.png", type: "shoes" }
-// ];
-
 const wardrobeCategories = [
     { key: "Upperwear", label: "Upperwear" },
     { key: "Bottomwear", label: "Bottomwear" },
@@ -33,7 +17,8 @@ function BuildOutfit() {
     const [isWardrobeOpen, setIsWardrobeOpen] = useState(false)
     const [canvasItems, setCanvasItems] = useState([])  //the x and y here are normalized w.r.t to the canvas' width nd height respectively
     const [selectedId, setSelectedId] = useState(null)
-    const [referenceImage, setReferenceImage] = useState(null)
+    const [referenceImageFile, setReferenceImageFile] = useState(null);
+    const [referenceImagePreview, setReferenceImagePreview] = useState(null);
     const fileInputRef = useRef(null)   //for reference outfit image upload
 
     const [wardrobeItems, setWardrobeItems] = useState([]);
@@ -159,11 +144,11 @@ function BuildOutfit() {
                 accept="image/*"
                 className="hidden"
                 onChange={(e) => {
-                    const file = e.target.files[0]
-                    if (!file) return
+                    const file = e.target.files[0];
+                    if (!file) return;
 
-                    const url = URL.createObjectURL(file)
-                    setReferenceImage(url)
+                    setReferenceImageFile(file);
+                    setReferenceImagePreview(URL.createObjectURL(file));
                 }}
             />
             {/* hidden element only for image upload */}
@@ -250,7 +235,11 @@ function BuildOutfit() {
                     <div className="flex gap-3">
                         {/* Upload image */}
                         <button
-                            onClick={() => fileInputRef.current.click()}
+                            onClick={() => {
+                                    fileInputRef.current.click();
+
+                                }
+                            }
                             className="
                                 flex-1
                                 px-6
@@ -465,14 +454,22 @@ function BuildOutfit() {
             <SaveOutfitModal
                 isOpen={isSaveOpen}
                 onClose={() => setIsSaveOpen(false)}
-                referenceImage={referenceImage}
-                onSave={(data) => {
-                    console.log("SAVE PAYLOAD", {
-                        ...data,
-                        canvasItems,
-                        referenceImage
-                    })
+                referenceImagePreview={referenceImagePreview}
+                referenceImage={referenceImageFile}
+                onSave={async (name, description) => {
+                    const formData = new FormData();
+                    formData.append("name", name.trim());
+                    if (description?.trim()) formData.append("description", description.trim());
+                    if (referenceImageFile) formData.append("referenceImage", referenceImageFile);
 
+                    const response = await fetch(`${API_URL}/outfits/`, {
+                        method: "POST",
+                        credentials: "include",
+                        body: formData,
+                    });
+                    const data = await response.json();
+                    if(response.ok) console.log("Successfully uploaded");
+                    else console.log(data.message);
                 }}
             />
 

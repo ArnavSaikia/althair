@@ -13,7 +13,6 @@ const uploadOutfit = async (req, res) => {
 
         const { name, description } = req.body;
 
-        // canvasItems comes as STRING in multipart/form-data
         let canvasItems;
         try {
             canvasItems = JSON.parse(req.body.canvasItems);
@@ -27,7 +26,6 @@ const uploadOutfit = async (req, res) => {
             });
         }
 
-        // Validate wardrobe ownership
         const wardrobeSet = new Set(
             user.wardrobe.map(item => item.clothing.toString())
         );
