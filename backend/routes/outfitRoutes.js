@@ -1,8 +1,9 @@
 const router = require('express').Router();
+const upload = require('../utils/multer');
 const {uploadOutfit , fetchOutfits, fetchSpecificOutfit, updateOutfit, deleteOutfit, searchOutfit} = require('../controllers/outfitController');
 
 //for uploading a wardrobe to your list
-router.post('/', uploadOutfit);
+router.post('/', upload.single('referenceImage') , uploadOutfit);
 
 router.get('/', fetchOutfits);
 

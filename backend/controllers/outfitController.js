@@ -4,12 +4,22 @@ const Clothing = require('../models/ClothingModel');
 const User = require('../models/userModel');
 const mongoose = require('mongoose');
 
-const uploadOutfit = async (req,res) => {
-    try{
+const uploadOutfit = async (req, res) => {
+    try {
         const user = await verifyToken(req);
-        if(!user) return res.status(401).json({message: "User not logged in or invalid token"});
+        if (!user) {
+            return res.status(401).json({ message: "User not logged in or invalid token" });
+        }
 
-        const {name, description, referenceImage, canvasItems} = req.body;
+        const { name, description } = req.body;
+
+        // canvasItems comes as STRING in multipart/form-data
+        let canvasItems;
+        try {
+            canvasItems = JSON.parse(req.body.canvasItems);
+        } catch {
+            return res.status(400).json({ message: "Invalid canvasItems format" });
+        }
 
         if (!name || !Array.isArray(canvasItems) || canvasItems.length === 0) {
             return res.status(400).json({
@@ -17,30 +27,60 @@ const uploadOutfit = async (req,res) => {
             });
         }
 
-        const wardrobeSet = new Set(user.wardrobe.map(item => item.clothing.toString()));
+        // Validate wardrobe ownership
+        const wardrobeSet = new Set(
+            user.wardrobe.map(item => item.clothing.toString())
+        );
 
-        const anyInvalidItem = canvasItems.find( item => !wardrobeSet.has(item.clothingId?.toString()));
-        if (anyInvalidItem){
-            return res.status(403).json(
-                {
-                    message: "One or more items are not in your wardrobe",
-                }
-            )
-        };
+        const invalidItem = canvasItems.find(
+            item => !wardrobeSet.has(item.clothingId?.toString())
+        );
+
+        if (invalidItem) {
+            return res.status(403).json({
+                message: "One or more items are not in your wardrobe",
+            });
+        }
+
+        // Handle reference image (optional)
+        const file = req.file;
+
+        let referenceImageUrl = null;
+
+        if (file) {
+            const s3 = new S3Client({
+                region: process.env.AWS_REGION,
+                credentials: {
+                    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+                    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+                },
+            });
+
+            const params = {
+                Bucket: process.env.S3_BUCKET_NAME,
+                Key: `outfits/reference/${Date.now()}-${file.originalname}`,
+                Body: file.buffer,
+                ContentType: file.mimetype,
+            };
+
+            await s3.send(new PutObjectCommand(params));
+
+            referenceImageUrl = `https://${process.env.S3_BUCKET_NAME}.s3.${process.env.AWS_REGION}.amazonaws.com/${params.Key}`;
+        }
 
         const newOutfit = new Outfit({
             user: user._id,
             name,
-            description,
-            referenceImage,
+            description: description || null,
+            referenceImage: referenceImageUrl,
             canvasItems,
         });
 
         const savedOutfit = await newOutfit.save();
         return res.status(201).json({ outfit: savedOutfit });
-    }
-    catch(err){
-        res.status(500).json({message: err.message});
+
+    } catch (err) {
+        return res.status(500).json({ message: err.message });
     }
 };
 
