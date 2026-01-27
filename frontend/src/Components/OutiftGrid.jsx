@@ -13,7 +13,7 @@ function OutfitGrid({ outfits }) {
             gap-y-8
         ">
             {outfits.map((outfit) => (
-                <OutfitCard key={outfit.id} outfit={outfit} />
+                <OutfitCard key={outfit._id} outfit={outfit} />
             ))}
         </div>
     )

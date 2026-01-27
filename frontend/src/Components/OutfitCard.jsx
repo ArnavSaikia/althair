@@ -1,3 +1,5 @@
+import CanvasPreview from "./CanvasPreview"
+
 function OutfitCard({ outfit }) {
     return (
         <button className="group text-left">
@@ -12,19 +14,25 @@ function OutfitCard({ outfit }) {
                 duration-500
                 hover:scale-[1.03]
             ">
-                <img
-                    src={outfit.referenceImage}
-                    alt={outfit.name}
-                    className="
-                        w-full
-                        h-full
-                        object-cover
-                        transition
-                        duration-500
-                        group-hover:scale-[1.03]
-                        group-hover:contrast-[1.02]
-                    "
-                />
+                {
+                    outfit.referenceImage ? (
+                        <img
+                            src={outfit.referenceImage}
+                            alt={outfit.name}
+                            className="
+                            w-full
+                            h-full
+                            object-cover
+                            transition
+                            duration-500
+                            group-hover:scale-[1.03]
+                            group-hover:contrast-[1.02]
+                        "
+                        />
+                    ) : (
+                        <CanvasPreview items={outfit.canvasItems}/>
+                    )                 
+                }
 
                 {/* Title overlay */}
                 <div className="
@@ -38,6 +46,7 @@ function OutfitCard({ outfit }) {
                     from-black/60
                     via-black/20
                     to-transparent
+                    z-[100000]
                 ">
                     <p className="
                         text-white
