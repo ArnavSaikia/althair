@@ -13,7 +13,7 @@ function OutfitCard({ outfit }) {
                 hover:scale-[1.03]
             ">
                 <img
-                    src={outfit.preview}
+                    src={outfit.referenceImage}
                     alt={outfit.name}
                     className="
                         w-full
@@ -55,7 +55,13 @@ function OutfitCard({ outfit }) {
                         tracking-wide
                         text-white/70
                     ">
-                        {outfit.createdAt}
+                        {
+                            new Date(outfit.createdAt).toLocaleDateString('en-US', {
+                                day: 'numeric',
+                                month: 'short',
+                                year: 'numeric'
+                            })
+                        }
                     </p>
                 </div>
             </div>
