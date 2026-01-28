@@ -1,4 +1,10 @@
+import { useNavigate } from "react-router-dom"
+
 function GarmentGrid({ items }) {
+    console.log("Items from garment grid: " , items);
+    const navigate = useNavigate();
+    const API_URL = import.meta.env.VITE_API_BASE_URL;
+
     return (
         <section className="
             max-w-md
@@ -26,7 +32,7 @@ function GarmentGrid({ items }) {
             ">
                 {items.length !== 0 && items.map((item) => (
                     <button
-                        key={item.id}
+                        key={item.clothingId._id}
                         className="
                             relative
                             flex
@@ -36,7 +42,7 @@ function GarmentGrid({ items }) {
                             focus:outline-none
                         "
                         onClick={() => {
-                            // navigate later
+                            navigate(`/wardrobe/${item.clothingId._id}`);
                         }}
                     >
                         <img
