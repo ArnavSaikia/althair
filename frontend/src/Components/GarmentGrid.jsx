@@ -24,7 +24,7 @@ function GarmentGrid({ items }) {
                 gap-x-6
                 gap-y-10
             ">
-                {items.map((item) => (
+                {items.length !== 0 && items.map((item) => (
                     <button
                         key={item.id}
                         className="

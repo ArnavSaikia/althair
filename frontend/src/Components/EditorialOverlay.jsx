@@ -53,7 +53,11 @@ export function DateOverlay2({outfit}){
             bg-[#f6f3ee]/40
             backdrop-blur-[2px]
         ">
-            {outfit.createdAt}
+            {new Date(outfit.createdAt).toLocaleDateString('en-US', {
+                day: 'numeric',
+                month: 'short',
+                year: 'numeric'
+            })}
         </div>
     )
 }

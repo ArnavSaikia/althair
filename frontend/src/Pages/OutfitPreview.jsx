@@ -1,58 +1,86 @@
 import Navbar from "@/Components/Navbar"
-import Footer from "@/Components/Footer"
+import Footer from "@/Components/Footer";
+import { useState , useEffect } from "react";
+import { useParams } from "react-router-dom";
 import CanvasPreview from "@/Components/CanvasPreview"
 import {TitleOverlay, DateOverlay, DateOverlay2, DescriptionOverlay} from "@/Components/EditorialOverlay";
 import GarmentGrid from "@/Components/GarmentGrid";
 
 function OutfitPreview() {
-    // mock backend response
-    const outfit = {
-        name: "Evening neutrals",
-        description: "Understated elegance in warm tones. Relaxed tailoring meets refined minimalism—a study in quiet sophistication for the modern evening.",
-        createdAt: "12 Dec 2025",
-        referenceImage: "/hero2.jpg",
-        canvasItems: [
-            {
-                "id": 4,
-                "src": "BuildOutfit/jacket.png",
-                "type": "top",
-                "canvasId": "49d0dc5c-2b24-4d21-98b9-e9f7ca5ac94a",
-                "x": 0.33285018772754854,
-                "y": 0.16960228379897793,
-                "scale": 2.804259766483157,
-                "normalizedScale": 0.8712264125786938,
-                "zIndex": 34,
-                "xCenter": 0.4881900167002261,
-                "yCenter": 0.24753436762253844
-            },
-            {
-                "id": 8,
-                "src": "BuildOutfit/jeans.png",
-                "type": "bottom",
-                "canvasId": "e9ecb023-9d45-4ac0-9931-0b733f1971e5",
-                "x": 0.3390812364596765,
-                "y": 0.397851591633719,
-                "scale": 1.7906428693858527,
-                "normalizedScale": 0.5563162646247345,
-                "zIndex": 33,
-                "xCenter": 0.49442104228491923,
-                "yCenter": 0.5482564731661236
-            },
-            {
-                "id": 3,
-                "src": "BuildOutfit/boots.png",
-                "type": "shoes",
-                "canvasId": "459d9b86-b939-433d-a180-6ad5e5e4adba",
-                "x": 0.34777536669981135,
-                "y": 0.7203131371754828,
-                "scale": 1.5406721981119091,
-                "normalizedScale": 0.4786554725424757,
-                "zIndex": 32,
-                "xCenter": 0.5031151632660801,
-                "yCenter": 0.8052726601630019
-            }
-        ]
+    const API_URL = import.meta.env.VITE_API_BASE_URL;
+    const { id } = useParams();
+    const [outfit , setOutfit] = useState({
+        canvasItems: []
+    });
+
+    async function fetchOutfit(){
+        const response = await fetch(`${API_URL}/outfits/${id}`, {
+            "method": "GET",
+            "credentials": "include",
+        });
+        const data = await response.json();
+        if(response.ok){
+            setOutfit(data.outfit);
+            console.log(data);
+        }
+        else{
+            console.log(data)
+        }
     }
+
+    useEffect(() => {
+        fetchOutfit();
+    }, []);
+
+
+    // mock backend response
+    // const outfit = {
+    //     name: "Evening neutrals",
+    //     description: "Understated elegance in warm tones. Relaxed tailoring meets refined minimalism—a study in quiet sophistication for the modern evening.",
+    //     createdAt: "12 Dec 2025",
+    //     referenceImage: "/hero2.jpg",
+    //     canvasItems: [
+    //         {
+    //             "id": 4,
+    //             "src": "BuildOutfit/jacket.png",
+    //             "type": "top",
+    //             "canvasId": "49d0dc5c-2b24-4d21-98b9-e9f7ca5ac94a",
+    //             "x": 0.33285018772754854,
+    //             "y": 0.16960228379897793,
+    //             "scale": 2.804259766483157,
+    //             "normalizedScale": 0.8712264125786938,
+    //             "zIndex": 34,
+    //             "xCenter": 0.4881900167002261,
+    //             "yCenter": 0.24753436762253844
+    //         },
+    //         {
+    //             "id": 8,
+    //             "src": "BuildOutfit/jeans.png",
+    //             "type": "bottom",
+    //             "canvasId": "e9ecb023-9d45-4ac0-9931-0b733f1971e5",
+    //             "x": 0.3390812364596765,
+    //             "y": 0.397851591633719,
+    //             "scale": 1.7906428693858527,
+    //             "normalizedScale": 0.5563162646247345,
+    //             "zIndex": 33,
+    //             "xCenter": 0.49442104228491923,
+    //             "yCenter": 0.5482564731661236
+    //         },
+    //         {
+    //             "id": 3,
+    //             "src": "BuildOutfit/boots.png",
+    //             "type": "shoes",
+    //             "canvasId": "459d9b86-b939-433d-a180-6ad5e5e4adba",
+    //             "x": 0.34777536669981135,
+    //             "y": 0.7203131371754828,
+    //             "scale": 1.5406721981119091,
+    //             "normalizedScale": 0.4786554725424757,
+    //             "zIndex": 32,
+    //             "xCenter": 0.5031151632660801,
+    //             "yCenter": 0.8052726601630019
+    //         }
+    //     ]
+    // }
 
     return (
         <>
@@ -74,17 +102,19 @@ function OutfitPreview() {
                     snap-mandatory
                 ">
                     {/* Slide 1 – reference image */}
-                    <div className="min-w-full h-full snap-center relative">
-                        <img
-                            src={outfit.referenceImage}
-                            alt=""
-                            className="w-full h-full object-cover"
-                        />
+                    {outfit.referenceImage && (
+                        <div className="min-w-full h-full snap-center relative">
+                            <img
+                                src={outfit.referenceImage}
+                                alt=""
+                                className="w-full h-full object-cover"
+                            />
 
-                        {/* <TitleOverlay outfit={outfit} /> */}
-                        {/* swap around with DateOverlay see what fits best*/}
-                        <DateOverlay2 outfit={outfit} /> 
-                    </div>
+                            {/* <TitleOverlay outfit={outfit} /> */}
+                            {/* swap around with DateOverlay see what fits best*/}
+                            <DateOverlay2 outfit={outfit} />
+                        </div>
+                    )}
 
                     {/* Slide 2 – reconstructed canvas */}
                     <div className="min-w-full h-full snap-center relative 
@@ -121,7 +151,11 @@ function OutfitPreview() {
                         tracking-wide
                         text-[#6f6c66]
                     ">
-                        {outfit.createdAt}
+                        {new Date(outfit.createdAt).toLocaleDateString('en-US', {
+                            day: 'numeric',
+                            month: 'short',
+                            year: 'numeric'
+                        })}
                     </p>
 
                     {outfit.description && (
