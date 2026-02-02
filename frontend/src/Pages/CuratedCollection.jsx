@@ -1,8 +1,24 @@
-import { useState } from "react"
+import { useState , useEffect} from "react"
 import Navbar from "@/Components/Navbar"
-import Footer from "@/Components/Footer"
+import Footer from "@/Components/Footer";
+import { useSearchParams } from "react-router-dom";
 
 function CuratedCollection() {
+    const [searchParams] = useSearchParams();
+    const scrollToCategory = searchParams.get("category");
+
+    useEffect(() => {
+        if (!scrollToCategory) return;
+
+        const el = document.getElementById(scrollToCategory);
+        if (!el) return;
+
+        el.scrollIntoView({
+            behavior: "smooth",
+            block: "start",
+        });
+    }, [scrollToCategory]); //add curatedClothing var as a dependency too once fetching from api has been implemented
+
     // fake curated data for now
     const curatedClothing = [
         {
@@ -138,7 +154,7 @@ function CuratedCollection() {
                     <div className="space-y-8">
                         {groupedByCategory.map(({ category, items }) =>
                             items.length > 0 ? (
-                                <section key={category}>
+                                <section key={category} id={category}>
                                     <h2 className="
                                         mb-6
                                         text-[22px]

@@ -3,8 +3,10 @@ import Card from '../Components/Card.jsx'
 import Footer from '../Components/Footer.jsx';
 import CTA from '../Components/CTA.jsx';
 import { useState, useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function Landing(){
+    const navigate = useNavigate();
 
     const heroSlides = [
         { 
@@ -108,25 +110,25 @@ function Landing(){
                     <span className='text-3xl font-light tracking-wide font-["Cormorant_Garamond"]'>Categories</span>
                     <div className='grid grid-cols-2 gap-4 mt-3'>
                         <div className='flex flex-col gap-4'>
-                            <div className="relative rounded-[12px] overflow-hidden shadow-[0_8px_20px_rgba(0,0,0,0.1)] border border-white/20 hover:scale-[1.03] transition duration-500 aspect-2/3">
+                            <div className="relative rounded-[12px] overflow-hidden shadow-[0_8px_20px_rgba(0,0,0,0.1)] border border-white/20 hover:scale-[1.03] transition duration-500 aspect-2/3" onClick={() => navigate(`/curated?category=upperwear`, { replace: true })}>
                                 <img src="/upperwear_landing2.jpg" className="w-full h-full object-cover" alt="upperwear" />
                                 <div className="absolute inset-0 bg-gradient-to-t from-black/25 to-transparent"></div>
                                 <span className="absolute bottom-3 left-3 text-white tracking-wide font-['Cormorant_Garamond'] text-lg">Upperwear</span>
                             </div>
-                            <div className="relative rounded-[12px] overflow-hidden shadow-[0_8px_20px_rgba(0,0,0,0.1)] border border-white/20 hover:scale-[1.03] transition duration-500 aspect-2/3">
+                            <div className="relative rounded-[12px] overflow-hidden shadow-[0_8px_20px_rgba(0,0,0,0.1)] border border-white/20 hover:scale-[1.03] transition duration-500 aspect-2/3" onClick={() => navigate(`/curated?category=bottomwear`, { replace: true })}>
                                 <img src="/bottomwear_landing.jpg" className="w-full h-full object-cover" alt="bottomwear" />
                                 <div className="absolute inset-0 bg-gradient-to-t from-black/25 to-transparent"></div>
                                 <span className="absolute bottom-3 left-3 text-white tracking-wide font-['Cormorant_Garamond'] text-lg">Bottomwear</span>
                             </div>
                         </div>
-                        <div className='flex flex-col gap-4'>
-                            <div className="relative grow-[3] min-h-0 rounded-[12px] overflow-hidden shadow-[0_8px_20px_rgba(0,0,0,0.1)] border border-white/20 hover:scale-[1.03] transition duration-500">
+                        <div className='flex flex-col gap-4' >
+                            <div className="relative grow-[3] min-h-0 rounded-[12px] overflow-hidden shadow-[0_8px_20px_rgba(0,0,0,0.1)] border border-white/20 hover:scale-[1.03] transition duration-500" onClick={() => navigate(`/curated?category=footwear`, { replace: true })}>
                                 <img src="/footwear_landing5.jpg" className="w-full h-full object-cover" alt="footwear" />
                                 <div className="absolute inset-0 bg-gradient-to-t from-black/25 to-transparent"></div>
                                 <span className="absolute bottom-3 left-3 text-white tracking-wide font-['Cormorant_Garamond'] text-lg">Footwear</span>
                             </div> 
                             {/* go with either 5th or 7th one id say */}
-                            <div className="relative rounded-[12px] overflow-hidden shadow-[0_8px_20px_rgba(0,0,0,0.1)] border border-white/20 hover:scale-[1.03] transition duration-500 aspect-[2/2.5]">
+                            <div className="relative rounded-[12px] overflow-hidden shadow-[0_8px_20px_rgba(0,0,0,0.1)] border border-white/20 hover:scale-[1.03] transition duration-500 aspect-[2/2.5]" onClick={() => navigate(`/curated?category=accessories`, { replace: true })}>
                                 <img src="/accessories_landing2.jpg" className="w-full h-full object-cover" alt="accessories" />
                                 <div className="absolute inset-0 bg-gradient-to-t from-black/25 to-transparent"></div>
                                 <span className="absolute bottom-3 left-3 text-white tracking-wide font-['Cormorant_Garamond'] text-lg">Accessories</span>

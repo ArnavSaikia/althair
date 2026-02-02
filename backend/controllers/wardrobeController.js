@@ -315,7 +315,7 @@ const searchClothingItems = async (req, res) => {
 
 //admin only for 
 //only for adding curated outfits
-const addCuratedClothing = async (req, res) => {
+const uploadCuratedClothing = async (req, res) => {
     try{
         if (process.env.ENABLE_CURATED_UPLOAD !== "true") {
             return res.status(404).json({ message: "NOT IN ADMIN ENVIRONMENT"});
@@ -370,4 +370,4 @@ const addCuratedClothing = async (req, res) => {
     }
 }
 
-module.exports = {addClothingItem , addCuratedToWardrobe, fetchWardrobe , fetchItem, fetchCurated, updateItem, deleteItem, searchClothingItems};
+module.exports = {addClothingItem , addCuratedToWardrobe, fetchWardrobe , fetchItem, fetchCurated, updateItem, deleteItem, searchClothingItems, uploadCuratedClothing};
