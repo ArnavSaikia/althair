@@ -312,4 +312,62 @@ const searchClothingItems = async (req, res) => {
     }
 };
 
+
+//admin only for 
+//only for adding curated outfits
+const addCuratedClothing = async (req, res) => {
+    try{
+        if (process.env.ENABLE_CURATED_UPLOAD !== "true") {
+            return res.status(404).json({ message: "NOT IN ADMIN ENVIRONMENT"});
+        }
+
+        const { name, category, color, fit, size, additionalNotes, gender} = req.body;
+
+        if (!name || !category) {
+            return res.status(400).json({ message: "Name and category are required" });
+        }
+
+        const file = req.file;
+
+        if (!file) return res.status(400).json({ message: "Image is required" });
+
+        const s3 = new S3Client({
+            region: process.env.AWS_REGION,
+            credentials: {
+                accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+                secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+            },
+        });
+
+        const params = {
+            Bucket: process.env.S3_BUCKET_NAME,
+            Key: `clothing/curated/${Date.now()}-${file.originalname}`,
+            Body: file.buffer,
+            ContentType: file.mimetype,
+        };
+
+        await s3.send(new PutObjectCommand(params));
+
+        const newClothing = new Clothing({
+            name,
+            category,
+            color: color || null,
+            fit: fit || null,
+            size: size || null,
+            additionalNotes: additionalNotes || null,
+            imageUrl: `https://${process.env.S3_BUCKET_NAME}.s3.${process.env.AWS_REGION}.amazonaws.com/${params.Key}`,
+            source: "curated",
+            isCurated: true,
+            gender: gender || null,
+        });
+
+        await newClothing.save();
+
+        res.status(201).json({ message: "Successfully Uploaded the Item", item: newClothing });
+    }
+    catch(err){
+        return res.status(500).json({ message: err.message });
+    }
+}
+
 module.exports = {addClothingItem , addCuratedToWardrobe, fetchWardrobe , fetchItem, fetchCurated, updateItem, deleteItem, searchClothingItems};

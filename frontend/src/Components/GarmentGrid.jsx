@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom"
 
 function GarmentGrid({ items }) {
-    console.log("Items from garment grid: " , items);
+    // console.log("Items from garment grid: " , items);
     const navigate = useNavigate();
     const API_URL = import.meta.env.VITE_API_BASE_URL;
 
