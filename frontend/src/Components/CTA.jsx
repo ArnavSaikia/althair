@@ -1,4 +1,8 @@
+import { useNavigate } from "react-router-dom";
+
 function CTA() {
+    const navigate = useNavigate();
+
     return (
         <section className="
             w-full
@@ -44,7 +48,9 @@ function CTA() {
                         rounded-full
                         hover:bg-neutral-800
                         transition
-                    ">
+                    "
+                        onClick={() => navigate('/outfits/build')}
+                    >
                         Start building
                     </button>
 
@@ -62,7 +68,9 @@ function CTA() {
                         rounded-full
                         hover:border-neutral-600
                         transition
-                    ">
+                    "
+                        onClick={() => navigate('wardrobe/new')}
+                    >
                         Upload clothing
                     </button>
                 </div>
