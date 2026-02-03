@@ -35,7 +35,7 @@ function SearchPage(){
     useEffect( () => {
         if (!query || !query.trim()) return;
         fetchSearches();
-    }, []);
+    }, [query]);
 
     return(
         <>

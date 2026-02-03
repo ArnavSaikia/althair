@@ -294,7 +294,10 @@ const searchClothingItems = async (req, res) => {
         const regex = { $regex: q, $options: "i" };
 
         const items = await Clothing.find({
-            _id: { $in: wardrobeIds },
+            $or: [
+                { _id: { $in: wardrobeIds } },
+                { isCurated: true }
+            ],
             $or: [
                 { name: regex },
                 { category: regex },

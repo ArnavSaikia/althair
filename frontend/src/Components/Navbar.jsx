@@ -13,6 +13,7 @@ export default function Navbar() {
     const [isOpen, setisOpen] = useState(false);
     const searchRef = useRef(null);
     const drawerRef = useRef(null);
+    const [searchQuery , setSearchQuery] = useState("");
 
     useEffect(() => {
         function handleClickOutside(event) {
@@ -59,6 +60,12 @@ export default function Navbar() {
                             bg-transparent
                             ${searchIsOpen ? "w-40 opacity-100 px-2 ml-2" : "w-0 opacity-0 p-0"}
                         `}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                        onKeyDown={(e) => {
+                            if (e.key === "Enter" && searchQuery.trim()) {
+                                navigate(`/search?q=${searchQuery.trim()}`)
+                            }
+                        }}
                     />
                 </button>
 
