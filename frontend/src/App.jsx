@@ -14,6 +14,7 @@ import Login from './Pages/Login';
 import Signup from './Pages/Signup';
 import AccountPage from './Pages/AccountPage';
 import CuratedCollection from './Pages/CuratedCollection';
+import SearchPage from "./Pages/SearchPage";
 
 
 function App() {
@@ -40,6 +41,9 @@ function App() {
 
         {/* Curated */}
         <Route path="/curated" element={<CuratedCollection />} />
+
+        {/* Search */}
+        <Route path="/search" element={<SearchPage />} />
 
         {/* Optional 404 */}
         <Route path="*" element={<div>Not Found</div>} />

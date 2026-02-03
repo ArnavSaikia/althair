@@ -207,9 +207,9 @@ const searchOutfit = async (req, res) => {
         const user = await verifyToken(req);
         if(!user) return res.status(400).json({message: "User not logged in or invalid token"});
 
-        const {query} = req.query;
+        const {q} = req.query;
 
-        if (!query || !query.trim()) {
+        if (!q || !q.trim()) {
             return res.status(400).json({
                 message: "Search query is required",
             });
@@ -218,8 +218,8 @@ const searchOutfit = async (req, res) => {
         const outfits = await Outfit.find({
             user: user._id,
             $or: [
-                { name: { $regex: query, $options: "i" } },
-                { description: { $regex: query, $options: "i" } }
+                { name: { $regex: q, $options: "i" } },
+                { description: { $regex: q, $options: "i" } }
             ]
         }).sort({ updatedAt: -1 })
         .populate("canvasItems.clothingId");    //might remove populate later. added for now because user may not have uploaded a preview/referenceImage
