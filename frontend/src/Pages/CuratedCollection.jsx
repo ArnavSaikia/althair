@@ -2,8 +2,10 @@ import { useState , useEffect} from "react"
 import Navbar from "@/Components/Navbar"
 import Footer from "@/Components/Footer";
 import { useSearchParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function CuratedCollection() {
+    const navigate = useNavigate();
     const API_URL = import.meta.env.VITE_API_BASE_URL;
     const [searchParams] = useSearchParams();
     const scrollToCategory = searchParams.get("category");
@@ -194,7 +196,7 @@ function CuratedCollection() {
                                     >
                                         {items.map(item => (
                                             <img
-                                                key={item.id}
+                                                key={item._id}
                                                 src={item.imageUrl}
                                                 alt=""
                                                 className="
@@ -205,6 +207,7 @@ function CuratedCollection() {
                                                     transition
                                                     hover:opacity-90
                                                 "
+                                                onClick={() => navigate(`/wardrobe/${item._id}`)}
                                             />
                                         ))}
                                     </div>
