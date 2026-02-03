@@ -10,50 +10,6 @@ function CuratedCollection() {
     const [searchParams] = useSearchParams();
     const scrollToCategory = searchParams.get("category");
 
-    useEffect(() => {
-        if (!scrollToCategory) return;
-
-        const el = document.getElementById(scrollToCategory);
-        if (!el) return;
-
-        el.scrollIntoView({
-            behavior: "smooth",
-            block: "start",
-        });
-    }, [scrollToCategory]); //add curatedClothing var as a dependency too once fetching from api has been implemented
-
-    // fake curated data for now
-    // const curatedClothing = [
-    //     {
-    //         id: 1,
-    //         name: "Ivory linen shirt",
-    //         category: "Upperwear",
-    //         preview: "./BuildOutfit/dress.png",
-    //         gender: "men",
-    //     },
-    //     {
-    //         id: 2,
-    //         name: "Charcoal trousers",
-    //         category: "Bottomwear",
-    //         preview: "./BuildOutfit/jeans.png",
-    //         gender: "men",
-    //     },
-    //     {
-    //         id: 3,
-    //         name: "Black leather loafers",
-    //         category: "Footwear",
-    //         preview: "./BuildOutfit/boots.png",
-    //         gender: "women",
-    //     },
-    //     {
-    //         id: 4,
-    //         name: "Silver chain",
-    //         category: "Accessories",
-    //         preview: "./BuildOutfit/watch.png",
-    //         gender: "women",
-    //     },
-    // ]
-
     const [curatedClothing , setCuratedClothing] = useState([]);
 
     async function fetchCurated() {
@@ -69,6 +25,18 @@ function CuratedCollection() {
     useEffect(() => {
         fetchCurated();
     }, []);
+
+    useEffect(() => {
+        if (!scrollToCategory) return;
+
+        const el = document.getElementById(scrollToCategory);
+        if (!el) return;
+
+        el.scrollIntoView({
+            behavior: "smooth",
+            block: "start",
+        });
+    }, [scrollToCategory, curatedClothing]); //add curatedClothing var as a dependency too once fetching from api has been implemented
 
     const CATEGORIES = [
         "Upperwear",

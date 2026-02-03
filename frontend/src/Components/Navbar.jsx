@@ -4,9 +4,11 @@ import SearchIcon from '@mui/icons-material/Search';
 import AddIcon from '@mui/icons-material/Add';
 import MenuIcon from '@mui/icons-material/Menu';
 import { useState, useEffect, useRef} from 'react';
+import { useNavigate } from 'react-router-dom';
 
 
 export default function Navbar() {
+    const navigate = useNavigate();
     const [searchIsOpen, setSearchIsOpen] = useState(false);
     const [isOpen, setisOpen] = useState(false);
     const searchRef = useRef(null);
@@ -31,12 +33,12 @@ export default function Navbar() {
 
     return (
         <div className="sticky top-0 bg-white z-[100] h-[10vh] w-[100vw] flex justify-between items-center border-b border-gray-400 font-[inter] px-4">
-            <span className='font-["Elsie_Swash_Caps"] text-2xl'>Althair</span>
+            <span className='font-["Elsie_Swash_Caps"] text-2xl' onClick={() => navigate('/')}>Althair</span>
             <div className="hidden flex gap-[1rem] justify-between items-center pl-[1rem] pr-[1rem]">
-                <a href="" className="navbar-link group">Home<span></span></a>
-                <a href="" className="navbar-link group">Categories<span></span></a>
-                <a href="" className="navbar-link group">My Wardrobe<span></span></a>
-                <a href="" className="navbar-link group">Outfit<span></span></a>
+                <a href="" className="navbar-link group" onClick={() => navigate('/')}>Home<span></span></a>
+                <a href="" className="navbar-link group" onClick={() => navigate('/curated')}>Curated Collection<span></span></a>
+                <a href="" className="navbar-link group" onClick={() => navigate('/wardrobe')}>My Wardrobe<span></span></a>
+                <a href="" className="navbar-link group" onClick={() => navigate('/outfits')}>Outfit<span></span></a>
             </div>
 
             <div className='flex justify-between items-center gap-[0rem]'>

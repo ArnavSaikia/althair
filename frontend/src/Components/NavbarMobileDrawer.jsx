@@ -1,6 +1,9 @@
 import { forwardRef } from "react";
+import { useNavigate } from "react-router-dom";
 
 const NavbarMobileDrawer = forwardRef((props, ref) => {
+    const navigate = useNavigate();
+
     return (
         <div
             ref={ref}
@@ -26,10 +29,10 @@ const NavbarMobileDrawer = forwardRef((props, ref) => {
             </div>
 
             <div className="flex flex-col gap-6 p-6 text-lg font-[inter]">
-                <a className="navbar-link">Home</a>
-                <a className="navbar-link">Categories</a>
-                <a className="navbar-link">My Wardrobe</a>
-                <a className="navbar-link">Outfit</a>
+                <a className="navbar-link" onClick={() => navigate('/')}>Home</a>
+                <a className="navbar-link" onClick={() => navigate('/curated')}>Curated Collection</a>
+                <a className="navbar-link" onClick={() => navigate('/wardrobe')}>My Wardrobe</a>
+                <a className="navbar-link" onClick={() => navigate('/outfits')}>Outfit</a>
             </div>
         </div>
     );
