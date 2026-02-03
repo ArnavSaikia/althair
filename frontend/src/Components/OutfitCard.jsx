@@ -1,8 +1,11 @@
+import { useNavigate } from "react-router-dom"
 import CanvasPreview from "./CanvasPreview"
 
 function OutfitCard({ outfit }) {
+    const navigate = useNavigate();
+
     return (
-        <button className="group text-left">
+        <button className="group text-left" onClick={() => navigate(`/outfits/${outfit._id}`)}>
             <div className="
                 relative
                 aspect-[3/4]
