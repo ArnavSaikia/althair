@@ -1,10 +1,12 @@
 const router = require('express').Router();
 const upload = require('../utils/multer');
-const { addClothingItem,fetchWardrobe,fetchItem,updateItem,deleteItem,searchClothingItems, addCuratedToWardrobe, uploadCuratedClothing } = require('../controllers/wardrobeController');
+const { addClothingItem,fetchWardrobe, fetchCurated, fetchItem,updateItem,deleteItem,searchClothingItems, addCuratedToWardrobe, uploadCuratedClothing } = require('../controllers/wardrobeController');
 
 router.post('/', upload.single('image'), addClothingItem);
 
 router.get('/', fetchWardrobe);
+
+router.get('/curated', fetchCurated);
 
 //admin only route
 router.post('/upload-curated', upload.single('image'), uploadCuratedClothing);

@@ -370,4 +370,6 @@ const uploadCuratedClothing = async (req, res) => {
     }
 }
 
+
+
 module.exports = {addClothingItem , addCuratedToWardrobe, fetchWardrobe , fetchItem, fetchCurated, updateItem, deleteItem, searchClothingItems, uploadCuratedClothing};
