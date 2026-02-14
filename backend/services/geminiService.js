@@ -1,4 +1,4 @@
-import { GoogleGenAI } from "@google/genai";
+const { GoogleGenAI } = require("@google/genai");
 
 const ai = new GoogleGenAI({}); //auto assuming GEMINI_API_KEY is the env name. otw need to pass it in as params
 

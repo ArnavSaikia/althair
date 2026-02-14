@@ -2,6 +2,8 @@ const verifyToken = require('../utils/verifyToken');
 const Clothing = require('../models/ClothingModel');
 const Outfit = require('../models/OutfitModel');
 const { S3Client, PutObjectCommand, DeleteObjectCommand } = require('@aws-sdk/client-s3');
+const { generateClothingEditorialNote } = require('../services/geminiService');
+
 
 // for the route POST /wardrobe/add
 //using form data here. might need to change later
@@ -57,6 +59,21 @@ const addClothingItem = async(req , res) =>{
         await user.save();
 
         res.status(201).json({message: "Successfully Uploaded the Item", item: newClothing});
+
+        (async () => {
+            try {
+
+                const note = await generateClothingEditorialNote(newClothing);
+
+                if (note) {
+                    newClothing.editorialNote = note;
+                    await newClothing.save();
+                }
+
+            } catch (err) {
+                console.error("Clothing editorial generation failed:", err.message);
+            }
+        })();
     }
     catch(err) {
         res.status(500).json({message: err.message});
@@ -183,6 +200,29 @@ const updateItem = async (req, res) => {
             return res.status(403).json({ message: "Not in your wardrobe" });
         }
 
+        //CHECKING IF REGENING ED NOTE IS WARRANTED
+        const fields = [
+            "name",
+            "category",
+            "color",
+            "fit",
+            "size",
+            "additionalNotes"
+        ];
+
+        let shouldRegenerateEditorial = false;
+
+        fields.forEach(field => {
+
+            if (
+                req.body[field] !== undefined &&
+                req.body[field] !== clothing[field]
+            ) {
+                shouldRegenerateEditorial = true;
+            }
+
+        });
+
         const allowed = ["name", "category", "color", "fit", "size", "additionalNotes"];
         allowed.forEach(field => {
             if (req.body[field] !== undefined) clothing[field] = req.body[field];
@@ -190,6 +230,26 @@ const updateItem = async (req, res) => {
 
         await clothing.save();
         res.status(200).json(clothing);
+
+        if (shouldRegenerateEditorial) {
+            (async () => {
+                try {
+                    const note = await generateClothingEditorialNote(updatedClothing);
+                    if (note) {
+
+                        updatedClothing.editorialNote = note;
+                        await updatedClothing.save();
+
+                    }
+                } catch (err) {
+                    console.error(
+                        "Clothing editorial regeneration failed:",
+                        err.message
+                    );
+                }
+            })();
+
+        }
     } catch (err) {
         res.status(500).json({ message: err.message });
     }
@@ -363,6 +423,18 @@ const uploadCuratedClothing = async (req, res) => {
             isCurated: true,
             gender: gender || null,
         });
+
+        try {
+            const editorialNote = await generateClothingEditorialNote(newClothing);
+
+            if (editorialNote)  newClothing.editorialNote = editorialNote;
+        }
+        catch (err) {
+            console.error(
+                "Curated clothing editorial generation failed:",
+                err.message
+            );
+        }
 
         await newClothing.save();
 
