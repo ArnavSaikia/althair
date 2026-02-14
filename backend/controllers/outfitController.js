@@ -4,6 +4,8 @@ const Clothing = require('../models/ClothingModel');
 const User = require('../models/userModel');
 const { S3Client, PutObjectCommand, DeleteObjectCommand } = require('@aws-sdk/client-s3');
 const mongoose = require('mongoose');
+const {generateClothingEditorialNote , generateOutfitEditorialNote} = require('../services/geminiService');
+
 
 const uploadOutfit = async (req, res) => {
     try {
@@ -76,7 +78,25 @@ const uploadOutfit = async (req, res) => {
         });
 
         const savedOutfit = await newOutfit.save();
-        return res.status(201).json({ outfit: savedOutfit });
+        res.status(201).json({ outfit: savedOutfit });
+
+        (async () => {
+            try {
+
+                const populatedOutfit = await Outfit.findById(savedOutfit._id)
+                    .populate("canvasItems.clothingId");
+
+                const note = await generateOutfitEditorialNote(populatedOutfit);
+
+                if (note) {
+                    populatedOutfit.editorialNote = note;
+                    await populatedOutfit.save();
+                }
+
+            } catch (err) {
+                console.error("Editorial note generation failed:", err.message);
+            }
+        })();
 
     } catch (err) {
         return res.status(500).json({ message: err.message });
@@ -162,6 +182,24 @@ const updateOutfit = async (req, res) => {
             });
         }
 
+        //CHECKING IF REGENERATING EDITORIAL NOTE'S WARRANTED OR NAH
+        let shouldRegenerateEditorial = false;
+
+        // name change
+        if (name !== undefined && name !== outfit.name) shouldRegenerateEditorial = true;
+
+        // description change
+        if (description !== undefined && description !== outfit.description) shouldRegenerateEditorial = true;
+
+        // canvasItems change (deep compare via JSON stringify)
+        const oldCanvas = JSON.stringify(outfit.canvasItems);
+        const newCanvas = JSON.stringify(canvasItems);
+
+        if (oldCanvas !== newCanvas) shouldRegenerateEditorial = true;
+
+
+
+        //actually updating the outfit
         if (name !== undefined) outfit.name = name;
         if (description !== undefined) outfit.description = description;
         if (referenceImage !== undefined) outfit.referenceImage = referenceImage;
@@ -170,10 +208,32 @@ const updateOutfit = async (req, res) => {
 
         const updatedOutfit = await outfit.save();
 
-        return res.status(200).json({
+        res.status(200).json({
             message: "Outfit updated successfully",
             outfit: updatedOutfit,
         });
+
+        if (shouldRegenerateEditorial) {
+
+            (async () => {
+                try {
+
+                    const populatedOutfit = await Outfit.findById(updatedOutfit._id)
+                        .populate("canvasItems.clothingId");
+
+                    const note = await generateOutfitEditorialNote(populatedOutfit);
+
+                    if (note) {
+                        populatedOutfit.editorialNote = note;
+                        await populatedOutfit.save();
+                    }
+
+                } catch (err) {
+                    console.error("Editorial regeneration failed:", err.message);
+                }
+            })();
+
+        }
     }
     catch(err){
         return res.status(500).json({message: err.message})

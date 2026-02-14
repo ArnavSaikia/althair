@@ -75,13 +75,15 @@ async function generateText(prompt) {
 
 
 
-export async function generateClothingEditorialNote(clothing) {
+async function generateClothingEditorialNote(clothing) {
     const prompt = buildClothingPrompt(clothing);
     return await generateText(prompt);
 }
 
 
-export async function generateOutfitEditorialNote(outfit) {
+async function generateOutfitEditorialNote(outfit) {
     const prompt = buildOutfitPrompt(outfit);
     return await generateText(prompt);
 }
+
+module.exports = { generateClothingEditorialNote , generateOutfitEditorialNote}
