@@ -11,7 +11,6 @@ function AccountPage() {
     const [disableLogout, setDisableLogout] = useState(true);
 
     async function logout() {
-        console.log(34);
         setLoggingOut(true);
         await fetch(`${API_URL}/users/logout`, {
             method: "POST",

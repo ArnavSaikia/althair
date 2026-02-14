@@ -91,13 +91,14 @@ function Landing(){
                         </h1>
                         <p
                             className="
-                                font-sans
-                                text-white/80
-                                text-lg
-                                leading-snug
-                                tracking-wide
+                                font-inter
+                                font-light
+                                text-white/75
+                                text-[17px]
+                                leading-relaxed
+                                tracking-[0.01em]
                                 max-w-[35ch]
-                                drop-shadow-[0_3px_6px_rgba(0,0,0,0.55)]
+                                drop-shadow-[0_2px_4px_rgba(0,0,0,0.45)]
                                 transition-opacity duration-700
                             "
                         >

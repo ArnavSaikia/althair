@@ -198,8 +198,7 @@ function OutfitPreview() {
                         text-[#5a5853]
                         max-w-[42ch]
                     ">
-                        A considered balance of relaxed silhouettes and muted tones,
-                        assembled with an emphasis on proportion and restraint.
+                        {outfit.editorialNote}
                     </p>
                 </section>
 

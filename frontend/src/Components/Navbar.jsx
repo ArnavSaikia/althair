@@ -74,6 +74,12 @@ export default function Navbar() {
                 </button>
             </div>
 
+            <div className={`
+                fixed inset-0 bg-black/20 backdrop-blur-sm z-[101]
+                transition-opacity duration-300
+                ${isOpen ? "opacity-100" : "opacity-0 pointer-events-none"}
+            `} />
+
             {/* mobile drawer html....not to be shown in desktop mode */}
             <NavbarMobileDrawer ref={drawerRef} isOpen={isOpen} setisOpen={setisOpen}/>
         </div>
