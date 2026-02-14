@@ -14,6 +14,7 @@ export default function Navbar() {
     const searchRef = useRef(null);
     const drawerRef = useRef(null);
     const [searchQuery , setSearchQuery] = useState("");
+    const [addModalOpen, setAddModalOpen] = useState(false);
 
     useEffect(() => {
         function handleClickOutside(event) {
@@ -43,7 +44,10 @@ export default function Navbar() {
             </div>
 
             <div className='flex justify-between items-center gap-[0rem]'>
-                <button className='bg-transparent p-2 rounded-4xl h-full flex '>
+                <button
+                    className='bg-transparent p-2 rounded-4xl h-full flex hover:bg-black/5 transition-colors'
+                    onClick={() => setAddModalOpen(true)}
+                >
                     <AddIcon sx={{ fontSize: 24, color: "#333" }}/>
                     <span className='hidden'>Add Item</span>
                 </button>
@@ -82,6 +86,100 @@ export default function Navbar() {
 
             {/* mobile drawer html....not to be shown in desktop mode */}
             <NavbarMobileDrawer ref={drawerRef} isOpen={isOpen} setisOpen={setisOpen}/>
+
+            {/* Add modal */}
+            <div
+                className={`
+                    fixed inset-0 z-[200]
+                    flex items-center justify-center
+                    transition-opacity duration-200
+                    ${addModalOpen ? "opacity-100" : "opacity-0 pointer-events-none"}
+                `}
+            >
+
+                {/* backdrop */}
+                <div
+                    className="absolute inset-0 bg-black/30 backdrop-blur-sm"
+                    onClick={() => setAddModalOpen(false)}
+                />
+
+                {/* modal box */}
+                <div
+                    className={`
+                        relative
+                        bg-white
+                        w-[85vw]
+                        max-w-[340px]
+                        rounded-2xl
+                        shadow-[0_20px_60px_rgba(0,0,0,0.25)]
+                        border border-black/10
+                        p-6
+                        transform transition-all duration-200
+                        ${addModalOpen ? "scale-100 translate-y-0" : "scale-95 translate-y-2"}
+                    `}
+                >
+
+                    {/* title */}
+                    <h2 className="
+                        font-['Cormorant_Garamond']
+                        text-2xl
+                        text-black/90
+                        mb-5
+                    ">
+                        Add New
+                    </h2>
+
+                    {/* options */}
+                    <div className="flex flex-col gap-3">
+
+                        <button
+                            onClick={() => {
+                                setAddModalOpen(false);
+                                navigate('wardrobe/new');
+                            }}
+                            className="
+                                w-full
+                                text-left
+                                px-4 py-3
+                                rounded-xl
+                                border border-black/10
+                                hover:bg-black/5
+                                transition-colors
+                            "
+                        >
+                            <div className="font-medium">Clothing</div>
+                            <div className="text-sm text-black/50">
+                                Upload a single clothing item
+                            </div>
+                        </button>
+
+                        <button
+                            onClick={() => {
+                                setAddModalOpen(false);
+                                navigate('outfits/build');
+                            }}
+                            className="
+                                w-full
+                                text-left
+                                px-4 py-3
+                                rounded-xl
+                                border border-black/10
+                                hover:bg-black/5
+                                transition-colors
+                            "
+                        >
+                            <div className="font-medium">Outfit</div>
+                            <div className="text-sm text-black/50">
+                                Create a full outfit
+                            </div>
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
         </div>
     )
 }
