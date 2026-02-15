@@ -1,10 +1,11 @@
 function Card({ image, title }) {
     return (
-        <div className="flex-none w-[45vw]">
+        <div className="flex-none w-[45vw] md:w-[30vw] lg:w-[25vw] xl:w-[17.5vw]">
             <div
                 className="
                     relative
                     aspect-[3/4]
+                    md:aspect-[3/4] lg:aspect-[2/3] xl:aspect-[3/4]
                     rounded-[14px]
                     overflow-hidden
                     shadow-[0_8px_20px_rgba(0,0,0,0.1)]

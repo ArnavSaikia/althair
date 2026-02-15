@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 
 function Landing(){
     const navigate = useNavigate();
+    const API_URL = import.meta.env.VITE_API_BASE_URL;
 
     const heroSlides = [
         { 
@@ -49,6 +50,21 @@ function Landing(){
 
         return () => clearInterval(interval);
     }, []);
+
+    const [clothes, setClothes] = useState([]);
+
+    async function fetchRecentlyAdded() {
+        const response = await fetch(`${API_URL}/wardrobe`, {
+            "method": "GET",
+            "credentials": "include"
+        });
+        const data = await response.json();
+        if(response.ok) setClothes(data);
+    }
+
+    useEffect(() => {
+        fetchRecentlyAdded();
+    } , []);
 
     return(
         <>
@@ -168,16 +184,66 @@ function Landing(){
 
                 <CTA/>
 
-                <div className='w-screen lg:w-full p-4'>
-                    <span className='text-3xl font-light tracking-wide font-["Cormorant_Garamond"]'>Our Picks</span>
-                    <div className='flex gap-4 overflow-x-auto mt-3 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]'>
-                        <Card image="/upperwear_landing3.jpg" title={"Formal Day"} />
-                        <Card image="/accessories_landing1.jpg" title={"Cozy Sweater Fit"} />
-                        <Card image="/upperwear_landing.jpg" title={"template"} />
-                        <Card image="/upperwear_landing.jpg" title={"template"} />
-                    </div>
-                </div>
-                
+                {clothes && (
+                    <section className="lg:max-w-[1100px] xl:max-w-[1200px] mx-auto px-4 lg:px-8 py-12 pt-10">
+
+                        <h2 className="text-3xl font-light font-['Cormorant_Garamond'] mb-6">
+                            Recently Added
+                        </h2>
+
+                        <div className="
+                        flex gap-6 overflow-x-auto pb-2
+                        md:grid md:grid-cols-4 md:gap-8 md:overflow-visible
+                        [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]
+                    ">
+
+                            {clothes.slice(0, 4).map((item) => (
+                                <div
+                                    key={item._id}
+                                    onClick={() => navigate(`/wardrobe/${item._id}`)}
+                                    className="
+                                    flex-none w-[40vw]
+                                    md:w-auto
+
+                                    cursor-pointer
+                                    transition duration-500
+                                    hover:scale-[1.05]
+                                    hover:-translate-y-1
+                                "
+                                >
+
+                                    {/* fixed uniform image frame */}
+                                    <div className="
+                                    w-full
+                                    h-[240px]
+                                    md:h-[260px]
+                                    lg:h-[280px]
+
+                                    flex items-center justify-center
+                                ">
+
+                                        <img
+                                            src={item.imageUrl}
+                                            alt={item.name}
+                                            className="
+                                            max-w-full
+                                            max-h-full
+                                            object-contain
+                                            select-none
+                                            pointer-events-none
+                                        "
+                                            draggable="false"
+                                        />
+
+                                    </div>
+
+                                </div>
+                            ))}
+
+                        </div>
+
+                    </section>
+                )}
                 <Footer/>
             </div>
         </> 
