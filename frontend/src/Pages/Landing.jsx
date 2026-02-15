@@ -114,32 +114,53 @@ function Landing(){
                     </div>
             </div>
 
-                <div className='w-screen lg:w-full p-4 md:p-6 lg:p-8 lg:px-40 xl:p-8 xl:px-80 pt-4'>
+                <div className="
+                    w-screen lg:w-full
+                    p-4
+                    md:p-6
+                    lg:p-8
+
+                    lg:max-w-[1100px]
+                    xl:max-w-[1200px]
+                    mx-auto
+                    pt-4
+                ">
                     <span className='text-3xl font-light tracking-wide font-["Cormorant_Garamond"]'>Categories</span>
-                    <div className='grid grid-cols-2 gap-4 mt-3'>
-                        <div className='flex flex-col gap-4'>
-                            <div className="relative rounded-[12px] overflow-hidden shadow-[0_8px_20px_rgba(0,0,0,0.1)] border border-white/20 hover:scale-[1.03] transition duration-500 aspect-2/3" onClick={() => navigate(`/curated?category=upperwear`)}>
+                    <div className="
+                        grid
+                        grid-cols-2
+                        gap-4
+
+                        md:gap-5
+                        lg:grid-cols-4
+                        lg:gap-6
+
+                        mt-3
+                    ">
+
+                        <div className='flex flex-col gap-4 lg:contents'>
+                            <div className="relative rounded-[12px] overflow-hidden shadow-[0_8px_20px_rgba(0,0,0,0.1)] border border-white/20 hover:scale-[1.03] transition duration-500 aspect-[2/3] md:aspect-[2/3] lg:aspect-[2/3] xl:aspect-[2/3]" onClick={() => navigate(`/curated?category=upperwear`)}>
                                 <img src="/upperwear_landing2.jpg" className="w-full h-full object-cover" alt="upperwear" />
                                 <div className="absolute inset-0 bg-gradient-to-t from-black/25 to-transparent"></div>
-                                <span className="absolute bottom-3 left-3 text-white tracking-wide font-['Cormorant_Garamond'] text-lg">Upperwear</span>
+                                <span className="absolute bottom-3 left-3 text-white tracking-wide font-['Cormorant_Garamond'] text-lg md:text-xl lg:text-lg xl:text-xl">Upperwear</span>
                             </div>
-                            <div className="relative rounded-[12px] overflow-hidden shadow-[0_8px_20px_rgba(0,0,0,0.1)] border border-white/20 hover:scale-[1.03] transition duration-500 aspect-2/3" onClick={() => navigate(`/curated?category=bottomwear`)}>
+                            <div className="relative rounded-[12px] overflow-hidden shadow-[0_8px_20px_rgba(0,0,0,0.1)] border border-white/20 hover:scale-[1.03] transition duration-500 aspect-[2/3] md:aspect-[2/3] lg:aspect-[2/3] xl:aspect-[2/3]" onClick={() => navigate(`/curated?category=bottomwear`)}>
                                 <img src="/bottomwear_landing.jpg" className="w-full h-full object-cover" alt="bottomwear" />
                                 <div className="absolute inset-0 bg-gradient-to-t from-black/25 to-transparent"></div>
-                                <span className="absolute bottom-3 left-3 text-white tracking-wide font-['Cormorant_Garamond'] text-lg">Bottomwear</span>
+                                <span className="absolute bottom-3 left-3 text-white tracking-wide font-['Cormorant_Garamond'] text-lg md:text-xl lg:text-lg xl:text-xl">Bottomwear</span>
                             </div>
                         </div>
-                        <div className='flex flex-col gap-4' >
-                            <div className="relative grow-[3] min-h-0 rounded-[12px] overflow-hidden shadow-[0_8px_20px_rgba(0,0,0,0.1)] border border-white/20 hover:scale-[1.03] transition duration-500" onClick={() => navigate(`/curated?category=footwear`)}>
+                        <div className='flex flex-col gap-4 lg:contents'>
+                            <div className="relative grow-[3] min-h-0 rounded-[12px] overflow-hidden shadow-[0_8px_20px_rgba(0,0,0,0.1)] border border-white/20 hover:scale-[1.03] transition duration-500 aspect-[2/2.5] md:aspect-[2/2.5] lg:aspect-[2/3] xl:aspect-[2/3]" onClick={() => navigate(`/curated?category=footwear`)}>
                                 <img src="/footwear_landing5.jpg" className="w-full h-full object-cover" alt="footwear" />
                                 <div className="absolute inset-0 bg-gradient-to-t from-black/25 to-transparent"></div>
-                                <span className="absolute bottom-3 left-3 text-white tracking-wide font-['Cormorant_Garamond'] text-lg">Footwear</span>
+                                <span className="absolute bottom-3 left-3 text-white tracking-wide font-['Cormorant_Garamond'] text-lg md:text-xl lg:text-lg xl:text-xl">Footwear</span>
                             </div> 
                             {/* go with either 5th or 7th one id say */}
-                            <div className="relative rounded-[12px] overflow-hidden shadow-[0_8px_20px_rgba(0,0,0,0.1)] border border-white/20 hover:scale-[1.03] transition duration-500 aspect-[2/2.5]" onClick={() => navigate(`/curated?category=accessories`)}>
+                            <div className="relative rounded-[12px] overflow-hidden shadow-[0_8px_20px_rgba(0,0,0,0.1)] border border-white/20 hover:scale-[1.03] transition duration-500 aspect-[2/2.5] md:aspect-[2/2.5] lg:aspect-[2/3] xl:aspect-[2/3]" onClick={() => navigate(`/curated?category=accessories`)}>
                                 <img src="/accessories_landing2.jpg" className="w-full h-full object-cover" alt="accessories" />
                                 <div className="absolute inset-0 bg-gradient-to-t from-black/25 to-transparent"></div>
-                                <span className="absolute bottom-3 left-3 text-white tracking-wide font-['Cormorant_Garamond'] text-lg">Accessories</span>
+                                <span className="absolute bottom-3 left-3 text-white tracking-wide font-['Cormorant_Garamond'] text-lg md:text-xl lg:text-lg xl:text-xl">Accessories</span>
                             </div>
                         </div>
                     </div>
