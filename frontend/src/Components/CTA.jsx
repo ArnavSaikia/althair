@@ -49,6 +49,7 @@ function CTA() {
                         rounded-full
                         hover:bg-neutral-800
                         transition
+                        cursor-pointer
                     "
                         onClick={() => navigate('/outfits/build')}
                     >
@@ -69,6 +70,7 @@ function CTA() {
                         rounded-full
                         hover:border-neutral-600
                         transition
+                        cursor-pointer
                     "
                         onClick={() => navigate('wardrobe/new')}
                     >

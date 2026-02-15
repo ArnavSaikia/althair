@@ -155,25 +155,25 @@ function Landing(){
                     ">
 
                         <div className='flex flex-col gap-4 lg:contents'>
-                            <div className="relative rounded-[12px] overflow-hidden shadow-[0_8px_20px_rgba(0,0,0,0.1)] border border-white/20 hover:scale-[1.03] transition duration-500 aspect-[2/3] md:aspect-[2/3] lg:aspect-[2/3] xl:aspect-[2/3]" onClick={() => navigate(`/curated?category=upperwear`)}>
+                            <div className="relative rounded-[12px] overflow-hidden shadow-[0_8px_20px_rgba(0,0,0,0.1)] border border-white/20 hover:scale-[1.03] transition duration-500 aspect-[2/3] md:aspect-[2/3] lg:aspect-[2/3] xl:aspect-[2/3] cursor-pointer" onClick={() => navigate(`/curated?category=upperwear`)}>
                                 <img src="/upperwear_landing2.jpg" className="w-full h-full object-cover" alt="upperwear" />
                                 <div className="absolute inset-0 bg-gradient-to-t from-black/25 to-transparent"></div>
                                 <span className="absolute bottom-3 left-3 text-white tracking-wide font-['Cormorant_Garamond'] text-lg md:text-xl lg:text-lg xl:text-xl">Upperwear</span>
                             </div>
-                            <div className="relative rounded-[12px] overflow-hidden shadow-[0_8px_20px_rgba(0,0,0,0.1)] border border-white/20 hover:scale-[1.03] transition duration-500 aspect-[2/3] md:aspect-[2/3] lg:aspect-[2/3] xl:aspect-[2/3]" onClick={() => navigate(`/curated?category=bottomwear`)}>
+                            <div className="relative rounded-[12px] overflow-hidden shadow-[0_8px_20px_rgba(0,0,0,0.1)] border border-white/20 hover:scale-[1.03] transition duration-500 aspect-[2/3] md:aspect-[2/3] lg:aspect-[2/3] xl:aspect-[2/3] cursor-pointer" onClick={() => navigate(`/curated?category=bottomwear`)}>
                                 <img src="/bottomwear_landing.jpg" className="w-full h-full object-cover" alt="bottomwear" />
                                 <div className="absolute inset-0 bg-gradient-to-t from-black/25 to-transparent"></div>
                                 <span className="absolute bottom-3 left-3 text-white tracking-wide font-['Cormorant_Garamond'] text-lg md:text-xl lg:text-lg xl:text-xl">Bottomwear</span>
                             </div>
                         </div>
                         <div className='flex flex-col gap-4 lg:contents'>
-                            <div className="relative grow-[3] min-h-0 rounded-[12px] overflow-hidden shadow-[0_8px_20px_rgba(0,0,0,0.1)] border border-white/20 hover:scale-[1.03] transition duration-500 aspect-[2/2.5] md:aspect-[2/2.5] lg:aspect-[2/3] xl:aspect-[2/3]" onClick={() => navigate(`/curated?category=footwear`)}>
+                            <div className="relative grow-[3] min-h-0 rounded-[12px] overflow-hidden shadow-[0_8px_20px_rgba(0,0,0,0.1)] border border-white/20 hover:scale-[1.03] transition duration-500 aspect-[2/2.5] md:aspect-[2/2.5] lg:aspect-[2/3] xl:aspect-[2/3] cursor-pointer" onClick={() => navigate(`/curated?category=footwear`)}>
                                 <img src="/footwear_landing5.jpg" className="w-full h-full object-cover" alt="footwear" />
                                 <div className="absolute inset-0 bg-gradient-to-t from-black/25 to-transparent"></div>
                                 <span className="absolute bottom-3 left-3 text-white tracking-wide font-['Cormorant_Garamond'] text-lg md:text-xl lg:text-lg xl:text-xl">Footwear</span>
                             </div> 
                             {/* go with either 5th or 7th one id say */}
-                            <div className="relative rounded-[12px] overflow-hidden shadow-[0_8px_20px_rgba(0,0,0,0.1)] border border-white/20 hover:scale-[1.03] transition duration-500 aspect-[2/2.5] md:aspect-[2/2.5] lg:aspect-[2/3] xl:aspect-[2/3]" onClick={() => navigate(`/curated?category=accessories`)}>
+                            <div className="relative rounded-[12px] overflow-hidden shadow-[0_8px_20px_rgba(0,0,0,0.1)] border border-white/20 hover:scale-[1.03] transition duration-500 aspect-[2/2.5] md:aspect-[2/2.5] lg:aspect-[2/3] xl:aspect-[2/3] cursor-pointer" onClick={() => navigate(`/curated?category=accessories`)}>
                                 <img src="/accessories_landing2.jpg" className="w-full h-full object-cover" alt="accessories" />
                                 <div className="absolute inset-0 bg-gradient-to-t from-black/25 to-transparent"></div>
                                 <span className="absolute bottom-3 left-3 text-white tracking-wide font-['Cormorant_Garamond'] text-lg md:text-xl lg:text-lg xl:text-xl">Accessories</span>
@@ -185,54 +185,54 @@ function Landing(){
                 <CTA/>
 
                 {clothes && (
-                    <section className="lg:max-w-[1100px] xl:max-w-[1200px] mx-auto px-4 lg:px-8 py-12 pt-10">
+                    <section className="lg:max-w-[1100px] xl:max-w-[1200px] mx-auto px-4 lg:px-8 py-12 pt-4 md:pt-6 lg:pt-8">
 
                         <h2 className="text-3xl font-light font-['Cormorant_Garamond'] mb-6">
                             Recently Added
                         </h2>
 
                         <div className="
-                        flex gap-6 overflow-x-auto pb-2
-                        md:grid md:grid-cols-4 md:gap-8 md:overflow-visible
-                        [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]
-                    ">
+                            flex gap-6 overflow-x-auto pb-2
+                            md:grid md:grid-cols-4 md:gap-8 md:overflow-visible
+                            [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]
+                        ">
 
                             {clothes.slice(0, 4).map((item) => (
                                 <div
                                     key={item._id}
                                     onClick={() => navigate(`/wardrobe/${item._id}`)}
                                     className="
-                                    flex-none w-[40vw]
-                                    md:w-auto
+                                        flex-none w-[40vw]
+                                        md:w-auto
 
-                                    cursor-pointer
-                                    transition duration-500
-                                    hover:scale-[1.05]
-                                    hover:-translate-y-1
-                                "
+                                        cursor-pointer
+                                        transition duration-500
+                                        hover:scale-[1.05]
+                                        hover:-translate-y-1
+                                    "
                                 >
 
                                     {/* fixed uniform image frame */}
                                     <div className="
-                                    w-full
-                                    h-[240px]
-                                    md:h-[260px]
-                                    lg:h-[280px]
+                                        w-full
+                                        h-[240px]
+                                        md:h-[260px]
+                                        lg:h-[280px]
 
-                                    flex items-center justify-center
-                                ">
+                                        flex items-center justify-center
+                                    ">
 
                                         <img
                                             src={item.imageUrl}
                                             alt={item.name}
                                             className="
-                                            max-w-full
-                                            max-h-full
-                                            object-contain
-                                            select-none
-                                            pointer-events-none
-                                        "
-                                            draggable="false"
+                                                max-w-full
+                                                max-h-full
+                                                object-contain
+                                                select-none
+                                                pointer-events-none
+                                            "
+                                                draggable="false"
                                         />
 
                                     </div>

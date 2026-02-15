@@ -8,6 +8,8 @@ function Footer() {
             <footer className="
                 w-screen
                 px-4
+                md:px-6
+                lg:px-8
                 pt-10
                 pb-8
                 bg-[#141414]
@@ -113,6 +115,8 @@ function Footer() {
             <div className="
                 w-screen
                 px-4
+                md:px-6
+                lg:px-8
                 py-4
                 bg-[#141414]
                 text-xs
