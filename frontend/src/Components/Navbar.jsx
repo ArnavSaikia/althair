@@ -34,8 +34,8 @@ export default function Navbar() {
 
 
     return (
-        <div className="sticky top-0 bg-white z-[100] h-[10vh] w-[100vw] flex justify-between items-center border-b border-gray-400 font-[inter] px-4">
-            <span className='font-["Elsie_Swash_Caps"] text-2xl' onClick={() => navigate('/')}>Althair</span>
+        <div className="sticky top-0 bg-white z-[100] h-[10vh] w-[100vw] lg:w-full flex justify-between items-center border-b border-gray-400 font-[inter] px-4">
+            <span className='font-["Elsie_Swash_Caps"] text-2xl cursor-pointer' onClick={() => navigate('/')}>Althair</span>
             <div className="hidden flex gap-[1rem] justify-between items-center pl-[1rem] pr-[1rem]">
                 <a href="" className="navbar-link group" onClick={() => navigate('/')}>Home<span></span></a>
                 <a href="" className="navbar-link group" onClick={() => navigate('/curated')}>Curated Collection<span></span></a>

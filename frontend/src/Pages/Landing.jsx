@@ -53,8 +53,8 @@ function Landing(){
     return(
         <>
             <Navbar/>
-            <div className='size-max'>
-                <div className="relative w-screen h-[80vh] overflow-hidden">
+            <div className='lg:w-full'>
+                <div className="relative w-screen lg:w-full h-[80vh] sm:h-[85vh] md:h-[90vh] lg:h-[95vh] lg:w-full xl:h-[100vh] overflow-hidden">
                 {heroSlides.map((slide, i) => (
                         <div
                             key={i}
@@ -78,12 +78,15 @@ function Landing(){
                                 font-['Cormorant_Garamond']
                                 text-white/95
                                 text-5xl
+                                sm:text-6xl
+                                md:text-7xl
+                                lg:text-8xl
+                                xl:text-[90px]
                                 font-light
                                 leading-[1.05]
                                 tracking-wide
                                 max-w-[18ch]
                                 drop-shadow-[0_4px_8px_rgba(0,0,0,0.6)]
-                                transition-opacity duration-700
                                 mb-2
                             "
                         >
@@ -95,6 +98,10 @@ function Landing(){
                                 font-light
                                 text-white/75
                                 text-[17px]
+                                sm:text-[18px]
+                                md:text-[19px]
+                                lg:text-[20px]
+                                xl:text-[21px]
                                 leading-relaxed
                                 tracking-[0.01em]
                                 max-w-[35ch]
@@ -107,7 +114,7 @@ function Landing(){
                     </div>
             </div>
 
-                <div className='w-screen p-4 pt-4'>
+                <div className='w-screen lg:w-full p-4 md:p-6 lg:p-8 lg:px-40 xl:p-8 xl:px-80 pt-4'>
                     <span className='text-3xl font-light tracking-wide font-["Cormorant_Garamond"]'>Categories</span>
                     <div className='grid grid-cols-2 gap-4 mt-3'>
                         <div className='flex flex-col gap-4'>
@@ -140,7 +147,7 @@ function Landing(){
 
                 <CTA/>
 
-                <div className='w-screen p-4'>
+                <div className='w-screen lg:w-full p-4'>
                     <span className='text-3xl font-light tracking-wide font-["Cormorant_Garamond"]'>Our Picks</span>
                     <div className='flex gap-4 overflow-x-auto mt-3 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]'>
                         <Card image="/upperwear_landing3.jpg" title={"Formal Day"} />

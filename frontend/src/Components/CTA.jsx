@@ -6,6 +6,7 @@ function CTA() {
     return (
         <section className="
             w-full
+            lg:w-full
             py-16
             flex
             justify-center
