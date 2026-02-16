@@ -3,10 +3,12 @@ import Navbar from "@/Components/Navbar"
 import Footer from "@/Components/Footer"
 import CollectionHeader from "@/Components/CollectionHeader"
 import OutfitGrid from "@/Components/OutiftGrid"
+import { useNavigate } from "react-router-dom"
 
 function ClothingCollection() {
     const API_URL = import.meta.env.VITE_API_BASE_URL;
     const [clothing, setClothing] = useState([]);
+    const navigate = useNavigate();
 
     useEffect(() => {
         let isMounted = true;
@@ -65,7 +67,18 @@ function ClothingCollection() {
         <>
             <Navbar />
 
-            <div className="min-h-screen px-4 py-12">
+            <div className="
+                min-h-screen
+                py-12
+
+                lg:max-w-[1100px]
+                xl:max-w-[1200px]
+                mx-auto
+
+                px-4
+                lg:px-8
+            ">
+
                 <CollectionHeader count={clothing.length} title="Wardrobe" quantifier="piece"/>
 
                 {clothing.length === 0 ? (
@@ -107,6 +120,7 @@ function ClothingCollection() {
                                         text-xs
                                         tracking-wide
                                         transition
+                                        cursor-pointer
                                         ${sortBy === option
                                             ? "bg-neutral-800 text-white"
                                             : "bg-white/70 text-neutral-600 hover:bg-white border border-neutral-300"
@@ -122,10 +136,12 @@ function ClothingCollection() {
                         <div className="space-y-8">
                             {groupedByCategory.map(({ category, items }) =>
                                 items.length > 0 ? (
-                                    <section key={category}>
+                                    <section key={category} className="lg:mb-18">
                                         <h2 className="
                                             mb-6
+                                            lg:mb-10
                                             text-[22px]
+                                            lg:text-[28px]
                                             font-['Cormorant_Garamond']
                                             font-light
                                             tracking-wide
@@ -156,6 +172,7 @@ function ClothingCollection() {
                                                         transition
                                                         hover:opacity-90
                                                     "
+                                                    onClick={() => navigate(`/wardrobe/${item._id}`)}
                                                 />
                                             ))}
                                         </div>

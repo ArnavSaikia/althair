@@ -8,4 +8,6 @@ body,root{
 body{
     /* overflow-x: hidden; */
     font-family: Lora;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
