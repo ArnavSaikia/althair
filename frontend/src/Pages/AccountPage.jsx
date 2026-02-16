@@ -57,7 +57,7 @@ function AccountPage() {
             <Navbar />
 
             <main className="flex-1 px-4">
-                <section className="w-full max-w-md py-20 flex flex-col gap-14">
+                <section className="w-full max-w-md py-20 flex flex-col gap-14 mx-auto lg:py-12">
                     {/* Identity */}
                     <div className="flex flex-col gap-1">
                         {details ? (
