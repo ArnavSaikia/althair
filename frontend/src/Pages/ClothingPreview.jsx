@@ -4,10 +4,12 @@ import CanvasPreview from "@/Components/CanvasPreview";
 import { useState , useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Skeleton } from "@/components/ui/skeleton"
+import { useNavigate } from "react-router-dom";
 
 export default function ClothingPreview() {
     const API_URL = import.meta.env.VITE_API_BASE_URL;
     const {id} = useParams();
+    const navigate = useNavigate();
 
     async function fetchOutfit(id){
         const response = await fetch(`${API_URL}/wardrobe/${id}`, {
@@ -17,6 +19,7 @@ export default function ClothingPreview() {
         const data = await response.json();
         if(response.ok) {
             setItem(data);
+            console.log(data)
             setIsLoading(false);
         }
         if(response.status == 404){
@@ -39,45 +42,6 @@ export default function ClothingPreview() {
         fetchOutfit(id)
     }, [id]);
 
-
-    // Temporary boilerplate data
-    // const item = {
-    //     _id: "mock-clothing-id",
-    //     user: "mock-user-id",
-
-    //     name: "Draped Red Dress",
-    //     category: "Outerwear",
-    //     color: "Blood Red",
-    //     fit: "Relaxed",
-    //     size: "M",
-
-    //     additionalNotes:
-    //         "Softened through repeated wear. Slight fading at the cuffs.",
-
-    //     imageUrl:
-    //         "./BuildOutfit/dress.png",
-
-    //     // Fake relational data
-    //     usedIn: [
-    //         {
-    //             id: "outfit-1",
-    //             preview:
-    //                 "/redOutfit.jpg",
-    //         },
-    //         {
-    //             id: "outfit-2",
-    //             preview:
-    //                 "/redOutfit2.jpg",
-    //         },
-    //     ],
-
-    //     editorialNote:
-    //         "A dependable layer. Chosen more often for comfort than intention, yet it quietly anchors most transitional outfits.",
-
-    //     createdAt: "Mar 2025",
-    //     source: "Personal wardrobe",
-    // }
-
     const [item , setItem] = useState({});
     const [isLoading , setIsLoading ] = useState(true);
 
@@ -86,6 +50,7 @@ export default function ClothingPreview() {
             <Navbar />
 
             {/* Image / Gallery Section */}
+            
             <section
                 className="
                     w-full
@@ -191,7 +156,7 @@ export default function ClothingPreview() {
                     </div>
                 </section>
                 ) : (
-                    item.usedIn?.length > 0 && (
+                    item.presentIn?.length > 0 && (
                         <section
                             className="
                                 max-w-md
@@ -218,9 +183,10 @@ export default function ClothingPreview() {
                                     flex
                                     gap-4
                                     overflow-x-auto
+                                    scrollbar-hide
                                 "
                             >
-                                {item.usedIn.map((outfit) => (
+                                {item.presentIn.map((outfit) => (
                                     <button
                                         key={outfit.id}
                                         className="
@@ -230,6 +196,7 @@ export default function ClothingPreview() {
                                             overflow-hidden
                                             cursor-pointer
                                         "
+                                        onClick={() => navigate(`/outfits/${outfit._id}`)}
                                     >
                                         {outfit.referenceImage ? (<img
                                             src={outfit.referenceImage}

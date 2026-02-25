@@ -168,7 +168,7 @@ const fetchItem = async (req,res) => {
 
         const presentIn = await Outfit.find({
             user: user._id,
-            "canvasItem.clothingId": item._id
+            "canvasItems.clothingId": item._id
         })
         // .populate('canvasItem.clothingId'); not quite sure if we need to populate here since we already have src for the canvasItems
 
