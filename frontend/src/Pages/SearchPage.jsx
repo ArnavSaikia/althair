@@ -61,7 +61,7 @@ function SearchPage(){
                     </h2>
 
                     {wardrobeResults.length === 0 ? (
-                        <p className="text-sm text-neutral-500 text-center py-12">
+                        <p className="text-m font-['Cormorant_Garamond'] font-light text-neutral-500 text-center py-8">
                             No matching clothing items found
                         </p>
                     ) : (
@@ -107,7 +107,7 @@ function SearchPage(){
                     </h2>
 
                     {outfitResults.length === 0 ? (
-                        <p className="text-sm font-['Cormorant_Garamond'] font-light text-neutral-500 text-center py-8">
+                        <p className="text-m font-['Cormorant_Garamond'] font-light text-neutral-500 text-center py-8">
                             No matching outfits found
                         </p>
                     ) : (

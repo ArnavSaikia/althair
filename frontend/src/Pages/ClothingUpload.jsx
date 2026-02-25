@@ -110,17 +110,34 @@ export default function ClothingUpload() {
         <main className="w-full">
             <Navbar />
 
+            <div className="
+                lg:max-w-[1100px]
+                xl:max-w-[1200px]
+                mx-auto
+
+                lg:grid
+                lg:grid-cols-2
+                lg:gap-16
+
+                lg:px-8
+                lg:py-10
+            ">
             {/* Image Section */}
             <section
                 className="
-                    w-full
-                    min-h-[60vh]
-                    flex
-                    flex-col
-                    items-center
-                    justify-center
-                    bg-[radial-gradient(ellipse_at_22%_16%,#fdfbf8_0%,#f3efe9_35%,#ebe6df_60%,#e2ddd6_75%)]
-                "
+                w-full
+                min-h-[60vh]
+
+                flex
+                flex-col
+                items-center
+                justify-center
+
+                bg-[radial-gradient(ellipse_at_22%_16%,#fdfbf8_0%,#f3efe9_35%,#ebe6df_60%,#e2ddd6_75%)]
+
+                lg:min-h-[520px]
+                lg:rounded-[8px]
+            "
             >
                 {imagePreviewUrl ? (
                     <img
@@ -140,7 +157,7 @@ export default function ClothingUpload() {
                                 text-[#3b3a36]/70
                                 hover:text-[#3b3a36]
                                 transition
-                                
+                                cursor-pointer
                             "
                         >
                             Add image
@@ -174,7 +191,22 @@ export default function ClothingUpload() {
             </section>
 
             {/* Content */}
-            <section className="max-w-md mx-auto px-6 pt-6 pb-10">
+                <section className="
+                    max-w-md
+                    mx-auto
+
+                    px-6
+                    pt-6
+                    pb-10
+
+                    lg:px-0
+                    lg:pt-0
+                    lg:pb-0
+                    lg:max-w-none
+                    lg:flex
+                    lg:flex-col
+                    lg:justify-center
+                ">
 
                 {/* Name */}
                 <input
@@ -324,6 +356,7 @@ export default function ClothingUpload() {
                     Add to Wardrobe
                 </button>
             </section>
+            </div>
 
             {/* Overlay state */}
             {status !== "idle" && (
