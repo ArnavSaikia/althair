@@ -135,7 +135,7 @@ export default function Navbar() {
                         <button
                             onClick={() => {
                                 setAddModalOpen(false);
-                                navigate('wardrobe/new');
+                                navigate('/wardrobe/new');
                             }}
                             className="
                                 w-full
@@ -156,7 +156,7 @@ export default function Navbar() {
                         <button
                             onClick={() => {
                                 setAddModalOpen(false);
-                                navigate('outfits/build');
+                                navigate('/outfits/build');
                             }}
                             className="
                                 w-full
