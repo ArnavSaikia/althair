@@ -39,7 +39,20 @@ function OutfitCollection() {
     return (
         <>
             <Navbar />
-            <div className="min-h-screen px-4 pb-20 pt-12">
+            <div className="
+                min-h-screen
+                pt-12
+                pb-20
+
+                lg:max-w-[1100px]
+                xl:max-w-[1200px]
+                mx-auto
+
+                px-4
+                lg:px-8
+
+                lg:py-12
+            ">
                 <CollectionHeader count={outfits.length} title={"Collection"} quantifier="outfit"/>
 
                 {sortedOutfits.length === 0 ? (
@@ -80,6 +93,7 @@ function OutfitCollection() {
                                             text-xs
                                             tracking-wide
                                             transition
+                                            cursor-pointer
                                             ${sortBy === option
                                                                     ? "bg-neutral-800 text-white"
                                                 : "bg-white/70 text-neutral-600 hover:bg-white border border-neutral-300"

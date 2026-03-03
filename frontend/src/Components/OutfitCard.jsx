@@ -5,7 +5,7 @@ function OutfitCard({ outfit }) {
     const navigate = useNavigate();
 
     return (
-        <button className="group text-left" onClick={() => navigate(`/outfits/${outfit._id}`)}>
+        <button className="group text-left cursor-pointer" onClick={() => navigate(`/outfits/${outfit._id}`)}>
             <div className="
                 relative
                 aspect-[3/4]
