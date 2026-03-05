@@ -140,6 +140,7 @@ function SaveOutfitModal({ isOpen, onClose, onSave, referenceImageFile, referenc
                     rounded-full
                     hover:border-neutral-500
                     transition
+                    cursor-pointer
                     "
                 >
                     Cancel
@@ -148,6 +149,7 @@ function SaveOutfitModal({ isOpen, onClose, onSave, referenceImageFile, referenc
                 <button
                     onClick={handleSave}
                     className={`
+                        cursor-pointer
                     flex-1
                     px-6
                     py-3

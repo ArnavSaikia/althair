@@ -191,7 +191,7 @@ function BuildOutfit() {
             <Navbar />
 
             {/* Editor */}
-            <div className="flex-1 flex flex-col">
+            <div className="flex-1 flex flex-col lg:flex-row">
                 {/* Canvas */}
                 <div className="
                     flex-1
@@ -253,8 +253,102 @@ function BuildOutfit() {
 
                 </div>
 
+                <div className="
+                    hidden
+                    lg:flex
+                    lg:flex-col
+                    lg:flex-1
+                    lg:border-l
+                    lg:border-black/10
+                    lg:px-8
+                    lg:overflow-y-auto
+                    lg:max-h-[90vh]
+                    hide-scroll
+                ">
+                    <div className="flex gap-3 py-6">
+                        {/* Upload image */}
+                        <button
+                            onClick={() => {
+                                fileInputRef.current.click();
+
+                            }
+                            }
+                            className="
+                                flex-1
+                                px-6
+                                py-3.5
+                                text-xs
+                                font-medium
+                                tracking-wider
+                                whitespace-nowrap
+                                text-neutral-800
+                                border
+                                border-neutral-300
+                                rounded-full
+                                hover:border-neutral-500
+                                transition
+                                cursor-pointer
+                            "
+                        >
+                            Attach Reference
+                        </button>
+
+                        {/* Save */}
+                        <button
+                            className={`
+                                cursor-pointer
+                                flex-1
+                                px-6
+                                py-3.5
+                                text-xs
+                                font-medium
+                                tracking-wider
+                                whitespace-nowrap
+                                rounded-full
+                                transition
+                                ${canvasItems.length === 0 ? "bg-neutral-300 text-neutral-500 cursor-not-allowed" : "bg-neutral-800 text-white hover:bg-neutral-800"}
+                            `}
+                            onClick={() => canvasItems.length != 0 ? setIsSaveOpen(true) : null}
+                        >
+                            Save
+                        </button>
+                    </div>
+
+                    {wardrobeCategories.map(category => {
+                        const items = wardrobeItems.filter(
+                            item => item.category === category.key
+                        )
+
+                        if (items.length === 0) return null
+
+                        return (
+                            <div key={category.key} className="mb-10">
+                                <p className="mb-4 text-2xl font-['Cormorant_Garamond'] text-neutral-600">
+                                    {category.label}
+                                </p>
+
+                                <div className="grid grid-cols-3 gap-4">
+                                    {items.map(item => (
+                                        <button
+                                            key={item._id}
+                                            onClick={() => addToCanvas(item)}
+                                            className="aspect-[3/4] cursor-pointer"
+                                        >
+                                            <img
+                                                src={item.imageUrl}
+                                                className="w-full h-full object-contain"
+                                            />
+                                        </button>
+                                    ))}
+                                </div>
+                            </div>
+                        )
+                    })}
+                </div>
+
                 {/* Toolbar */}
                 <div className={`
+                    lg:hidden
                     w-full
                     bg-white/80
                     backdrop-blur-md
@@ -341,6 +435,7 @@ function BuildOutfit() {
             {/* Wardrobe Bottom Sheet */}
             <div
                 className={`
+                    lg:hidden
                     fixed inset-0 z-50 flex items-end
                     transition-opacity duration-300
                     ${isWardrobeOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}
@@ -451,7 +546,7 @@ function BuildOutfit() {
                                                 src={item.imageUrl}
                                                 alt=""
                                                 className="
-                                                    w-full h-full object-cover
+                                                    w-full h-full object-contain
                                                     transition-transform duration-300
                                                     group-hover:scale-[1.03]
                                                 "
