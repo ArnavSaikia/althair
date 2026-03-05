@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect} from "react"
 import DraggableItem from "@/Components/DraggableItem"
 import Navbar from "../Components/Navbar"
+import Footer from "@/Components/Footer"
 import SaveOutfitModal from "@/Components/SaveOutfitModal"
 
 const wardrobeCategories = [
@@ -195,6 +196,9 @@ function BuildOutfit() {
                 {/* Canvas */}
                 <div className="
                     flex-1
+                    lg:flex-none
+                    lg:h-[90vh]
+                    lg:aspect-[9/16]
                     relative
                     overflow-hidden
                     bg-[#f5f4f1]
@@ -260,7 +264,7 @@ function BuildOutfit() {
                     lg:flex-1
                     lg:border-l
                     lg:border-black/10
-                    lg:px-8
+                    lg:px-35
                     lg:overflow-y-auto
                     lg:max-h-[90vh]
                     hide-scroll
@@ -608,6 +612,9 @@ function BuildOutfit() {
                 }}
             />
 
+            <div className="hidden xl:block">
+                <Footer/>
+            </div>
         </div>
     )
 }
