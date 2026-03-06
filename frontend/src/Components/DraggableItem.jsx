@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef , useEffect } from "react";
 import Draggable from "react-draggable";
 import ClearIcon from '@mui/icons-material/Clear';
 
@@ -36,6 +36,29 @@ function DraggableItem({ item, onScale, onSelect, isSelected, onDelete, onDragEn
     onScaleEnd(item.canvasId, rect.width)
   }
 
+  useEffect(() => {
+    const el = scaleRef.current;
+    if (!el) return;
+
+    const handleWheel = (e) => {
+      if (!isSelected) return;
+
+      e.preventDefault(); // stop page scroll
+
+      const delta = -e.deltaY / 500;
+      onScale(item.canvasId, delta);
+
+      const rect = scaleRef.current.getBoundingClientRect();
+      onScaleEnd(item.canvasId, rect.width);
+    };
+
+    el.addEventListener("wheel", handleWheel, { passive: false });
+
+    return () => {
+      el.removeEventListener("wheel", handleWheel);
+    };
+  }, [isSelected, item.canvasId]);
+
   return (
     <Draggable nodeRef={nodeRef} bounds="parent"
       onStop={(e,data) => {
@@ -50,6 +73,9 @@ function DraggableItem({ item, onScale, onSelect, isSelected, onDelete, onDragEn
         onPointerDown={(e) => {
           e.stopPropagation()
           onSelect(item.canvasId)
+        }}
+        onClick={(e) => {
+          e.stopPropagation()
         }}
       >
 
