@@ -193,12 +193,16 @@ function BuildOutfit() {
 
             {/* Editor */}
             <div className="flex-1 flex flex-col lg:flex-row">
+                
                 {/* Canvas */}
                 <div className="
                     flex-1
                     lg:flex-none
-                    lg:h-[90vh]
+                    lg:h-[80vh]
                     lg:aspect-[9/16]
+                    lg:m-10
+                    lg:mx-40
+                    lg:rounded-xl
                     relative
                     overflow-hidden
                     bg-[#f5f4f1]
@@ -264,7 +268,7 @@ function BuildOutfit() {
                     lg:flex-1
                     lg:border-l
                     lg:border-black/10
-                    lg:px-35
+                    lg:px-6
                     lg:overflow-y-auto
                     lg:max-h-[90vh]
                     hide-scroll
