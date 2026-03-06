@@ -202,7 +202,8 @@ function BuildOutfit() {
                     lg:aspect-[9/16]
                     lg:m-10
                     lg:mx-40
-                    lg:rounded-xl
+                    lg:rounded-2xl
+                    lg:shadow-[0_10px_30px_rgba(0,0,0,0.08),0_2px_6px_rgba(0,0,0,0.06)]
                     relative
                     overflow-hidden
                     bg-[#f5f4f1]
@@ -268,18 +269,25 @@ function BuildOutfit() {
                     lg:flex-1
                     lg:border-l
                     lg:border-black/10
-                    lg:px-6
+                    lg:px-8
                     lg:overflow-y-auto
                     lg:max-h-[90vh]
                     hide-scroll
                 ">
-                    <div className="flex gap-3 py-6">
+                    <div className="
+                        sticky
+                        top-0
+                        z-10
+                        bg-white
+                        flex
+                        gap-3
+                        py-5
+                    ">
                         {/* Upload image */}
                         <button
                             onClick={() => {
-                                fileInputRef.current.click();
-
-                            }
+                                    fileInputRef.current.click();
+                                }
                             }
                             className="
                                 flex-1
@@ -335,16 +343,21 @@ function BuildOutfit() {
                                     {category.label}
                                 </p>
 
-                                <div className="grid grid-cols-3 gap-4">
+                                <div className="grid grid-cols-4 gap-4">
                                     {items.map(item => (
                                         <button
                                             key={item._id}
                                             onClick={() => addToCanvas(item)}
-                                            className="aspect-[3/4] cursor-pointer"
+                                            className="
+                                                group
+                                                aspect-[3/4]
+                                                cursor-pointer
+                                                overflow-hidden
+                                            "
                                         >
                                             <img
                                                 src={item.imageUrl}
-                                                className="w-full h-full object-contain"
+                                                className="w-full h-full object-contain transition-transform duration-200 ease-out group-hover:scale-[1.06]"
                                             />
                                         </button>
                                     ))}
