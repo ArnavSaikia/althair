@@ -62,11 +62,24 @@ function CuratedCollection() {
         <>
             <Navbar />
 
-            <div className="min-h-screen px-4 py-12">
+            <div
+                className="
+                    min-h-screen
+                    py-12
+
+                    lg:max-w-[1100px]
+                    xl:max-w-[1200px]
+                    mx-auto
+
+                    px-4
+                    lg:px-8
+                "
+            >
                 {/* Intro text */}
                 <div className="mb-10 text-center">
                     <h1 className="
-                        text-[42px]
+                        text-[36px]
+                        lg:text-[42px]
                         leading-tight
                         font-['Cormorant_Garamond']
                         font-light
@@ -138,13 +151,15 @@ function CuratedCollection() {
                         </p>
                     </div>
                 ) : (
-                    <div className="space-y-8">
+                        <div className="space-y-8 lg:space-y-12">
                         {groupedByCategory.map(({ category, items }) =>
                             items.length > 0 ? (
                                 <section key={category} id={category}>
                                     <h2 className="
                                         mb-6
+                                        lg:mb-10
                                         text-[22px]
+                                        lg:text-[28px]
                                         font-['Cormorant_Garamond']
                                         font-light
                                         tracking-wide

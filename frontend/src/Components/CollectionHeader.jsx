@@ -2,7 +2,8 @@ function CollectionHeader({ count, title, quantifier }) {
     return (
         <div className="mb-12 text-center">
             <h1 className="
-                text-[42px]
+                text-[36px]
+                lg:text-[42px]
                 leading-tight
                 font-['Cormorant_Garamond']
                 font-light
