@@ -352,7 +352,6 @@ function BuildOutfit() {
                                                 group
                                                 aspect-[3/4]
                                                 cursor-pointer
-                                                overflow-hidden
                                             "
                                         >
                                             <img
