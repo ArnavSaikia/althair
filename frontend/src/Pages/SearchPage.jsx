@@ -9,7 +9,7 @@ function SearchPage(){
     const navigate = useNavigate();
     const API_URL = import.meta.env.VITE_API_BASE_URL;
     const [searchParams] = useSearchParams();
-    const query = searchParams.get("q").trim();
+    const query = (searchParams.get("q") || "").trim();
 
     const [wardrobeResults , setWardrobeResults] = useState([]);
     const [outfitResults , setOutfitResults] = useState([]);
@@ -41,7 +41,19 @@ function SearchPage(){
         <>
             <Navbar />
 
-            <div className="min-h-[85vh] px-4 pt-12">
+            <div
+                className="
+                    min-h-screen
+                    py-12
+
+                    lg:max-w-[1100px]
+                    xl:max-w-[1200px]
+                    mx-auto
+
+                    px-4
+                    lg:px-8
+                "
+            >
                 <CollectionHeader
                     title="Search Results"
                     count={wardrobeResults.length + outfitResults.length}
@@ -50,8 +62,9 @@ function SearchPage(){
 
                 <section className="mb-10">
                     <h2 className="
-                        mb-6
-                        text-[24px]
+                        mb-12
+                        text-[28px]
+                        lg:text-[28px]
                         font-['Cormorant_Garamond']
                         font-light
                         tracking-wide
@@ -96,8 +109,9 @@ function SearchPage(){
 
                 <section>
                     <h2 className="
-                        mb-6
-                        text-[24px]
+                        mb-10
+                        text-[28px]
+                        lg:text-[28px]
                         font-['Cormorant_Garamond']
                         font-light
                         tracking-wide
