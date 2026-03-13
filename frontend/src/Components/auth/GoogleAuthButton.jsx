@@ -7,6 +7,7 @@ function GoogleAuthButton() {
                 window.location.href = `${API_BASE_URL}/auth/google`
             }}
             className="
+                cursor-pointer
                 w-full
                 flex
                 items-center

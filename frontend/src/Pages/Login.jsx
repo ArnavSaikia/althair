@@ -2,9 +2,12 @@ import AuthLayout from "@/Components/auth/AuthLayout"
 import GoogleAuthButton from "@/Components/auth/GoogleAuthButton"
 import AuthDivider from "@/Components/auth/AuthDivider"
 import { useState } from "react"
+import { useNavigate } from "react-router-dom"
 
 function Login() {
     const API_URL = import.meta.env.VITE_API_BASE_URL;
+
+    const navigate = useNavigate();
 
     const diaryInputClass = `
         w-[85vw]
@@ -104,6 +107,7 @@ function Login() {
                     disabled={!isLoginValid}
                     type="submit"
                     className={`
+                        cursor-pointer
                         w-full
                         bg-neutral-800
                         text-white
