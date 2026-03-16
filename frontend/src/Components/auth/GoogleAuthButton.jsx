@@ -1,11 +1,45 @@
+import { useGoogleLogin } from "@react-oauth/google"
+import { useNavigate } from "react-router-dom"
+
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL
 
 function GoogleAuthButton() {
+    const navigate = useNavigate();
+
+    const login = useGoogleLogin({
+        flow: "implicit",
+        onSuccess: async (tokenResponse) => {
+            const response = await fetch(`${API_BASE_URL}/users/auth/google`, {
+                method: "POST",
+                credentials: "include",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    credential: tokenResponse.id_token
+                })
+            })
+
+            const data = await response.json()
+
+            if (!response.ok) {
+                console.log(data.message)
+                return
+            }
+
+            console.log("Google login successful")
+            navigate("/")
+        },
+
+        onError: () => {
+            console.log("Google Login Failed")
+        }
+    })
+
+
     return (
         <button
-            onClick={() => {
-                window.location.href = `${API_BASE_URL}/auth/google`
-            }}
+            onClick={() => login()}
             className="
                 cursor-pointer
                 w-full
