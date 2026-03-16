@@ -1,7 +1,9 @@
-const User = require('../models/userModel');
+const User = require('../models/UserModel');
 const Outfit = require('../models/OutfitModel');
 const generateToken = require('../utils/generateToken');
 const verifyToken = require('../utils/verifyToken');
+const { OAuth2Client } = require("google-auth-library");
+const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
 // a user regestering to make an account
 const registerUser = async (req , res) => {
@@ -47,7 +49,13 @@ const loginUser = async (req,res) => {
 
         if (!user) return res.status(400).json({message: "No account found with following email"});
         
-        if (user && (await user.matchPassword(password))){
+        if (!user.password) {
+            return res.status(400).json({
+                message: "This account uses Google login"
+            });
+        }
+
+        if (await user.matchPassword(password)) {
             generateToken(res , user._id);
             res.status(201).json({message: "Successfully Logged In"});
         }
@@ -163,4 +171,63 @@ const deleteProfile = async (req ,res) => {
     }
 };
 
-module.exports = {registerUser , loginUser , logoutUser, fetchUserDetails, updateUserDetails , deleteProfile};
+const authenticateGoogle = async (req,res) => {
+    try{
+        const {credential} = req.body;
+
+        const ticketFromGoogle = await client.verifyIdToken({
+            idToken: credential,
+            audience: process.env.GOOGLE_CLIENT_ID
+        });
+
+        const payload = ticketFromGoogle.getPayload();
+
+        const email = payload.email;
+        const name = payload.name;
+        const googleId = payload.sub;
+        const emailVerified = payload.email_verified;
+
+        if (!emailVerified) {
+            return res.status(400).json({
+                message: "Google email not verified"
+            });
+        }
+
+        let user = await User.findOne({ googleId });
+
+        if (user) {
+            generateToken(res, user._id);
+            return res.status(200).json({ message: "Google login success" });
+        }
+
+        user = await User.findOne({email});
+
+        if(user){
+            user.googleId = googleId;
+            await user.save();
+
+            generateToken(res, user._id);
+            return res.status(200).json({
+                message: "Google account linked and login successful"
+            })
+        }
+
+        //will only work if the other 2 above fail
+        user = await User.create({
+            name,
+            email,
+            googleId,
+            wardrobe:[]
+        });
+
+        generateToken(res,user._id);
+
+        res.status(201).json({
+            message: "Google signup successful"
+        });
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+};
+
+module.exports = {registerUser , loginUser , logoutUser, fetchUserDetails, updateUserDetails , deleteProfile, authenticateGoogle};

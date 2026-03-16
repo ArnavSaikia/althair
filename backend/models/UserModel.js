@@ -30,7 +30,13 @@ const userSchema = new Schema({
 
     password: {
         type: String,
-        required: true
+        required: false
+    },
+
+    googleId: {
+        type: String,
+        unique: true,
+        sparse: true
     },
 
     wardrobe: [wardrobeItemSchema]
@@ -45,8 +51,9 @@ userSchema.pre("save", async function (next) {
 });
 
 userSchema.methods.matchPassword = async function (enteredPassword) {
-    return await bcrypt.compare(enteredPassword , this.password);
-}
+    if (!this.password) return false;
+    return await bcrypt.compare(enteredPassword, this.password);
+};
 
 const User = mongoose.model('User', userSchema);
 
