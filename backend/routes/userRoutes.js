@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const {registerUser , loginUser , logoutUser , fetchUserDetails, updateUserDetails, deleteProfile} = require('../controllers/userController')
+const {registerUser , loginUser , logoutUser , fetchUserDetails, updateUserDetails, deleteProfile, authenticateGoogle} = require('../controllers/userController')
 
 router.post('/register' , registerUser);
 
@@ -12,6 +12,8 @@ router.get('/profile', fetchUserDetails);
 router.put('/update-profile', updateUserDetails);
 
 router.delete('/delete-profile', deleteProfile);
+
+router.post("/auth/google", authenticateGoogle);
 
 //need to add a 404 handler at the last here
 
