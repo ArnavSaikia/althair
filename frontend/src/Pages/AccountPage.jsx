@@ -1,10 +1,11 @@
 import Navbar from "@/Components/Navbar";
 import Footer from "@/Components/Footer";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState , useEffect } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 
 function AccountPage() {
+    const navigate = useNavigate();
     const API_URL = import.meta.env.VITE_API_BASE_URL;
     const [details , setDetails] = useState(null);
     const [loggingOut, setLoggingOut] = useState(false);
@@ -36,6 +37,9 @@ function AccountPage() {
             setDetails(data);
             setDisableLogout(false);
             return;
+        }
+        else{
+            navigate('/login');
         }
         setDetails({
             name: "Anonymous Archivist",

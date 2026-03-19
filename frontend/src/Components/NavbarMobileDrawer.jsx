@@ -46,9 +46,9 @@ const NavbarMobileDrawer = forwardRef((props, ref) => {
             </div>
 
             <div className="pb-4">
-                <span className="px-6 font-['Cormorant_Garamond'] font-medium text-2xl block hover:translate-x-1 transition-all duration-200 cursor-pointer">{user.name}</span>
-                <span className="px-6 text-gray-400 font-inter text-sm hover:translate-x-1 transition-all duration-200 cursor-pointer">{user.outfitCount} Outifts</span>
-                <span className="text-gray-400 font-inter text-sm hover:translate-x-1 transition-all duration-200 cursor-pointer">{user.wardrobeCount} Clothing</span>
+                <span className="px-6 font-['Cormorant_Garamond'] font-medium text-2xl block hover:translate-x-1 transition-all duration-200 cursor-pointer" onClick={() => navigate('/account')}>{user.name}</span>
+                <span className="px-6 text-gray-400 font-inter text-sm hover:translate-x-1 transition-all duration-200 cursor-pointer" onClick={() => navigate('/outfits')}>{user.outfitCount} Outifts</span>
+                <span className="text-gray-400 font-inter text-sm hover:translate-x-1 transition-all duration-200 cursor-pointer" onClick={() => navigate('/wardrobe')}>{user.wardrobeCount} Clothing</span>
             </div>
             <div className="flex justify-center">
                 <div className="border-b border-black/10 w-[90%] px-6"></div>
@@ -56,9 +56,9 @@ const NavbarMobileDrawer = forwardRef((props, ref) => {
 
             <div className="flex flex-col gap-6 p-6 text-lg font-[inter]">
                 <a className="navbar-link font-inter text-lg hover:translate-x-1 transition-all duration-200 cursor-pointer" onClick={() => navigate('/')}>Home</a>
-                <a className="navbar-link font-inter text-lg hover:translate-x-1 transition-all duration-200 cursor-pointer" onClick={() => navigate('/curated')}>Curated Collection</a>
-                <a className="navbar-link font-inter text-lg hover:translate-x-1 transition-all duration-200 cursor-pointer" onClick={() => navigate('/wardrobe')}>My Wardrobe</a>
-                <a className="navbar-link font-inter text-lg hover:translate-x-1 transition-all duration-200 pointer-cursor cursor-pointer" onClick={() => navigate('/outfits')}>Outfit</a>
+                <a className="navbar-link font-inter text-lg hover:translate-x-1 transition-all duration-200 cursor-pointer" onClick={() => navigate('/curated')}>Collections</a>
+                <a className="navbar-link font-inter text-lg hover:translate-x-1 transition-all duration-200 cursor-pointer" onClick={() => navigate('/wardrobe')}>Wardrobe</a>
+                <a className="navbar-link font-inter text-lg hover:translate-x-1 transition-all duration-200 pointer-cursor cursor-pointer" onClick={() => navigate('/outfits')}>Outfits</a>
             </div>
         </div>
     );
