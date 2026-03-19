@@ -28,7 +28,7 @@ const NavbarMobileDrawer = forwardRef((props, ref) => {
 
     useEffect(() => {
         fetchUser();
-    })
+    }, []);
 
     return (
         <div

@@ -3,18 +3,21 @@ import NavbarMobileDrawer from './NavbarMobileDrawer';
 import SearchIcon from '@mui/icons-material/Search';
 import AddIcon from '@mui/icons-material/Add';
 import MenuIcon from '@mui/icons-material/Menu';
+import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
 import { useState, useEffect, useRef} from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate , useLocation } from 'react-router-dom';
 
 
 export default function Navbar() {
     const navigate = useNavigate();
+    const location = useLocation();
     const [searchIsOpen, setSearchIsOpen] = useState(false);
     const [isOpen, setisOpen] = useState(false);
     const searchRef = useRef(null);
     const drawerRef = useRef(null);
     const [searchQuery , setSearchQuery] = useState("");
     const [addModalOpen, setAddModalOpen] = useState(false);
+    const [currentPage , setCurrentPage] = useState(location.pathname);
 
     useEffect(() => {
         function handleClickOutside(event) {
@@ -33,49 +36,91 @@ export default function Navbar() {
     }, []);
 
 
+    const [scrolled, setScrolled] = useState(false);
+
+    useEffect(() => {
+        function handleScroll() {
+            setScrolled(window.scrollY > 40);
+        }
+
+        window.addEventListener("scroll", handleScroll);
+        return () => window.removeEventListener("scroll", handleScroll);
+    }, []);
+
     return (
-        <div className="sticky top-0 bg-white z-[100] h-[10vh] w-[100vw] lg:w-full flex justify-between items-center border-b border-gray-400 font-[inter] px-4">
-            <span className='font-["Elsie_Swash_Caps"] text-2xl cursor-pointer' onClick={() => navigate('/')}>Althair</span>
-            <div className="hidden flex gap-[1rem] justify-between items-center pl-[1rem] pr-[1rem]">
-                <a href="" className="navbar-link group" onClick={() => navigate('/')}>Home<span></span></a>
-                <a href="" className="navbar-link group" onClick={() => navigate('/curated')}>Curated Collection<span></span></a>
-                <a href="" className="navbar-link group" onClick={() => navigate('/wardrobe')}>My Wardrobe<span></span></a>
-                <a href="" className="navbar-link group" onClick={() => navigate('/outfits')}>Outfit<span></span></a>
-            </div>
+        <div className={`
+            sticky top-0 z-[100]
+            w-[100vw] lg:w-full
 
-            <div className='flex justify-between items-center gap-[0rem]'>
-                <button
-                    className='bg-transparent p-2 rounded-4xl h-full flex hover:bg-black/5 transition-colors'
-                    onClick={() => setAddModalOpen(true)}
-                >
-                    <AddIcon sx={{ fontSize: 24, color: "#333" }}/>
-                    <span className='hidden'>Add Item</span>
-                </button>
+            flex justify-between items-center
+            px-4 lg:px-10
 
-                <button ref={searchRef} className={`p-2 rounded-4xl h-full flex ${searchIsOpen? "border border-gray-300 bg-gray-300/20" : "bg-transparent border border-transparent"}`}>
-                    <SearchIcon onClick={()=> setSearchIsOpen(!searchIsOpen)} sx={{ fontSize: 24, color: "#333" }} />
-                    {/* <span className={`${searchIsOpen ? "" : "hidden"}`}>Search</span> */}
-                    <input
-                        type="text"
-                        placeholder="Search..."
-                        className={`
-                            transition-all duration-300 ease-out
-                            outline-none
-                            bg-transparent
-                            ${searchIsOpen ? "w-40 opacity-100 px-2 ml-2" : "w-0 opacity-0 p-0"}
-                        `}
-                        onChange={(e) => setSearchQuery(e.target.value)}
-                        onKeyDown={(e) => {
-                            if (e.key === "Enter" && searchQuery.trim()) {
-                                navigate(`/search?q=${searchQuery.trim()}`)
-                            }
-                        }}
-                    />
-                </button>
+            h-[10vh] lg:h-[72px]
 
-                <button className='bg-transparent p-2 rounded-4xl h-full flex' onClick={() => setisOpen(true)}>
-                    <MenuIcon sx={{ fontSize: 24, color: "#333" }} />
-                </button>
+            transition-all duration-500 ease-in-out
+
+            relative  border-b border-black/5
+            shadow-[0_4px_24px_rgba(0,0,0,0.06)]
+        `}>
+            <div className="
+                absolute inset-0
+                bg-white/80 backdrop-blur-md
+                border-b border-black/5
+                shadow-[0_4px_24px_rgba(0,0,0,0.06)]
+                z-[-1]
+            " />
+            <div className="flex items-center justify-between lg:grid lg:grid-cols-[1fr_auto_1fr] lg:items-center w-full max-w-[1200px] mx-auto">
+                <span className='font-["Elsie_Swash_Caps"] text-2xl cursor-pointer ' onClick={() => navigate('/')}>Althair</span>
+                <div className="hidden lg:flex gap-10 items-center">
+                    <button className={`inline-block text-sm tracking-wide transition-colors duration-500 cursor-pointer font-['Cormorant_Garamond'] tracking-wide text-lg md:text-xl lg:text-lg ${location.pathname == '/' ? "text-black font-semibold" : "transition-transform duration-[300ms] ease-out hover:-translate-y-[2px]"}`} onClick={() => navigate('/')}>Home<span></span></button>
+                    <button className={`inline-block text-sm tracking-wide transition-colors duration-200 cursor-pointer font-['Cormorant_Garamond'] tracking-wide text-lg md:text-xl lg:text-lg ${location.pathname == '/curated' ? "text-black font-semibold" : "transition-transform duration-[300ms] ease-out hover:-translate-y-[2px]"}`} onClick={() => navigate('/curated')}>Curated Collection<span></span></button>
+                    <button className={`inline-block text-sm tracking-wide transition-colors duration-200 cursor-pointer font-['Cormorant_Garamond'] tracking-wide text-lg md:text-xl lg:text-lg ${location.pathname == '/wardrobe' ? "text-black font-semibold" : "transition-transform duration-[300ms] ease-out hover:-translate-y-[2px]"}`} onClick={() => navigate('/wardrobe')}>My Wardrobe<span></span></button>
+                    <button className={`inline-block text-sm tracking-wide transition-colors duration-200 cursor-pointer font-['Cormorant_Garamond'] tracking-wide text-lg md:text-xl lg:text-lg ${location.pathname == '/outfits' ? "text-black font-semibold" : "transition-transform duration-[300ms] ease-out hover:-translate-y-[2px]"}`} onClick={() => navigate('/outfits')}>Outfit<span></span></button>
+                </div>
+
+                <div className='flex justify-end items-center gap-1 lg:gap-3'>
+                    <button
+                        className='bg-transparent p-2 rounded-4xl h-full flex hover:bg-black/5 transition-colors'
+                        onClick={() => setAddModalOpen(true)}
+                    >
+                        <AddIcon sx={{ fontSize: 24, color: "#333" }}/>
+                        <span className='hidden'>Add Item</span>
+                    </button>
+
+                    <button ref={searchRef} className={`p-2 rounded-4xl h-full flex ${searchIsOpen? "border border-gray-300 bg-gray-300/20" : "bg-transparent border border-transparent"}`}>
+                        <SearchIcon onClick={()=> setSearchIsOpen(!searchIsOpen)} sx={{ fontSize: 24, color: "#333" }} />
+                        {/* <span className={`${searchIsOpen ? "" : "hidden"}`}>Search</span> */}
+                        <input
+                            type="text"
+                            placeholder="Search..."
+                            className={`
+                                transition-all duration-300 ease-out
+                                outline-none
+                                bg-transparent
+                                ${searchIsOpen ? "w-40 opacity-100 px-2 ml-2" : "w-0 opacity-0 p-0"}
+                            `}
+                            onChange={(e) => setSearchQuery(e.target.value)}
+                            onKeyDown={(e) => {
+                                if (e.key === "Enter" && searchQuery.trim()) {
+                                    navigate(`/search?q=${searchQuery.trim()}`)
+                                }
+                            }}
+                        />
+                    </button>
+
+                    <button className='bg-transparent p-2 rounded-4xl h-full flex lg:hidden' onClick={() => setisOpen(true)}>
+                        <MenuIcon sx={{ fontSize: 24, color: "#333" }} />
+                    </button>
+
+                    <button className='hidden lg:bg-transparent lg:p-2 lg:rounded-4xl lg:h-full lg:flex cursor-pointer' onClick={() => navigate('/account')}>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 16 16">
+                            <g fill="none" stroke="#333" strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.25}>
+                                <circle cx={8} cy={6} r={3.25}></circle>
+                                <path d="m2.75 14.25c0-2.5 2-5 5.25-5s5.25 2.5 5.25 5"></path>
+                            </g>
+                        </svg>
+                    </button>
+                </div>
             </div>
 
             <div className={`
