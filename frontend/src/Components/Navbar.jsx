@@ -80,14 +80,14 @@ export default function Navbar() {
 
                 <div className='flex justify-end items-center gap-1 lg:gap-3'>
                     <button
-                        className='bg-transparent p-2 rounded-4xl h-full flex hover:bg-black/5 transition-colors'
+                        className='cursor-pointer bg-transparent p-2 rounded-4xl h-full flex hover:scale-110 active:scale-95'
                         onClick={() => setAddModalOpen(true)}
                     >
                         <AddIcon sx={{ fontSize: 24, color: "#333" }}/>
                         <span className='hidden'>Add Item</span>
                     </button>
 
-                    <button ref={searchRef} className={`p-2 rounded-4xl h-full flex ${searchIsOpen? "border border-gray-300 bg-gray-300/20" : "bg-transparent border border-transparent"}`}>
+                    <button ref={searchRef} className={`hover:scale-110 active:scale-95 cursor-pointer p-2 rounded-4xl h-full flex ${searchIsOpen? "border border-gray-300 bg-gray-300/20" : "bg-transparent border border-transparent"}`}>
                         <SearchIcon onClick={()=> setSearchIsOpen(!searchIsOpen)} sx={{ fontSize: 24, color: "#333" }} />
                         {/* <span className={`${searchIsOpen ? "" : "hidden"}`}>Search</span> */}
                         <input
@@ -112,7 +112,7 @@ export default function Navbar() {
                         <MenuIcon sx={{ fontSize: 24, color: "#333" }} />
                     </button>
 
-                    <button className='hidden lg:bg-transparent lg:p-2 lg:rounded-4xl lg:h-full lg:flex cursor-pointer' onClick={() => navigate('/account')}>
+                    <button className='hidden hover:scale-110 active:scale-95 lg:bg-transparent lg:p-2 lg:rounded-4xl lg:h-full lg:flex cursor-pointer' onClick={() => navigate('/account')}>
                         <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 16 16">
                             <g fill="none" stroke="#333" strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.25}>
                                 <circle cx={8} cy={6} r={3.25}></circle>
