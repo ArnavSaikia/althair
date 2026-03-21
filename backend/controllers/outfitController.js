@@ -1,7 +1,7 @@
 const verifyToken = require('../utils/verifyToken');
 const Outfit = require('../models/OutfitModel');
 const Clothing = require('../models/ClothingModel');
-const User = require('../models/userModel');
+const User = require('../models/UserModel');
 const { S3Client, PutObjectCommand, DeleteObjectCommand } = require('@aws-sdk/client-s3');
 const mongoose = require('mongoose');
 const {generateClothingEditorialNote , generateOutfitEditorialNote} = require('../services/geminiService');
