@@ -1,4 +1,4 @@
-import Navbar from "@/components/Navbar"
+import Navbar from "@/Components/Navbar"
 import Footer from "@/Components/Footer";
 import CanvasPreview from "@/Components/CanvasPreview";
 import { useState , useEffect } from "react";

@@ -155,25 +155,25 @@ function Landing(){
                     ">
 
                         <div className='flex flex-col gap-4 lg:contents'>
-                            <div className="relative rounded-[12px] overflow-hidden shadow-[0_8px_20px_rgba(0,0,0,0.1)] border border-white/20 hover:scale-[1.03] transition duration-500 aspect-[2/3] md:aspect-[2/3] lg:aspect-[2/3] xl:aspect-[2/3] cursor-pointer" onClick={() => navigate(`/curated?category=upperwear`)}>
+                            <div className="relative rounded-[12px] overflow-hidden shadow-[0_8px_20px_rgba(0,0,0,0.1)] border border-white/20 hover:scale-[1.03] transition duration-500 aspect-[2/3] md:aspect-[2/3] lg:aspect-[2/3] xl:aspect-[2/3] cursor-pointer" onClick={() => navigate(`/curated?category=Upperwear`)}>
                                 <img src="/upperwear_landing2.jpg" className="w-full h-full object-cover" alt="upperwear" />
                                 <div className="absolute inset-0 bg-gradient-to-t from-black/25 to-transparent"></div>
                                 <span className="absolute bottom-3 left-3 text-white tracking-wide font-['Cormorant_Garamond'] text-lg md:text-xl lg:text-lg xl:text-xl">Upperwear</span>
                             </div>
-                            <div className="relative rounded-[12px] overflow-hidden shadow-[0_8px_20px_rgba(0,0,0,0.1)] border border-white/20 hover:scale-[1.03] transition duration-500 aspect-[2/3] md:aspect-[2/3] lg:aspect-[2/3] xl:aspect-[2/3] cursor-pointer" onClick={() => navigate(`/curated?category=bottomwear`)}>
+                            <div className="relative rounded-[12px] overflow-hidden shadow-[0_8px_20px_rgba(0,0,0,0.1)] border border-white/20 hover:scale-[1.03] transition duration-500 aspect-[2/3] md:aspect-[2/3] lg:aspect-[2/3] xl:aspect-[2/3] cursor-pointer" onClick={() => navigate(`/curated?category=Bottomwear`)}>
                                 <img src="/bottomwear_landing.jpg" className="w-full h-full object-cover" alt="bottomwear" />
                                 <div className="absolute inset-0 bg-gradient-to-t from-black/25 to-transparent"></div>
                                 <span className="absolute bottom-3 left-3 text-white tracking-wide font-['Cormorant_Garamond'] text-lg md:text-xl lg:text-lg xl:text-xl">Bottomwear</span>
                             </div>
                         </div>
                         <div className='flex flex-col gap-4 lg:contents'>
-                            <div className="relative grow-[3] min-h-0 rounded-[12px] overflow-hidden shadow-[0_8px_20px_rgba(0,0,0,0.1)] border border-white/20 hover:scale-[1.03] transition duration-500 aspect-[2/2.5] md:aspect-[2/2.5] lg:aspect-[2/3] xl:aspect-[2/3] cursor-pointer" onClick={() => navigate(`/curated?category=footwear`)}>
+                            <div className="relative grow-[3] min-h-0 rounded-[12px] overflow-hidden shadow-[0_8px_20px_rgba(0,0,0,0.1)] border border-white/20 hover:scale-[1.03] transition duration-500 aspect-[2/2.5] md:aspect-[2/2.5] lg:aspect-[2/3] xl:aspect-[2/3] cursor-pointer" onClick={() => navigate(`/curated?category=Footwear`)}>
                                 <img src="/footwear_landing5.jpg" className="w-full h-full object-cover" alt="footwear" />
                                 <div className="absolute inset-0 bg-gradient-to-t from-black/25 to-transparent"></div>
                                 <span className="absolute bottom-3 left-3 text-white tracking-wide font-['Cormorant_Garamond'] text-lg md:text-xl lg:text-lg xl:text-xl">Footwear</span>
                             </div> 
                             {/* go with either 5th or 7th one id say */}
-                            <div className="relative rounded-[12px] overflow-hidden shadow-[0_8px_20px_rgba(0,0,0,0.1)] border border-white/20 hover:scale-[1.03] transition duration-500 aspect-[2/2.5] md:aspect-[2/2.5] lg:aspect-[2/3] xl:aspect-[2/3] cursor-pointer" onClick={() => navigate(`/curated?category=accessories`)}>
+                            <div className="relative rounded-[12px] overflow-hidden shadow-[0_8px_20px_rgba(0,0,0,0.1)] border border-white/20 hover:scale-[1.03] transition duration-500 aspect-[2/2.5] md:aspect-[2/2.5] lg:aspect-[2/3] xl:aspect-[2/3] cursor-pointer" onClick={() => navigate(`/curated?category=Accessories`)}>
                                 <img src="/accessories_landing2.jpg" className="w-full h-full object-cover" alt="accessories" />
                                 <div className="absolute inset-0 bg-gradient-to-t from-black/25 to-transparent"></div>
                                 <span className="absolute bottom-3 left-3 text-white tracking-wide font-['Cormorant_Garamond'] text-lg md:text-xl lg:text-lg xl:text-xl">Accessories</span>
