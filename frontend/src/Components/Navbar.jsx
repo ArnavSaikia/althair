@@ -183,6 +183,7 @@ export default function Navbar() {
                                 navigate('/wardrobe/new');
                             }}
                             className="
+                                cursor-pointer
                                 w-full
                                 text-left
                                 px-4 py-3
@@ -204,6 +205,7 @@ export default function Navbar() {
                                 navigate('/outfits/build');
                             }}
                             className="
+                                cursor-pointer
                                 w-full
                                 text-left
                                 px-4 py-3

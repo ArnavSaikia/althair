@@ -5,7 +5,6 @@ function CanvasPreview({ items, extraCSS = "" }) {
     const [size, setSize] = useState({ width: 0, height: 0 });
 
     useLayoutEffect(() => {
-        console.log(items)
         if (!ref.current) return;
 
         const rect = ref.current.getBoundingClientRect();

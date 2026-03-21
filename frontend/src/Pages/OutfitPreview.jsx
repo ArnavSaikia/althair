@@ -21,10 +21,6 @@ function OutfitPreview() {
         const data = await response.json();
         if(response.ok){
             setOutfit(data.outfit);
-            console.log(data);
-        }
-        else{
-            console.log(data)
         }
     }
 
