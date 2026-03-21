@@ -57,9 +57,12 @@ function OutfitPreview() {
                     md:shadow-[0_10px_30px_rgba(0,0,0,0.08),0_2px_6px_rgba(0,0,0,0.06)]
                     aspect-[9/16]
                     overflow-x-auto
+                    no-scrollbar
                     flex
                     snap-x
                     snap-mandatory
+                    snap-always
+                    flex gap-[1px]
                 ">
                     {/* Slide 1 – reference image */}
                     {outfit.referenceImage && (
@@ -85,6 +88,7 @@ function OutfitPreview() {
                         {/* <DateOverlay2 outfit={outfit} /> */}
                         {/* <DescriptionOverlay outfit={outfit} /> */}
                     </div>
+                    
                 </div>
 
                 {/* Metadata */}

@@ -87,8 +87,8 @@ export default function Navbar() {
                         <span className='hidden'>Add Item</span>
                     </button>
 
-                    <button ref={searchRef} className={`hover:scale-110 active:scale-95 cursor-pointer p-2 rounded-4xl h-full flex ${searchIsOpen? "border border-gray-300 bg-gray-300/20" : "bg-transparent border border-transparent"}`}>
-                        <SearchIcon onClick={()=> setSearchIsOpen(!searchIsOpen)} sx={{ fontSize: 24, color: "#333" }} />
+                    <button ref={searchRef} className={` cursor-pointer p-2 rounded-4xl h-full flex ${searchIsOpen? "border border-gray-300 bg-gray-300/20" : "bg-transparent border border-transparent"}`}>
+                        <SearchIcon onClick={() => setSearchIsOpen(!searchIsOpen)} sx={{ fontSize: 24, color: "#333" }} className='hover:scale-110 active:scale-95'/>
                         {/* <span className={`${searchIsOpen ? "" : "hidden"}`}>Search</span> */}
                         <input
                             type="text"

@@ -42,6 +42,7 @@ function Footer() {
                                 variant="ghost"
                                 size="icon"
                                 className="
+                                    cursor-pointer
                                     rounded-full
                                     text-neutral-400
                                     hover:text-neutral-100
@@ -56,6 +57,7 @@ function Footer() {
                                 variant="ghost"
                                 size="icon"
                                 className="
+                                    cursor-pointer
                                     rounded-full
                                     text-neutral-400
                                     hover:text-neutral-100

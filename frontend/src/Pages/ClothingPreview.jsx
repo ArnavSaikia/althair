@@ -192,6 +192,7 @@ export default function ClothingPreview() {
                                             flex
                                             gap-4
                                             overflow-x-auto
+                                            no-scrollbar
                                             scrollbar-hide
                                         "
                                     >
