@@ -184,7 +184,7 @@ function Landing(){
 
                 <CTA/>
 
-                {clothes && (
+                {clothes.length != 0 && (
                     <section className="lg:max-w-[1100px] xl:max-w-[1200px] mx-auto px-4 lg:px-8 py-12 pt-4 md:pt-6 lg:pt-8">
 
                         <h2 className="text-3xl font-light font-['Cormorant_Garamond'] mb-6">
