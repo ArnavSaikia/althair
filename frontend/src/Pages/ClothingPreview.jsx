@@ -3,7 +3,7 @@ import Footer from "@/Components/Footer";
 import CanvasPreview from "@/Components/CanvasPreview";
 import { useState , useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { Skeleton } from "@/components/ui/skeleton"
+import { Skeleton } from "@/Components/ui/skeleton"
 import { useNavigate } from "react-router-dom";
 
 export default function ClothingPreview() {

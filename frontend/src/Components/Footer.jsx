@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button"
+import { Button } from "@/Components/ui/button"
 import InstagramIcon from "@mui/icons-material/Instagram"
 import XIcon from "@mui/icons-material/X"
 
