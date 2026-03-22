@@ -2,7 +2,7 @@ import Navbar from "@/Components/Navbar";
 import Footer from "@/Components/Footer";
 import { Link, useNavigate } from "react-router-dom";
 import { useState , useEffect } from "react";
-import { Skeleton } from "@/components/ui/skeleton";
+import { Skeleton } from "@/Components/ui/skeleton";
 
 function AccountPage() {
     const navigate = useNavigate();
