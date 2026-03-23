@@ -13,7 +13,7 @@ router.post('/upload-curated', upload.single('image'), uploadCuratedClothing);
 
 router.post('/add-curated/:id', addCuratedToWardrobe);
 
-router.get('/search', searchClothingItems); //not implemented on frontend yet
+router.get('/search', searchClothingItems);
 
 router.get('/:id', fetchItem);
 

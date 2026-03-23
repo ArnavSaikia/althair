@@ -34,8 +34,17 @@ export default function ClothingPreview() {
         });
         const data  = await response.json();
         if(response.ok){
-            //redirect to wardrobe collection
+            navigate('/wardrobe');
         }
+    }
+
+    async function removeFromWardrobe(){
+        const response = await fetch(`${API_URL}/wardrobe/${id}`, {
+            "method": "DELETE",
+            "credentials": "include"
+        });
+        const data = await response.json();
+        if(response.ok) navigate('/wardrobe');
     }
 
     useEffect(() => {
@@ -44,6 +53,26 @@ export default function ClothingPreview() {
 
     const [item , setItem] = useState({});
     const [isLoading , setIsLoading ] = useState(true);
+
+    const [inWardrobe, setInWardrobe] = useState(false);
+
+    async function loadWardrobe() {
+        const response = await fetch(`${API_URL}/wardrobe`, {
+            method: "GET",
+            credentials: "include"
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+            const exists = data.some(item => item._id === id);
+            setInWardrobe(exists);
+        }
+    }
+
+    useEffect(() => {
+        loadWardrobe()
+    }, []);
 
     return (
         <main className="w-full">
@@ -280,11 +309,12 @@ export default function ClothingPreview() {
                         )}
                     </section>
 
-                    {item.isCurated && (
-                        <section className="max-w-md mx-auto px-6 lg:max-w-none lg:mx-0 lg:px-0 pb-12">
+                    {item.isCurated && !inWardrobe && (
+                        <section className="max-w-md mx-auto px-6 pb-12">
                             <button
                                 onClick={addToWardrobe}
                                 className="
+                                    cursor-pointer
                                     w-full
                                     py-3
                                     rounded-full
@@ -297,11 +327,42 @@ export default function ClothingPreview() {
                                     transition
                                     hover:bg-neutral-900
                                     hover:text-white
+                                    active:bg-neutral-900
+                                    active:text-white
                                     disabled:opacity-50
                                     disabled:cursor-not-allowed
                                 "
                             >
                                 Add to wardrobe
+                            </button>
+                        </section>
+                    )}
+
+                    {inWardrobe && (
+                        <section className="max-w-md mx-auto px-6 pb-12">
+                            <button
+                                onClick={removeFromWardrobe}
+                                className="
+                                    cursor-pointer
+                                    w-full
+                                    py-3
+                                    rounded-full
+                                    border
+                                    border-neutral-800
+                                    text-[13px]
+                                    tracking-wide
+                                    font-['Cormorant_Garamond']
+                                    text-neutral-900
+                                    transition
+                                    hover:bg-neutral-900
+                                    hover:text-white
+                                    active:bg-neutral-900
+                                    active:text-white
+                                    disabled:opacity-50
+                                    disabled:cursor-not-allowed
+                                "
+                            >
+                                Remove from wardrobe
                             </button>
                         </section>
                     )}
