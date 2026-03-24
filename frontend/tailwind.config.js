@@ -8,6 +8,7 @@ module.exports = {
     extend: {
       fontFamily: {
         elsie: ['"Elsie Swash Caps"', "serif"],
+        times: ['"Times New Roman"', 'Times', 'serif'],
       },
     },
   },

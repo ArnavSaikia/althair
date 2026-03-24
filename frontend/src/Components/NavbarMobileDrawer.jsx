@@ -74,11 +74,11 @@ const NavbarMobileDrawer = forwardRef((props, ref) => {
                 <div className="border-b border-black/10 w-[90%] px-6"></div>
             </div>
 
-            <div className="flex flex-col gap-6 p-6 text-lg font-[inter]">
-                <a className="navbar-link font-inter text-lg hover:translate-x-1 transition-all duration-200 cursor-pointer" onClick={() => navigate('/')}>Home</a>
-                <a className="navbar-link font-inter text-lg hover:translate-x-1 transition-all duration-200 cursor-pointer" onClick={() => navigate('/curated')}>Collections</a>
-                <a className="navbar-link font-inter text-lg hover:translate-x-1 transition-all duration-200 cursor-pointer" onClick={() => navigate('/wardrobe')}>Wardrobe</a>
-                <a className="navbar-link font-inter text-lg hover:translate-x-1 transition-all duration-200 pointer-cursor cursor-pointer" onClick={() => navigate('/outfits')}>Outfits</a>
+            <div className="flex flex-col gap-6 p-6 text-lg font-times">
+                <a className="navbar-link font-times text-lg hover:translate-x-1 transition-all duration-200 cursor-pointer" onClick={() => navigate('/')}>Home</a>
+                <a className="navbar-link font-times text-lg hover:translate-x-1 transition-all duration-200 cursor-pointer" onClick={() => navigate('/curated')}>Collections</a>
+                <a className="navbar-link font-times text-lg hover:translate-x-1 transition-all duration-200 cursor-pointer" onClick={() => navigate('/wardrobe')}>Wardrobe</a>
+                <a className="navbar-link font-times text-lg hover:translate-x-1 transition-all duration-200 pointer-cursor cursor-pointer" onClick={() => navigate('/outfits')}>Outfits</a>
             </div>
         </div>
     );

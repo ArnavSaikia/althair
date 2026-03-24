@@ -110,7 +110,7 @@ function Landing(){
                         </h1>
                         <p
                             className="
-                                font-inter
+                                font-times
                                 font-light
                                 text-white/75
                                 text-[17px]
