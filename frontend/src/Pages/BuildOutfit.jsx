@@ -524,6 +524,44 @@ function BuildOutfit() {
                         />
                     </div>
 
+                    {
+                        wardrobeItems.length===0 ? (
+                            <div className="
+                                flex
+                                flex-col
+                                items-center
+                                justify-center
+                                text-center
+                                py-24
+                                text-neutral-600
+                            ">
+                                <p className="
+                                    text-xl
+                                    font-['Cormorant_Garamond']
+                                    font-light
+                                    text-neutral-800
+                                    mb-2
+                                ">
+                                    Your wardrobe is empty
+                                </p>
+
+                                <p className="text-sm max-w-sm mx-2">
+                                    Start adding garments or explore common pieces from{" "}
+                                    <span
+                                        onClick={() => {
+                                            closeSheet();
+                                            navigate('/curated');
+                                        }}
+                                        className="underline cursor-pointer hover:text-black transition"
+                                    >
+                                        Collections
+                                    </span>.
+                                </p>
+                            </div>
+                        ) : ""
+                    }
+
+
                     {wardrobeCategories.map(category => {
                         const items = wardrobeItems.filter(
                             item => item.category === category.key
