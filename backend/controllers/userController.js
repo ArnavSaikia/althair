@@ -74,9 +74,11 @@ const loginUser = async (req,res) => {
 // a user logging out
 const logoutUser = (req,res) => {
     try{
-        res.cookie("jwt","",{
-        httpOnly: true,
-        expires: new Date(0)
+        res.cookie("jwt", "", {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === "production",
+            sameSite: "None",
+            expires: new Date(0),
         });
         res.status(200).json({message: "Successfully Logged Out"});
     }
