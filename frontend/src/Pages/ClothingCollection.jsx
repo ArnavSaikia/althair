@@ -11,6 +11,20 @@ function ClothingCollection() {
     const navigate = useNavigate();
 
     useEffect(() => {
+        const fetchUser = async () => {
+            const response = await fetch(`${API_URL}/users/profile`, {
+                method: "GET",
+                credentials: "include",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+            });
+            if (!response.ok) navigate('/login');
+        }
+        fetchUser();
+    }, []);
+
+    useEffect(() => {
         let isMounted = true;
 
         async function fetchClothing() {

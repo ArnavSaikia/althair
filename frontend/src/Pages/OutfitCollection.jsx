@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Navbar from "@/Components/Navbar";
 import Footer from "@/Components/Footer";
 import CollectionHeader from "../Components/CollectionHeader"
@@ -6,6 +7,21 @@ import OutfitGrid from "@/Components/OutiftGrid"
 
 function OutfitCollection() {
     const API_URL = import.meta.env.VITE_API_BASE_URL;
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        const fetchUser = async () => {
+            const response = await fetch(`${API_URL}/users/profile`, {
+                method: "GET",
+                credentials: "include",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+            });
+            if (!response.ok) navigate('/login');
+        }
+        fetchUser();
+    }, []);
 
     const [outfits , setOutfits] = useState([]);
     async function fetchOutfits() {

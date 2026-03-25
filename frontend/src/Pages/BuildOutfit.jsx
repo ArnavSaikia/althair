@@ -3,6 +3,7 @@ import DraggableItem from "@/Components/DraggableItem"
 import Navbar from "../Components/Navbar"
 import Footer from "@/Components/Footer"
 import SaveOutfitModal from "@/Components/SaveOutfitModal"
+import { useNavigate } from "react-router-dom"
 
 const wardrobeCategories = [
     { key: "Upperwear", label: "Upperwear" },
@@ -14,6 +15,7 @@ const wardrobeCategories = [
 
 function BuildOutfit() {
     const API_URL = import.meta.env.VITE_API_BASE_URL;
+    const navigate = useNavigate();
 
     const [isWardrobeOpen, setIsWardrobeOpen] = useState(false)
     const [canvasItems, setCanvasItems] = useState([])  //the x and y here are normalized w.r.t to the canvas' width nd height respectively
@@ -21,6 +23,20 @@ function BuildOutfit() {
     const [referenceImageFile, setReferenceImageFile] = useState(null);
     const [referenceImagePreview, setReferenceImagePreview] = useState(null);
     const fileInputRef = useRef(null)   //for reference outfit image upload
+
+    useEffect(() => {
+        const fetchUser = async () => {
+            const response = await fetch(`${API_URL}/users/profile`, {
+                method: "GET",
+                credentials: "include",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+            });
+            if(!response.ok) navigate('/login');
+        }
+        fetchUser();
+    }, []);
 
     const [wardrobeItems, setWardrobeItems] = useState([]);
     useEffect(() => {
