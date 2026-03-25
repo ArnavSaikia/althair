@@ -143,21 +143,21 @@ const fetchCurated = async (req,res) => {
 
 const fetchItem = async (req,res) => {
     try{
-        const user = await verifyToken(req);
-        if(!user) return res.status(401).json({message: "User not logged in or invalid token"});
-
         const _id = req.params.id;
-        const item = await Clothing.findOne({_id});
+        const item = await Clothing.findOne({ _id });
 
-        if(!item) {
-            res.status(404).json({message: `No item found with ID ${_id}`});
+        if (!item) {
+            res.status(404).json({ message: `No item found with ID ${_id}` });
             return;
         }
-        
-        if(item.isCurated) {
+
+        if (item.isCurated) {
             res.status(200).json(item);
             return;
         }
+
+        const user = await verifyToken(req);
+        if(!user) return res.status(401).json({message: "User not logged in or invalid token"});
 
         const itemOwnedFlag = user.wardrobe.some(entry => entry.clothing.equals(item._id));
 

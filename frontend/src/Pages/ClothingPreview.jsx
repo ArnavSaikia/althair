@@ -36,6 +36,7 @@ export default function ClothingPreview() {
         if(response.ok){
             navigate('/wardrobe');
         }
+        if(response.status == 401) navigate('/login');
     }
 
     async function removeFromWardrobe(){
