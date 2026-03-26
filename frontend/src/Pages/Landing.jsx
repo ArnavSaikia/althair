@@ -10,20 +10,20 @@ function Landing(){
     const API_URL = import.meta.env.VITE_API_BASE_URL;
 
     const heroSlides = [
-        { 
-            image: "/hero33.jpg", 
-            title: "Dress Like You Mean It", 
-            text: "Fresh fits crafted for everyday confidence."
+        {
+            image: "/hero33.jpg",
+            title: "Your wardrobe digitized",
+            text: "All your clothing, in one place."
         },
-        { 
-            image: "/hero2.jpeg", 
-            title: "Find Your Daily Uniform", 
-            text: "Minimal silhouettes, maximum comfort."
+        {
+            image: "/hero2.jpg",
+            title: "Build outfits effortlessly",
+            text: "Create looks before you wear them."
         },
-        { 
-            image: "/hero3.jpg", 
-            title: "Wear What Moves You", 
-            text: "Pieces built to match your rhythm." 
+        {
+            image: "/hero3.jpg",
+            title: "Keep your best outfits",
+            text: "Saved looks, ready anytime."
         }
     ];
 
@@ -59,7 +59,12 @@ function Landing(){
             "credentials": "include"
         });
         const data = await response.json();
-        if(response.ok) setClothes(data);
+        if(response.ok){
+            const sorted = data.sort(
+                (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+            );
+            setClothes(sorted);
+        }
     }
 
     useEffect(() => {

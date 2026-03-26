@@ -35,3 +35,12 @@ app.use('/wardrobe', wardrobeRoutes);
 const outfitRoutes = require('./routes/outfitRoutes');
 
 app.use('/outfits', outfitRoutes);
+
+app.get('/api/health', (req , res) => {
+    try{
+        res.status(200).json({"message": "good"});
+    }
+    catch(err){
+        res.status(500).json({message: err.message});
+    }
+})
