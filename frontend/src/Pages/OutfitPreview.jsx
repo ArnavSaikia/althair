@@ -5,8 +5,10 @@ import { useParams } from "react-router-dom";
 import CanvasPreview from "@/Components/CanvasPreview"
 import {TitleOverlay, DateOverlay, DateOverlay2, DescriptionOverlay} from "@/Components/EditorialOverlay";
 import GarmentGrid from "@/Components/GarmentGrid";
+import { useNavigate } from "react-router-dom";
 
 function OutfitPreview() {
+    const navigate = useNavigate();
     const API_URL = import.meta.env.VITE_API_BASE_URL;
     const { id } = useParams();
     const [outfit , setOutfit] = useState({
@@ -27,6 +29,14 @@ function OutfitPreview() {
     useEffect(() => {
         fetchOutfit();
     }, []);
+
+    async function deleteOutfit() {
+        const response = await fetch(`${API_URL}/outfits/${id}`, {
+            method: "DELETE",
+            credentials: "include"
+        });
+        if (response.ok) navigate('/outfits');
+    }
 
     return (
         <>
@@ -165,6 +175,33 @@ function OutfitPreview() {
                         ">
                             {outfit.editorialNote}
                         </p>
+                    </section>
+
+                    <section className="max-w-md mx-auto px-6 pb-12">
+                        <button
+                            onClick={deleteOutfit}
+                            className="
+                                cursor-pointer
+                                w-full
+                                py-3
+                                rounded-full
+                                border
+                                border-neutral-800
+                                text-[13px]
+                                tracking-wide
+                                font-['Cormorant_Garamond']
+                                text-neutral-900
+                                transition
+                                hover:bg-neutral-900
+                                hover:text-white
+                                active:bg-neutral-900
+                                active:text-white
+                                disabled:opacity-50
+                                disabled:cursor-not-allowed
+                            "
+                        >
+                            Delete outfit
+                        </button>
                     </section>
                 </div>
 
