@@ -1,16 +1,15 @@
 const { GoogleGenAI } = require("@google/genai");
 
-const ai = new GoogleGenAI({}); //auto assuming GEMINI_API_KEY is the env name. otw need to pass it in as params
+const ai = new GoogleGenAI({});
 
 const MODEL = "gemini-2.5-flash";
 
 
-function buildClothingPrompt(clothing){
-    return `You are a small AI service that provides 1-2 lines long editorial notes on clothing items uploaded by the user.
-    You will be given requirements and available metadata of the clothing data as uploaded by the user (set as 'Unknown' if the data wasn't provided). You have to analyse the metadata, ascertain what kind of a clothing item it is and what vibe it suits.
-    Based on these results, you have to generate a reply only containing the editorial note that you created for the item so that it may be copied cleanly and pasted straight into the UI.
-    Here's the details of the clothing provided by the user. Generate the note and reply as instructed.
-    
+function buildClothingPrompt(clothing) {
+    return `You are a small AI service that gives short, practical styling suggestions for clothing items in a personal wardrobe app.
+    You will be given metadata about a clothing item. Based on this, give the user 1-2 sentences of casual, useful advice on how to get the most out of this piece — what it pairs well with, what occasions it works for, or how to style it differently.
+    Reply only with the suggestion so it can be pasted straight into the UI.
+
     Name: ${clothing.name || "Unknown"}
     Category: ${clothing.category || "Unknown"}
     Color: ${clothing.color || "Unknown"}
@@ -19,8 +18,8 @@ function buildClothingPrompt(clothing){
     Notes: ${clothing.additionalNotes || "None"}
 
     Requirements:
-    - Sophisticated tone
-    - Editorial fashion magazine style
+    - Casual, practical tone
+    - Focused on usage and combinations
     - No emojis
     - No hashtags
     - No bullet points
@@ -38,19 +37,17 @@ function buildOutfitPrompt(outfit) {
         .filter(Boolean)
         .join(", ");
 
-    return `
-        You are a small AI service that provides 1-2 lines long editorial notes on outfits uploaded by the user.
-        You will be given requirements and available metadata of the outfit data as uploaded by the user (set as 'Unknown' if the data wasn't provided). You have to analyse the metadata, ascertain what kind of an outfit it is and what vibe it suits.
-        Based on these results, you have to generate a reply only containing the editorial note that you created for the outfit so that it may be copied cleanly and pasted straight into the UI.
-        Here's the details of the clothing provided by the user. Generate the note and reply as instructed.
+    return `You are a small AI service that gives short, practical suggestions for outfits saved in a personal wardrobe app.
+        You will be given metadata about an outfit. Based on this, give the user 1-2 sentences of casual, useful advice — what occasions this outfit works for, what could be swapped out to change the vibe, or when to reach for this look.
+        Reply only with the suggestion so it can be pasted straight into the UI.
 
-       Outfit name: ${outfit.name || "Untitled"}
+        Outfit name: ${outfit.name || "Untitled"}
         Garments: ${clothingDescriptions || "Various garments"}
         Description: ${outfit.description || "None"}
 
         Requirements:
-        - Sophisticated tone
-        - Editorial fashion magazine style
+        - Casual, practical tone
+        - Focused on usage and occasion suggestions
         - No emojis
         - No hashtags
         - No bullet points
@@ -73,17 +70,14 @@ async function generateText(prompt) {
     }
 }
 
-
-
 async function generateClothingEditorialNote(clothing) {
     const prompt = buildClothingPrompt(clothing);
     return await generateText(prompt);
 }
-
 
 async function generateOutfitEditorialNote(outfit) {
     const prompt = buildOutfitPrompt(outfit);
     return await generateText(prompt);
 }
 
-module.exports = { generateClothingEditorialNote , generateOutfitEditorialNote}
+module.exports = { generateClothingEditorialNote, generateOutfitEditorialNote }
