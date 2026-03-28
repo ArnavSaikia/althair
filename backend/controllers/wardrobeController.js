@@ -445,6 +445,52 @@ const uploadCuratedClothing = async (req, res) => {
     }
 }
 
+const deleteCuratedClothing = async (req, res) => {
+    try {
+        if (process.env.ENABLE_CURATED_UPLOAD !== "true") {
+            return res.status(404).json({ message: "NOT IN ADMIN ENVIRONMENT" });
+        }
+
+        const clothing = await Clothing.findById(req.params.id);
+
+        if (!clothing) {
+            return res.status(404).json({ message: "Item not found" });
+        }
+
+        if (!clothing.isCurated) {
+            return res.status(403).json({ message: "Item is not a curated item" });
+        }
+
+        // Delete from S3
+        const urlParts = clothing.imageUrl.split("/");
+        const keyIndex = urlParts.findIndex(part => part === "clothing");
+        const s3Key = urlParts.slice(keyIndex).join("/");
+
+        const s3 = new S3Client({
+            region: process.env.AWS_REGION,
+            credentials: {
+                accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+                secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+            },
+        });
+
+        await s3.send(
+            new DeleteObjectCommand({
+                Bucket: process.env.S3_BUCKET_NAME,
+                Key: s3Key,
+            })
+        );
+
+        // Delete the document
+        await Clothing.deleteOne({ _id: clothing._id });
+
+        res.status(200).json({ message: "Curated item deleted successfully" });
+
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+};
 
 
-module.exports = {addClothingItem , addCuratedToWardrobe, fetchWardrobe , fetchItem, fetchCurated, updateItem, deleteItem, searchClothingItems, uploadCuratedClothing};
+
+module.exports = {addClothingItem , addCuratedToWardrobe, fetchWardrobe , fetchItem, fetchCurated, updateItem, deleteItem, searchClothingItems, uploadCuratedClothing, deleteCuratedClothing};
