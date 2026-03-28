@@ -279,6 +279,18 @@ const deleteItem = async (req,res) => {
             return res.status(403).json({ message: "Item is not in your wardrobe" });
         }
 
+        await Outfit.updateMany(
+            {
+                user: user._id,
+                "canvasItems.clothingId": clothing._id
+            },
+            {
+                $pull: {
+                    canvasItems: { clothingId: clothing._id }
+                }
+            }
+        );
+
         // curated item
         if (clothing.isCurated) {
             user.wardrobe = user.wardrobe.filter(
@@ -460,6 +472,11 @@ const deleteCuratedClothing = async (req, res) => {
         if (!clothing.isCurated) {
             return res.status(403).json({ message: "Item is not a curated item" });
         }
+
+        await Outfit.updateMany(
+            { "canvasItems.clothingId": clothing._id },
+            { $pull: { canvasItems: { clothingId: clothing._id } } }
+        );
 
         // Delete from S3
         const urlParts = clothing.imageUrl.split("/");
