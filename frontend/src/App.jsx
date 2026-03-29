@@ -15,6 +15,7 @@ import Signup from './Pages/Signup';
 import AccountPage from './Pages/AccountPage';
 import CuratedCollection from './Pages/CuratedCollection';
 import SearchPage from "./Pages/SearchPage";
+import { Analytics } from '@vercel/analytics/react'
 
 
 function App() {
@@ -48,6 +49,7 @@ function App() {
         {/* Optional 404 */}
         <Route path="*" element={<div>Not Found</div>} />
       </Routes>
+      <Analytics />
     </BrowserRouter>
   )
 }
