@@ -188,7 +188,7 @@ export default function ClothingUpload() {
                                     px-6
                                 "
                             >
-                                Images work best when the garment fills the frame, with little space around it.
+                                Images work best with the background removed and the garment filling most of the frame
                             </p>
 
                 </>

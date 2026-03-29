@@ -33,8 +33,7 @@ function Footer() {
                             tracking-tight
                             text-neutral-400
                         ">
-                            Curate your personal style. Build outfits that reflect who you are.
-                            Your wardrobe, reimagined.
+                            Catalogue what you own. Build outfits. Wear more of what you already have.
                         </p>
 
                         <div className="mt-5 flex gap-3">
